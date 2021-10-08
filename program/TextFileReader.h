@@ -4,13 +4,18 @@
 #include <memory>
 #include <string>
 #include <fstream>
+#include <iostream>
 
 class TextFileReader {
 public:
-    std::shared_ptr<int32_t[]> fromFile(std::string filename);
+    std::shared_ptr<int32_t[]> fromFile(const std::string& filename);
 
 private:
-    void read(std::string);
+    void read(const std::string&);
+
+    std::string name;
+    std::string edgeWeightType;
+    std::string edgeWeightFormat;
 
     std::shared_ptr<int32_t[]> fileContent;
 };

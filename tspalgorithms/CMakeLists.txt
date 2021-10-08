@@ -6,11 +6,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(HEADER_FILES
         TSPInputMatrix.h
         TSPAbstractSolver.h
-        TSPSolution.h)
+        TSPSolution.h
+        TSPBruteForceSolver.h)
 
 set(SOURCE_FILES
         index.cpp
         TSPInputMatrix.cpp
+        TSPBruteForceSolver.cpp
         )
 
 link_libraries(structure_templates_lib)
