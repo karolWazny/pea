@@ -4,11 +4,14 @@ project(pea)
 set(CMAKE_CXX_STANDARD 17)
 
 set(HEADER_FILES
-        TSPInputMatrix.h)
+        TSPInputMatrix.h
+        TSPAbstractSolver.h
+        TSPSolution.h)
 
 set(SOURCE_FILES
         index.cpp
-        TSPInputMatrix.cpp)
+        TSPInputMatrix.cpp
+        )
 
 link_libraries(structure_templates_lib)
 
