@@ -10,7 +10,7 @@ add_subdirectory(tspalgorithms)
 add_subdirectory(structure_templates_lib)
 add_subdirectory(program)
 
-target_link_libraries(pea graphs structure_templates_lib program)
+target_link_libraries(pea tspalgorithms structure_templates_lib program)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     add_definitions(-DDEBUG=1)

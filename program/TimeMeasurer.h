@@ -6,9 +6,6 @@
 #include <ctime>
 #include <fstream>
 #include "../structure_templates_lib/structures.h"
-#include "../graphs/MatrixGraphFactory.h"
-#include "../graphs/ListGraphFactory.h"
-#include "../graphs/GraphGenerator.h"
 #include "StopWatch.h"
 #include "Randomizer.h"
 
@@ -18,7 +15,7 @@ class TimeMeasurer {
 public:
     void runMeasurement();
 private:
-    Array<Array<SingleMeasurement>> singleMeasurement(int densityOption,
+/*    Array<Array<SingleMeasurement>> singleMeasurement(int densityOption,
                                         int sizeOption,
                                         int probOption);
 
@@ -27,7 +24,7 @@ private:
     static unsigned long long dijkstra(GraphPointer);
     static unsigned long long bFord(GraphPointer);
 
-    static unsigned long long (*(measuringMethods[2][2]))(GraphPointer);
+    static unsigned long long (*(measuringMethods[2][2]))(GraphPointer);*/
 
     static constexpr unsigned char densities[4] = {25, 50, 75, 99};
     static constexpr size_t sizes[5] = {10, 20, 50, 100, 200};

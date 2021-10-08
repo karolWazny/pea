@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(sdizo2)
+project(pea)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -19,7 +19,7 @@ set(SOURCE_FILES
         StopWatch.cpp
         TimeMeasurer.cpp)
 
-link_libraries(graphs)
+link_libraries(tspalgorithms)
 
 add_library(program ${SOURCE_FILES} ${HEADER_FILES})
 

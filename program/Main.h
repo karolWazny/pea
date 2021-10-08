@@ -16,8 +16,6 @@ private:
     static void displayGreeting();
     static void displayMenu();
     void interpretInput();
-    void mst();
-    void shortestPaths();
     void measurements();
     bool keepGoing = true;
     String input;

@@ -16,9 +16,9 @@ void Main::displayGreeting() {
 }
 
 void Main::displayMenu() {
-    String menuText = "1. Szukanie najkrotszych sciezek (grafy skierowane).\n";
-    menuText += "2. Wyznaczanie MST (grafy nieskierowane).\n"
-                "3. Automatyczne pomiary\n";
+    String menuText = "1. Brute force (przeglad zupelny).\n";
+    menuText += "2. Programowanie dynamiczne.\n"
+                "3. Automatyczne pomiary czasu\n";
     menuText += "4. Zakoncz program.\n";
     std::cout << menuText;
 }
@@ -29,10 +29,8 @@ void Main::interpretInput() {
         option = std::stoi(input);
         switch(option){
             case 1:
-                shortestPaths();
                 break;
             case 2:
-                mst();
                 break;
             case 3:
                 measurements();
@@ -50,5 +48,5 @@ void Main::interpretInput() {
 }
 
 void Main::measurements() {
-    timeMeasurer.runMeasurement();
+    //timeMeasurer.runMeasurement();
 }

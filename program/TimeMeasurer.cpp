@@ -5,7 +5,7 @@ std::string TimeMeasurer::representations[2] = {"list", "matrix"};
 std::string TimeMeasurer::problems[2] = {"mst", "paths"};
 std::string TimeMeasurer::algorithms[2][2] = {{"prim", "kruskal"}, {"dijkstra", "b-ford"}};
 std::string TimeMeasurer::columnHeaders = "TIME\tDENSITY\tSIZE\tREPRES\tPROBLEM\tALGORITHM";
-unsigned long long(*(TimeMeasurer::measuringMethods[2][2]))(GraphPointer) = {{prim, kruskal}, {dijkstra, bFord}};
+//unsigned long long(*(TimeMeasurer::measuringMethods[2][2]))(GraphPointer) = {{prim, kruskal}, {dijkstra, bFord}};
 
 void gotoxy(short x, short y)
 {
@@ -66,14 +66,14 @@ void TimeMeasurer::runMeasurement() {
             for(int prob = 0; prob < 2; prob++) {
                 gotoxy(0,3);
                 std::cout << "Problem: " << std::setw(10) << std::left << problems[prob] << " (option "<< prob + 1 << " out of 2)"  << "        ";
-                auto meas = singleMeasurement(dens,
+                /*auto meas = singleMeasurement(dens,
                                               si,
                                               prob);
                 for(int i = 0; i < 2; i++){
                     for(int j = 0; j < 2; j++){
                         measurements.pushBack(meas[i][j]);
                     }
-                }
+                }*/
             }
         }
     }
@@ -91,6 +91,7 @@ void TimeMeasurer::runMeasurement() {
     clear();
 }
 
+/*
 Array<Array<SingleMeasurement>>
 TimeMeasurer::singleMeasurement(int densityOption,
                                 int sizeOption,
@@ -192,3 +193,4 @@ unsigned long long TimeMeasurer::bFord(GraphPointer graph) {
     stopWatch.stop();
     return stopWatch.getLastMeasurmentPiccosec();
 }
+*/

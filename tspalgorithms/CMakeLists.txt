@@ -1,12 +1,14 @@
 cmake_minimum_required(VERSION 3.17)
-project(sdizo2)
+project(pea)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(HEADER_FILES)
+set(HEADER_FILES
+        TSPInputMatrix.h)
 
 set(SOURCE_FILES
-        index.cpp)
+        index.cpp
+        TSPInputMatrix.cpp)
 
 link_libraries(structure_templates_lib)
 
