@@ -22,9 +22,9 @@ public:
     T removeFirst();
     T get(const size_t index);
     bool isEmpty();
-    size_t getLength();
+    size_t getLength() const;
     std::string toString();
-    T& operator[](size_t);
+    T& operator[](size_t) const;
     size_t forEach(std::function<bool(T&)>);
     T& find(std::function<bool(T)> condition);
 
@@ -142,7 +142,7 @@ bool Array<T>::isEmpty()
 }
 
 template <typename T>
-size_t Array<T>::getLength()
+size_t Array<T>::getLength() const
 {
     return length;
 }
@@ -188,7 +188,7 @@ Array<T>::Array(size_t initialSize) {
 //zwraca obiekt przez referencję, działanie jak
 //ten sam operator dla tablicy
 template<typename T>
-T &Array<T>::operator[](size_t index) {
+T &Array<T>::operator[](size_t index) const{
     if(index >= length)
         throw IndexOutOfBoundException();
     return elements[index];

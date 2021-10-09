@@ -7,6 +7,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 add_executable(Google_Tests_run
         InitialTest.cpp
         TSPInputMatrixTest.cpp
-        FileReaderTest.cpp)
+        FileReaderTest.cpp
+        BruteForceTest.cpp)
 
 target_link_libraries(Google_Tests_run gtest gtest_main tspalgorithms program)

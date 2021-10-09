@@ -26,6 +26,7 @@ public:
     type removeLast();
     type removeFirst();
     type& get(int index);
+    type& getLast();
     bool isEmpty();
     int getLength();
     LinkedList();
@@ -351,6 +352,13 @@ size_t LinkedList<type>::forEach(std::function<bool(type &)> function) {
             count++;
     }
     return count;
+}
+
+template<typename type>
+type &LinkedList<type>::getLast() {
+    if(isEmpty())
+        throw std::exception();
+    return lastIndex.lock()->getContent();
 }
 
 #endif //SDIZO_1_LINKEDLIST_H

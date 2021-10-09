@@ -7,6 +7,15 @@
 class TSPBruteForceSolver : public TSPAbstractSolver {
 public:
     TSPSolution solveFor(const TSPInputMatrix &) override;
+    TSPBruteForceSolver(){};
+private:
+    void goDeeper();
+    void compareAndUpdateBestPath();
+
+    LinkedList<size_t> currentBranch;
+    LinkedList<size_t> unusedNodes;
+    const TSPInputMatrix* inputMatrix{};
+    TSPSolution solution;
 };
 
 #endif //PEA_TSPBRUTEFORCESOLVER_H

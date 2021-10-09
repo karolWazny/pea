@@ -7,11 +7,11 @@ class TSPInputMatrix {
 public:
     class Builder;
     static TSPInputMatrix::Builder builder(size_t nodes);
-    int getDistance(size_t from, size_t to);
-
-private:
+    [[nodiscard]] int getDistance(size_t from, size_t to) const;
+    [[nodiscard]] size_t size() const;
     explicit TSPInputMatrix(Array<Array<int>>);
 
+private:
     Array<Array<int>> _values;
 };
 
@@ -24,5 +24,7 @@ public:
 private:
     Array<Array<int>> values;
 };
+
+TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile);
 
 #endif //PEA_TSPINPUTMATRIX_H
