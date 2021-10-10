@@ -6,7 +6,7 @@
 class TSPSolution {
 public:
     LinkedList<size_t> circuit;
-    int totalCost;
+    int totalCost{INT32_MAX};
 };
 
 

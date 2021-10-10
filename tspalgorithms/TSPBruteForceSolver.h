@@ -7,7 +7,6 @@
 class TSPBruteForceSolver : public TSPAbstractSolver {
 public:
     TSPSolution solveFor(const TSPInputMatrix &) override;
-    TSPBruteForceSolver(){};
 private:
     void goDeeper();
     void compareAndUpdateBestPath();

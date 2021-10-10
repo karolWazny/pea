@@ -9,7 +9,6 @@ TSPSolution TSPBruteForceSolver::solveFor(const TSPInputMatrix &input) {
     currentBranch = LinkedList<size_t>();
     currentBranch.pushBack(0);
     solution = TSPSolution();
-    solution.totalCost = INT32_MAX;
 
     goDeeper();
 
