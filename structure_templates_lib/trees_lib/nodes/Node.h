@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 #include "trees_lib/node_util/Side.h"
+#include "../Tree.h"
 
 template <typename T>
 class Node;
@@ -33,6 +34,7 @@ public:
     virtual std::string toString() = 0;
     NodePointer<T> get(Side side);
     void setSide(NodePointer<T> node, Side side);
+    virtual void copy(Tree<T>& output);
 };
 
 template<typename T>
@@ -49,6 +51,13 @@ void Node<T>::setSide(NodePointer<T> node, Side side) {
         return setRight(node);
     else
         return setLeft(node);
+}
+
+template<typename T>
+void Node<T>::copy(Tree <T> &output) {
+    this->getLeft()->copy(output);
+    this->getRight()->copy(output);
+    output.put(this->getKey());
 }
 
 #endif //SDIZO_1_NODE_H

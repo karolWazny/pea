@@ -7,14 +7,16 @@
 #include "trees_lib/rbutil/RBPutter.h"
 #include "trees_lib/rbutil/RBRemover.h"
 #include "trees_lib/node_util/TreePrinter.h"
+#include "Tree.h"
 
 
 template <typename T>
-class RedBlackTree
+class RedBlackTree : public Tree<T>
 {
 public:
     RedBlackTree();
-    void put(T key);
+    RedBlackTree<T> copy();
+    void put(T key) override;
     bool contains(T key) const;
     void remove(T key);
     string toString();
@@ -70,6 +72,12 @@ string RedBlackTree<T>::getRepresentation() {
 template<typename T>
 bool RedBlackTree<T>::isEmpty() {
     return root->isNil();
+}
+
+template<typename T>
+RedBlackTree<T> RedBlackTree<T>::copy() {
+    RedBlackTree<T> output;
+    return output;
 }
 
 #endif //SDIZO_1_REDBLACKTREE_H

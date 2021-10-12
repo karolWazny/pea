@@ -4,6 +4,7 @@
 #include "RBNode.h"
 #include "Sentinel.h"
 #include "trees_lib/colors/Black.h"
+#include "../Tree.h"
 
 template <typename T>
 class RBSentinel : public RBNode<T>
@@ -21,6 +22,7 @@ public:
     virtual NodePointer<T> getRight();
     virtual bool isNil();
     std::string toString() override;
+    void copy(Tree<T>& output) override;
 
     virtual bool isBlack();
     virtual bool isRed();
@@ -135,6 +137,11 @@ int RBSentinel<T>::checkAmountOfBlackToLeaves() {
 template<typename T>
 std::string RBSentinel<T>::toString() {
     return "B-NIL";
+}
+
+template<typename T>
+void RBSentinel<T>::copy(Tree <T> &output) {
+    //do nothing
 }
 
 #endif //SDIZO_1_RBSENTINEL_H

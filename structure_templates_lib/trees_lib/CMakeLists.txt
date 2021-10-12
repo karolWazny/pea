@@ -42,7 +42,7 @@ set(HEADER_FILES
         AVLPutter.h
         AVLPutRestorer.h
         AVLRemover.h
-        nodes/AVLSentinel.h)
+        nodes/AVLSentinel.h Tree.h)
 
 set(SOURCE_FILES
         index.cpp

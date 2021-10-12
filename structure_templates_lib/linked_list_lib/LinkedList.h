@@ -12,6 +12,7 @@ class LinkedList
 {
     friend ListIterator<type>;
 public:
+    LinkedList<type> copy();
     ListIterator<type> iterator();
     size_t forEach(std::function<bool(type&)>);
     int firstIndexOf(type element);
@@ -359,6 +360,16 @@ type &LinkedList<type>::getLast() {
     if(isEmpty())
         throw std::exception();
     return lastIndex.lock()->getContent();
+}
+
+template<typename type>
+LinkedList<type> LinkedList<type>::copy() {
+    auto iterator = this->iterator();
+    auto output = LinkedList<type>();
+    while(iterator.hasNext()){
+        output.pushBack(iterator.next());
+    }
+    return output;
 }
 
 #endif //SDIZO_1_LINKEDLIST_H
