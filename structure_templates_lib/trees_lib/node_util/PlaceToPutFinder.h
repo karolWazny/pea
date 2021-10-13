@@ -1,7 +1,7 @@
 #ifndef SDIZO_1_PLACETOPUTFINDER_H
 #define SDIZO_1_PLACETOPUTFINDER_H
 
-#include "trees_lib/node_util/NodeFinder.h"
+#include "../node_util/NodeFinder.h"
 #include "Side.h"
 
 

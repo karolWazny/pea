@@ -3,7 +3,7 @@
 
 #include "RBNode.h"
 #include "Sentinel.h"
-#include "trees_lib/colors/Black.h"
+#include "colors/Black.h"
 #include "../Tree.h"
 
 template <typename T>
@@ -23,6 +23,7 @@ public:
     virtual bool isNil();
     std::string toString() override;
     void copy(Tree<T>& output) override;
+    bool isContainedIn(const Tree<T>& tree) override;
 
     virtual bool isBlack();
     virtual bool isRed();
@@ -142,6 +143,11 @@ std::string RBSentinel<T>::toString() {
 template<typename T>
 void RBSentinel<T>::copy(Tree <T> &output) {
     //do nothing
+}
+
+template<typename T>
+bool RBSentinel<T>::isContainedIn(const Tree<T> &tree) {
+    return true;
 }
 
 #endif //SDIZO_1_RBSENTINEL_H

@@ -2,7 +2,7 @@
 #define SDIZO_1_NODEROTATOR_H
 
 #include "NodeUtility.h"
-#include "trees_lib/nodes/Node.h"
+#include "../nodes/Node.h"
 
 template <typename T>
 class NodeRotator : public NodeUtility<T>

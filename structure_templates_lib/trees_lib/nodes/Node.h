@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <string>
-#include "trees_lib/node_util/Side.h"
+#include "../node_util/Side.h"
 #include "../Tree.h"
 
 template <typename T>
@@ -35,6 +35,7 @@ public:
     NodePointer<T> get(Side side);
     void setSide(NodePointer<T> node, Side side);
     virtual void copy(Tree<T>& output);
+    virtual bool isContainedIn(const Tree<T>& tree);
 };
 
 template<typename T>
@@ -58,6 +59,12 @@ void Node<T>::copy(Tree <T> &output) {
     this->getLeft()->copy(output);
     this->getRight()->copy(output);
     output.put(this->getKey());
+}
+
+template<typename T>
+bool Node<T>::isContainedIn(const Tree<T> &tree) {
+    return tree.contains(getKey()) && getRight()->isContainedIn(tree)
+                && getLeft()->isContainedIn(tree);
 }
 
 #endif //SDIZO_1_NODE_H

@@ -16,6 +16,7 @@ public:
     NodePointer<T> getRight() override;
     bool isNil() override;
     std::string toString() override;
+    bool isContainedIn(const Tree<T>& tree) override;
 
     static NodePointer<T> getInstance();
 private:
@@ -77,6 +78,11 @@ NodePointer<T> Sentinel<T>::getInstance() {
 template<typename T>
 std::string Sentinel<T>::toString() {
     return "NIL";
+}
+
+template<typename T>
+bool Sentinel<T>::isContainedIn(const Tree<T> &tree) {
+    return true;
 }
 
 #endif //SDIZO_1_SENTINEL_H

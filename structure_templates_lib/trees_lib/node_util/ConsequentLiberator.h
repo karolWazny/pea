@@ -1,8 +1,8 @@
 #ifndef SDIZO_1_CONSEQUENTLIBERATOR_H
 #define SDIZO_1_CONSEQUENTLIBERATOR_H
 
-#include "trees_lib/nodes/Node.h"
-#include "trees_lib/node_util/NodeUtility.h"
+#include "../nodes/Node.h"
+#include "NodeUtility.h"
 #include "Side.h"
 
 

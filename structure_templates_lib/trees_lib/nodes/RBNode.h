@@ -1,7 +1,7 @@
 #ifndef SDIZO_1_RBNODE_H
 #define SDIZO_1_RBNODE_H
 
-#include "trees_lib/colors/Colored.h"
+#include "colors/Colored.h"
 #include "Node.h"
 
 template <typename T>

@@ -5,7 +5,7 @@
 #include "NodeImpl.h"
 #include "RBSentinel.h"
 #include "RBNodeImpl.h"
-#include "trees_lib/colors/RedBlack.h"
+#include "colors/RedBlack.h"
 
 #include "NodeFactory.h"
 

@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "trees_lib/nodes/RBNode.h"
-#include "trees_lib/node_util/TreeSizer.h"
+#include "../nodes/RBNode.h"
+#include "TreeSizer.h"
 
 using string = std::string;
 

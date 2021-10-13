@@ -1,10 +1,10 @@
 #ifndef SDIZO_1_NODEPUTTER_H
 #define SDIZO_1_NODEPUTTER_H
 
-#include "trees_lib/nodes/Node.h"
+#include "../nodes/Node.h"
 #include "PlaceToPutFinder.h"
-#include "trees_lib/nodes/SimpleFactory.h"
-#include "trees_lib/nodes/NodeFactory.h"
+#include "../nodes/SimpleFactory.h"
+#include "../nodes/NodeFactory.h"
 #include "NodeUtility.h"
 
 template <typename T>

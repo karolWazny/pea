@@ -1,7 +1,7 @@
 #ifndef SDIZO_1_NODEUTILITY_H
 #define SDIZO_1_NODEUTILITY_H
 
-#include "trees_lib/nodes/Node.h"
+#include "../nodes/Node.h"
 #include "RootFinder.h"
 
 template <typename T>

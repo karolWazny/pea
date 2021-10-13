@@ -1,12 +1,12 @@
 #ifndef SDIZO_1_REDBLACKTREE_H
 #define SDIZO_1_REDBLACKTREE_H
 
-#include "trees_lib/nodes/Node.h"
-#include "trees_lib/node_util/KeyFinder.h"
-#include "trees_lib/nodes/RBFactory.h"
-#include "trees_lib/rbutil/RBPutter.h"
-#include "trees_lib/rbutil/RBRemover.h"
-#include "trees_lib/node_util/TreePrinter.h"
+#include "nodes/Node.h"
+#include "node_util/KeyFinder.h"
+#include "nodes/RBFactory.h"
+#include "rbutil/RBPutter.h"
+#include "rbutil/RBRemover.h"
+#include "node_util/TreePrinter.h"
 #include "Tree.h"
 
 
@@ -22,6 +22,10 @@ public:
     string toString();
     string getRepresentation();
     bool isEmpty();
+    bool contains(const Tree<T>&) const override;
+    virtual bool isContainedIn(const Tree<T>&) const override;
+    bool operator==(const Tree<T>&) const;
+    bool operator!=(const Tree<T>&) const;
 private:
     NodePointer<T> root;
 };
@@ -77,7 +81,28 @@ bool RedBlackTree<T>::isEmpty() {
 template<typename T>
 RedBlackTree<T> RedBlackTree<T>::copy() {
     RedBlackTree<T> output;
+    root->copy(output);
     return output;
+}
+
+template<typename T>
+bool RedBlackTree<T>::operator==(const Tree<T> &tree) const {
+    return this->contains(tree) && tree.contains(*this);
+}
+
+template<typename T>
+bool RedBlackTree<T>::operator!=(const Tree<T> &tree) const {
+    return !operator==(tree);
+}
+
+template<typename T>
+bool RedBlackTree<T>::contains(const Tree<T> & tree) const {
+    return tree.isContainedIn(*this);
+}
+
+template<typename T>
+bool RedBlackTree<T>::isContainedIn(const Tree<T> &tree) const {
+    return root->isContainedIn(tree);
 }
 
 #endif //SDIZO_1_REDBLACKTREE_H
