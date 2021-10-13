@@ -8,6 +8,7 @@
 #include "rbutil/RBRemover.h"
 #include "node_util/TreePrinter.h"
 #include "Tree.h"
+#include "../linked_list_lib/LinkedList.h"
 
 
 template <typename T>
@@ -23,9 +24,10 @@ public:
     string getRepresentation();
     bool isEmpty();
     bool contains(const Tree<T>&) const override;
-    virtual bool isContainedIn(const Tree<T>&) const override;
+    bool isContainedIn(const Tree<T>&) const override;
     bool operator==(const Tree<T>&) const;
     bool operator!=(const Tree<T>&) const;
+    LinkedList<T> inOrderList() const override;
 private:
     NodePointer<T> root;
 };
@@ -103,6 +105,13 @@ bool RedBlackTree<T>::contains(const Tree<T> & tree) const {
 template<typename T>
 bool RedBlackTree<T>::isContainedIn(const Tree<T> &tree) const {
     return root->isContainedIn(tree);
+}
+
+template<typename T>
+LinkedList<T> RedBlackTree<T>::inOrderList() const {
+    LinkedList<T> result;
+
+    return result;
 }
 
 #endif //SDIZO_1_REDBLACKTREE_H

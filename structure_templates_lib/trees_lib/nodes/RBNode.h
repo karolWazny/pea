@@ -14,19 +14,13 @@ template <typename T>
 class RBNode : public Colored, public Node<T>
 {
 public:
-    virtual T getKey() = 0;
+    virtual T getKey() const = 0;
     virtual void setParent(NodePointer<T>) = 0;
-    virtual NodePointer<T> getParent() = 0;
+    virtual NodePointer<T> getParent() const = 0;
     virtual void setLeft(NodePointer<T>) = 0;
-    virtual NodePointer<T> getLeft() = 0;
+    virtual NodePointer<T> getLeft() const = 0;
     virtual void setRight(NodePointer<T>) = 0;
-    virtual NodePointer<T> getRight() = 0;
-    virtual bool isNil() = 0;
-
-    virtual bool isBlack() = 0;
-    virtual bool isRed() = 0;
-    virtual void paintBlack() = 0;
-    virtual void paintRed() = 0;
+    virtual NodePointer<T> getRight() const = 0;
 #if DEBUG
     virtual int checkAmountOfBlackToLeaves() = 0;
 #endif

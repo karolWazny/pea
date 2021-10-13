@@ -11,22 +11,23 @@ class RBSentinel : public RBNode<T>
 {
 public:
     RBSentinel();
-    RBSentinel(NodePointer<T>& node);
+    explicit RBSentinel(NodePointer<T>& node);
 
-    virtual T getKey();
+    T getKey() const override;
     virtual void setParent(NodePointer<T>);
-    virtual NodePointer<T> getParent();
+    virtual NodePointer<T> getParent() const override;
     virtual void setLeft(NodePointer<T>);
-    virtual NodePointer<T> getLeft();
+    virtual NodePointer<T> getLeft() const override;
     virtual void setRight(NodePointer<T>);
-    virtual NodePointer<T> getRight();
-    virtual bool isNil();
-    std::string toString() override;
-    void copy(Tree<T>& output) override;
-    bool isContainedIn(const Tree<T>& tree) override;
+    virtual NodePointer<T> getRight() const override;
+    virtual bool isNil() const override;
+    [[nodiscard]] std::string toString() const override;
+    void copy(Tree<T>& output) const override;
+    bool isContainedIn(const Tree<T>& tree) const override;
+    void inOrderList(LinkedList<T>& list) const override;
 
-    virtual bool isBlack();
-    virtual bool isRed();
+    virtual bool isBlack() const override;
+    virtual bool isRed() const override;
     virtual void paintBlack();
     virtual void paintRed();
 #if DEBUG
@@ -63,7 +64,7 @@ RBSentinel<T>::RBSentinel():parent(instance) {
 }
 
 template<typename T>
-T RBSentinel<T>::getKey() {
+T RBSentinel<T>::getKey() const {
     return key;
 }
 
@@ -74,7 +75,7 @@ void RBSentinel<T>::setParent(NodePointer<T> node) {
 }
 
 template<typename T>
-NodePointer<T> RBSentinel<T>::getParent() {
+NodePointer<T> RBSentinel<T>::getParent() const {
     return parent;
 }
 
@@ -84,7 +85,7 @@ void RBSentinel<T>::setLeft(NodePointer<T>) {
 }
 
 template<typename T>
-NodePointer<T> RBSentinel<T>::getLeft() {
+NodePointer<T> RBSentinel<T>::getLeft() const {
     return getInstance();
 }
 
@@ -94,12 +95,12 @@ void RBSentinel<T>::setRight(NodePointer<T>) {
 }
 
 template<typename T>
-NodePointer<T> RBSentinel<T>::getRight() {
+NodePointer<T> RBSentinel<T>::getRight() const {
     return getInstance();
 }
 
 template<typename T>
-bool RBSentinel<T>::isNil() {
+bool RBSentinel<T>::isNil() const {
     return true;
 }
 
@@ -109,12 +110,12 @@ RBNodePtr<T> RBSentinel<T>::getInstance() {
 }
 
 template<typename T>
-bool RBSentinel<T>::isBlack() {
+bool RBSentinel<T>::isBlack() const {
     return black.isBlack();
 }
 
 template<typename T>
-bool RBSentinel<T>::isRed() {
+bool RBSentinel<T>::isRed() const {
     return black.isRed();
 }
 
@@ -136,18 +137,23 @@ int RBSentinel<T>::checkAmountOfBlackToLeaves() {
 #endif
 
 template<typename T>
-std::string RBSentinel<T>::toString() {
+std::string RBSentinel<T>::toString() const {
     return "B-NIL";
 }
 
 template<typename T>
-void RBSentinel<T>::copy(Tree <T> &output) {
+void RBSentinel<T>::copy(Tree <T> &output) const {
     //do nothing
 }
 
 template<typename T>
-bool RBSentinel<T>::isContainedIn(const Tree<T> &tree) {
+bool RBSentinel<T>::isContainedIn(const Tree<T> &tree) const {
     return true;
+}
+
+template<typename T>
+void RBSentinel<T>::inOrderList(LinkedList<T> &list) const {
+    //do nothing
 }
 
 #endif //SDIZO_1_RBSENTINEL_H
