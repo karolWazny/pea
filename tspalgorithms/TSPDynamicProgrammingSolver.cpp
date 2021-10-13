@@ -38,13 +38,22 @@ TSPSolution TSPDynamicProgrammingSolver::recursionEdge(size_t node) {
 void TSPDynamicProgrammingSolver::prepareMembers(const TSPInputMatrix &inputMatrix) {
     nodes = LinkedList<size_t>();
     this->input = &inputMatrix;
-    for(size_t i = 1; i < input->size(); i++){
+    for(size_t i = 1; i < size(); i++){
         nodes.pushBack(i);
+    }
+
+    currentLevel = Array<Array<PartialSolution>>(1);
+    currentLevel[0] = Array<PartialSolution>(size() - 1);
+    for(size_t i = 0; i < currentLevel[0].getLength(); i++){
+        currentLevel[0][i].cost = input->getDistance(0, i);
+        currentLevel[0][i].circuit.pushBack(0);
+        currentLevel[0][i].circuit.pushBack(i);
     }
 }
 
 TSPSolution TSPDynamicProgrammingSolver::solveIteratively() {
-    for(size_t i = 1; i < input->size(); i++){
+
+    for(size_t i = 1; i < size(); i++){
         iterationOnLevel(i);
     }
     return {};
@@ -63,8 +72,8 @@ void TSPDynamicProgrammingSolver::iterationForSetWithIndex(const size_t i) {
 
 void TSPDynamicProgrammingSolver::updateMembersForLevel(size_t i) {
     previousLevel = currentLevel;
-    currentLevel = Array<Array<TSPSolution>>(math::newton(input->size(), i));
+    currentLevel = Array<Array<PartialSolution>>(math::newton(size(), i));
     for(size_t j = 0; j < currentLevel.getLength(); j++){
-        currentLevel[j] = Array<TSPSolution>(input->size() - i - 1);
+        currentLevel[j] = Array<PartialSolution>(size() - i - 1);
     }
 }
