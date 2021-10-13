@@ -237,3 +237,15 @@ TEST(RedBlackTestSuite, CopyEquals){
     ASSERT_FALSE(tree==copy);
     ASSERT_TRUE(tree!=copy);
 }
+
+TEST(RedBlackTestSuite, InOrderListTest){
+    auto tree = RedBlackTree<int>();
+    tree.put(5);
+    tree.put(7);
+    tree.put(6);
+    tree.put(4);
+
+    ASSERT_EQ(tree.inOrderList().toString(), "[4, 5, 6, 7]");
+    tree.put(4);
+    ASSERT_EQ(tree.inOrderList().toString(), "[4, 4, 5, 6, 7]");
+}

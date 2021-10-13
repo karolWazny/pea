@@ -110,6 +110,7 @@ bool RedBlackTree<T>::isContainedIn(const Tree<T> &tree) const {
 template<typename T>
 LinkedList<T> RedBlackTree<T>::inOrderList() const {
     LinkedList<T> result;
+    root->inOrderList(result);
 
     return result;
 }
