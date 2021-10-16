@@ -13,7 +13,7 @@ public:
     public:
         LinkedList<size_t> circuit;
         RedBlackTree<size_t> nodesUsed;
-        size_t lastNode;
+        size_t lastNode{};
         int cost{INT32_MAX};
     };
 private:
@@ -22,9 +22,9 @@ private:
     TSPSolution recursionEdge(size_t node);
     TSPSolution solveIteratively();
     void prepareMembers(const TSPInputMatrix& inputMatrix);
-    void iterationOnLevel(size_t i);
-    void iterationForSetWithIndex(size_t i);
-    void updateMembersForLevel(size_t i);
+    void iterationOnLevel();
+    void iterationForCurrentSet();
+    void updateMembersForCurrentLevel();
     size_t size(){
         return input->size();
     }
@@ -33,6 +33,9 @@ private:
     const TSPInputMatrix* input{};
     Array<Array<PartialSolution>> currentLevel;
     Array<Array<PartialSolution>> previousLevel;
+
+    size_t currentLevelIndex{};
+    size_t currentSetIndex{};
 };
 
 #endif //PEA_TSPDYNAMICPROGRAMMINGSOLVER_H

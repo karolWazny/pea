@@ -44,36 +44,70 @@ void TSPDynamicProgrammingSolver::prepareMembers(const TSPInputMatrix &inputMatr
 
     currentLevel = Array<Array<PartialSolution>>(1);
     currentLevel[0] = Array<PartialSolution>(size() - 1);
-    for(size_t i = 0; i < currentLevel[0].getLength(); i++){
-        currentLevel[0][i].cost = input->getDistance(0, i);
-        currentLevel[0][i].circuit.pushBack(0);
-        currentLevel[0][i].circuit.pushBack(i);
+    //mamy jeden pusty zbiór S oraz n - 1 możliwych suffiksów
+    for(size_t i = 1; i <= currentLevel[0].getLength(); i++){
+        currentLevel[0][i - 1].cost = input->getDistance(0, i);
+        currentLevel[0][i - 1].lastNode = i;
     }
 }
 
 TSPSolution TSPDynamicProgrammingSolver::solveIteratively() {
 
-    for(size_t i = 1; i < size(); i++){
-        iterationOnLevel(i);
+    for(currentLevelIndex = 1; currentLevelIndex < size(); currentLevelIndex++){
+        iterationOnLevel();
     }
     return {};
 }
 
-void TSPDynamicProgrammingSolver::iterationOnLevel(const size_t i) {
-    updateMembersForLevel(i);
+void TSPDynamicProgrammingSolver::iterationOnLevel() {
+    updateMembersForCurrentLevel();
 
-    for(size_t j = 0; j < previousLevel.getLength(); j++){
-        iterationForSetWithIndex(j);
+    for(currentSetIndex = 0; currentSetIndex < previousLevel.getLength(); currentSetIndex++){
+        iterationForCurrentSet();
     }
 }
 
-void TSPDynamicProgrammingSolver::iterationForSetWithIndex(const size_t i) {
+void TSPDynamicProgrammingSolver::iterationForCurrentSet() {
+    for(size_t i = 0; i < previousLevel[currentSetIndex].getLength(); i++){
+        //dla danego zbioru S (uporządkowanego) i węzła x nienależącego
+        // do tego zbioru tworzymy zbiór S' jako S + {x},
+        // następnie tworzymy wszystkie możliwe g(S', x)
+
+        //tworzymy alias dla previousLevel[index][i], żeby było wygodniej pracować
+        auto& set = previousLevel[currentSetIndex][i];
+        set.circuit.pushBack(set.lastNode);
+        set.nodesUsed.put(set.lastNode);
+
+        // przyporządkowujemy jednoznaczny identyfikator zbiorowi S
+        //jednocześnie tworząc listę węzłów nieużytych w tym zbiorze
+        LinkedList<size_t> unusedNodes;
+        size_t setIdentifier{};
+        size_t numberOfHits{};
+        //todo nie jestem pewien tych przypisań do n i k
+        const auto n = size() - 1;
+        const auto k = set.circuit.getLength();
+        for(size_t j = 1; j < size(); j++){
+            if(set.nodesUsed.contains(j)){
+                setIdentifier += math::newton(n - j, k - numberOfHits);
+                numberOfHits++;
+            } else {
+                unusedNodes.pushBack(j);
+            }
+        }
+        auto iterator = unusedNodes.iterator();
+        for(size_t j = 0; iterator.hasNext(); j++){
+            //aliasujemy najlepszą w tym momencie permutację
+            //dla tego zbioru i z tym samym węzłem na końcu
+            auto& currentlyBestPermutation = currentLevel[setIdentifier][j];
+            //
+        }
+    }
 }
 
-void TSPDynamicProgrammingSolver::updateMembersForLevel(size_t i) {
+void TSPDynamicProgrammingSolver::updateMembersForCurrentLevel() {
     previousLevel = currentLevel;
-    currentLevel = Array<Array<PartialSolution>>(math::newton(size(), i));
+    currentLevel = Array<Array<PartialSolution>>(math::newton(size() - 1, currentLevelIndex));
     for(size_t j = 0; j < currentLevel.getLength(); j++){
-        currentLevel[j] = Array<PartialSolution>(size() - i - 1);
+        currentLevel[j] = Array<PartialSolution>(size() - currentLevelIndex - 1);
     }
 }
