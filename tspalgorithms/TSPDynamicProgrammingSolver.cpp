@@ -98,8 +98,26 @@ void TSPDynamicProgrammingSolver::iterationForCurrentSet() {
         for(size_t j = 0; iterator.hasNext(); j++){
             //aliasujemy najlepszą w tym momencie permutację
             //dla tego zbioru i z tym samym węzłem na końcu
+            auto currentLastNode = iterator.next();
             auto& currentlyBestPermutation = currentLevel[setIdentifier][j];
-            //
+            const auto candidateCost = set.cost + input->getDistance(set.lastNode, currentLastNode);
+            if(currentlyBestPermutation.cost > candidateCost){
+                //update currentlyBestPermutation:
+                //copy circuit and element-by-element,
+                auto innerIterator = set.circuit.iterator();
+                currentlyBestPermutation.circuit = LinkedList<size_t>();
+                while(innerIterator.hasNext()){
+                    currentlyBestPermutation.circuit.pushBack(innerIterator.next());
+                }
+                //copy tree only if this is the first permutation found!!!
+                //update last node (in case this is the first permutation found)
+                if(!currentlyBestPermutation.lastNode){
+                    currentlyBestPermutation.lastNode = currentLastNode;
+                    currentlyBestPermutation.nodesUsed = set.nodesUsed.copy();
+                }
+                //update cost (of course)
+                currentlyBestPermutation.cost = candidateCost;
+            }
         }
     }
 }
