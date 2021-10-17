@@ -1,10 +1,10 @@
 #include "RedBlack.h"
 
-bool RedBlack::isBlack() {
+bool RedBlack::isBlack() const {
     return color == Color::BLACK;
 }
 
-bool RedBlack::isRed() {
+bool RedBlack::isRed() const {
     return color == Color::RED;
 }
 

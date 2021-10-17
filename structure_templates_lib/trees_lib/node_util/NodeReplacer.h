@@ -1,7 +1,7 @@
 #ifndef SDIZO_1_NODEREPLACER_H
 #define SDIZO_1_NODEREPLACER_H
 
-#include "trees_lib/nodes/Node.h"
+#include "../nodes/Node.h"
 #include "Side.h"
 #include "NodeUtility.h"
 

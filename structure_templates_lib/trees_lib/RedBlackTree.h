@@ -1,25 +1,33 @@
 #ifndef SDIZO_1_REDBLACKTREE_H
 #define SDIZO_1_REDBLACKTREE_H
 
-#include "trees_lib/nodes/Node.h"
-#include "trees_lib/node_util/KeyFinder.h"
-#include "trees_lib/nodes/RBFactory.h"
-#include "trees_lib/rbutil/RBPutter.h"
-#include "trees_lib/rbutil/RBRemover.h"
-#include "trees_lib/node_util/TreePrinter.h"
+#include "nodes/Node.h"
+#include "node_util/KeyFinder.h"
+#include "nodes/RBFactory.h"
+#include "rbutil/RBPutter.h"
+#include "rbutil/RBRemover.h"
+#include "node_util/TreePrinter.h"
+#include "Tree.h"
+#include "../linked_list_lib/LinkedList.h"
 
 
 template <typename T>
-class RedBlackTree
+class RedBlackTree : public Tree<T>
 {
 public:
     RedBlackTree();
-    void put(T key);
+    RedBlackTree<T> copy();
+    void put(T key) override;
     bool contains(T key) const;
     void remove(T key);
     string toString();
     string getRepresentation();
     bool isEmpty();
+    bool contains(const Tree<T>&) const override;
+    bool isContainedIn(const Tree<T>&) const override;
+    bool operator==(const Tree<T>&) const;
+    bool operator!=(const Tree<T>&) const;
+    LinkedList<T> inOrderList() const override;
 private:
     NodePointer<T> root;
 };
@@ -70,6 +78,41 @@ string RedBlackTree<T>::getRepresentation() {
 template<typename T>
 bool RedBlackTree<T>::isEmpty() {
     return root->isNil();
+}
+
+template<typename T>
+RedBlackTree<T> RedBlackTree<T>::copy() {
+    RedBlackTree<T> output;
+    root->copy(output);
+    return output;
+}
+
+template<typename T>
+bool RedBlackTree<T>::operator==(const Tree<T> &tree) const {
+    return this->contains(tree) && tree.contains(*this);
+}
+
+template<typename T>
+bool RedBlackTree<T>::operator!=(const Tree<T> &tree) const {
+    return !operator==(tree);
+}
+
+template<typename T>
+bool RedBlackTree<T>::contains(const Tree<T> & tree) const {
+    return tree.isContainedIn(*this);
+}
+
+template<typename T>
+bool RedBlackTree<T>::isContainedIn(const Tree<T> &tree) const {
+    return root->isContainedIn(tree);
+}
+
+template<typename T>
+LinkedList<T> RedBlackTree<T>::inOrderList() const {
+    LinkedList<T> result;
+    root->inOrderList(result);
+
+    return result;
 }
 
 #endif //SDIZO_1_REDBLACKTREE_H

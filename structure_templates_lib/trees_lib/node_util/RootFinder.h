@@ -1,7 +1,7 @@
 #ifndef SDIZO_1_ROOTFINDER_H
 #define SDIZO_1_ROOTFINDER_H
 
-#include "trees_lib/node_util/NodeFinder.h"
+#include "NodeFinder.h"
 
 template <typename T>
 class RootFinder

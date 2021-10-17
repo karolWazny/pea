@@ -4,6 +4,7 @@
 #include "../tspalgorithms/TSPInputMatrix.h"
 #include "../tspalgorithms/TSPBranchNBoundSolver.h"
 
+/*
 TEST(BnBSuite, GivesCorrectCostForTestFile){
     auto reader = TextFileReader();
     auto values = reader.fromFile("testfile.atsp");
@@ -34,4 +35,4 @@ TEST(BnBSuite, GivesCorrectPathLengthForTestFile){
     auto output = TSPBranchNBoundSolver().solveFor(matrix);
     auto iterator = output.circuit.iterator();
     ASSERT_EQ(6, output.circuit.getLength());
-}
+}*/

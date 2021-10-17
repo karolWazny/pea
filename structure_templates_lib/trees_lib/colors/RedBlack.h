@@ -12,8 +12,8 @@ enum class Color : char
 class RedBlack : public Colored
 {
 public:
-    bool isBlack() override;
-    bool isRed() override;
+    [[nodiscard]] bool isBlack() const override;
+    [[nodiscard]] bool isRed() const override;
     void paintBlack() override;
     void paintRed() override;
 private:

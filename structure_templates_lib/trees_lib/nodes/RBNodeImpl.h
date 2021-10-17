@@ -14,20 +14,20 @@ class RBNodeImpl : public RBNode<T>
 public:
     RBNodeImpl(Node<T>*, Colored*);
 
-    bool isBlack() override;
-    bool isRed() override;
+    bool isBlack() const override;
+    bool isRed() const override;
     void paintBlack() override;
     void paintRed() override;
 
-    T getKey()override;
+    T getKey() const override;
     void setParent(NodePointer<T>) override;
-    NodePointer<T> getParent() override;
+    NodePointer<T> getParent() const override;
     void setLeft(NodePointer<T>) override;
-    NodePointer<T> getLeft() override;
+    NodePointer<T> getLeft() const override;
     void setRight(NodePointer<T>) override;
-    NodePointer<T> getRight() override;
-    bool isNil() override;
-    std::string toString() override;
+    NodePointer<T> getRight() const override;
+    bool isNil() const override;
+    std::string toString() const override;
 #if DEBUG
     int checkAmountOfBlackToLeaves() override;
 #endif
@@ -55,12 +55,12 @@ RBNodeImpl<T>::RBNodeImpl(Node<T> * nodeImpl, Colored * coloredImpl) {
 }
 
 template<typename T>
-bool RBNodeImpl<T>::isBlack() {
+bool RBNodeImpl<T>::isBlack() const {
     return colored->isBlack();
 }
 
 template<typename T>
-bool RBNodeImpl<T>::isRed() {
+bool RBNodeImpl<T>::isRed() const {
     return colored->isRed();
 }
 
@@ -75,7 +75,7 @@ void RBNodeImpl<T>::paintRed() {
 }
 
 template<typename T>
-T RBNodeImpl<T>::getKey() {
+T RBNodeImpl<T>::getKey() const {
     return node->getKey();
 }
 
@@ -88,7 +88,7 @@ void RBNodeImpl<T>::setParent(NodePointer<T> parent) {
 }
 
 template<typename T>
-NodePointer<T> RBNodeImpl<T>::getParent() {
+NodePointer<T> RBNodeImpl<T>::getParent() const {
     return node->getParent();
 }
 
@@ -101,7 +101,7 @@ void RBNodeImpl<T>::setLeft(NodePointer<T> left) {
 }
 
 template<typename T>
-NodePointer<T> RBNodeImpl<T>::getLeft() {
+NodePointer<T> RBNodeImpl<T>::getLeft() const {
     return node->getLeft();
 }
 
@@ -114,12 +114,12 @@ void RBNodeImpl<T>::setRight(NodePointer<T> right) {
 }
 
 template<typename T>
-NodePointer<T> RBNodeImpl<T>::getRight() {
+NodePointer<T> RBNodeImpl<T>::getRight() const {
     return node->getRight();
 }
 
 template<typename T>
-bool RBNodeImpl<T>::isNil() {
+bool RBNodeImpl<T>::isNil() const {
     return node->isNil();
 }
 
@@ -142,7 +142,7 @@ int RBNodeImpl<T>::checkAmountOfBlackToLeaves() {
 }
 #endif
 template<typename T>
-std::string RBNodeImpl<T>::toString() {
+std::string RBNodeImpl<T>::toString() const {
     std::string output;
     output += (isBlack() ? "B" : "R");
     output += node->toString();

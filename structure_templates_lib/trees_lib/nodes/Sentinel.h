@@ -7,15 +7,17 @@ template <typename T>
 class Sentinel : public Node<T>
 {
 public:
-    T getKey();
+    T getKey() const override;
     void setParent(NodePointer<T>);
-    NodePointer<T> getParent();
+    NodePointer<T> getParent() const override;
     void setLeft(NodePointer<T>) override;
-    NodePointer<T> getLeft() override;
+    NodePointer<T> getLeft() const override;
     void setRight(NodePointer<T>) override;
-    NodePointer<T> getRight() override;
-    bool isNil() override;
-    std::string toString() override;
+    NodePointer<T> getRight() const override;
+    [[nodiscard]] bool isNil() const override;
+    std::string toString() const override;
+    bool isContainedIn(const Tree<T>& tree) const override;
+    void inOrderList(LinkedList<T>& list) const override;
 
     static NodePointer<T> getInstance();
 private:
@@ -30,27 +32,27 @@ template <typename T>
 T Sentinel<T>::key = NULL;
 
 template<typename T>
-NodePointer<T> Sentinel<T>::getParent() {
+NodePointer<T> Sentinel<T>::getParent() const {
     return getInstance();
 }
 
 template<typename T>
-NodePointer<T> Sentinel<T>::getLeft() {
+NodePointer<T> Sentinel<T>::getLeft() const {
     return getInstance();
 }
 
 template<typename T>
-NodePointer<T> Sentinel<T>::getRight() {
+NodePointer<T> Sentinel<T>::getRight() const{
     return getInstance();
 }
 
 template<typename T>
-T Sentinel<T>::getKey() {
+T Sentinel<T>::getKey() const {
     return key;
 }
 
 template<typename T>
-bool Sentinel<T>::isNil() {
+bool Sentinel<T>::isNil() const {
     return true;
 }
 
@@ -75,8 +77,18 @@ NodePointer<T> Sentinel<T>::getInstance() {
 }
 
 template<typename T>
-std::string Sentinel<T>::toString() {
+std::string Sentinel<T>::toString() const {
     return "NIL";
+}
+
+template<typename T>
+bool Sentinel<T>::isContainedIn(const Tree<T> &tree) const {
+    return true;
+}
+
+template<typename T>
+void Sentinel<T>::inOrderList(LinkedList<T> &list) const {
+    //do nothing
 }
 
 #endif //SDIZO_1_SENTINEL_H

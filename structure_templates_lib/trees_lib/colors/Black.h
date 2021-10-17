@@ -5,8 +5,8 @@
 
 class Black : public Colored{
 public:
-    bool isBlack() override;
-    bool isRed() override;
+    bool isBlack() const override;
+    bool isRed() const override;
     void paintBlack() override;
     void paintRed() override;
 };

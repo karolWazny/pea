@@ -4,8 +4,8 @@
 class Colored
 {
 public:
-    virtual bool isBlack() = 0;
-    virtual bool isRed() = 0;
+    [[nodiscard]] virtual bool isBlack() const = 0;
+    [[nodiscard]] virtual bool isRed() const = 0;
     virtual void paintBlack() = 0;
     virtual void paintRed() = 0;
 };

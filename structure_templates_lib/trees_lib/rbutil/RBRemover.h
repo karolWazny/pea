@@ -1,13 +1,13 @@
 #ifndef SDIZO_1_RBREMOVER_H
 #define SDIZO_1_RBREMOVER_H
 
-#include "trees_lib/node_util/NodeRotator.h"
-#include "trees_lib/node_util/KeyFinder.h"
-#include "trees_lib/node_util/ConsequentFinder.h"
-#include "trees_lib/node_util/ConsequentLiberator.h"
-#include "trees_lib/node_util/NodeReplacer.h"
-#include "trees_lib/nodes/RBNode.h"
-#include "trees_lib/nodes/RBFactory.h"
+#include "../node_util/NodeRotator.h"
+#include "../node_util/KeyFinder.h"
+#include "../node_util/ConsequentFinder.h"
+#include "../node_util/ConsequentLiberator.h"
+#include "../node_util/NodeReplacer.h"
+#include "../nodes/RBNode.h"
+#include "../nodes/RBFactory.h"
 
 template <typename T>
 class RBRemover

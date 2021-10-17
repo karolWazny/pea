@@ -1,8 +1,8 @@
 #ifndef SDIZO_1_CONSEQUENTFINDER_H
 #define SDIZO_1_CONSEQUENTFINDER_H
 
-#include "trees_lib/nodes/Node.h"
-#include "trees_lib/node_util/NodeFinder.h"
+#include "../nodes/Node.h"
+#include "NodeFinder.h"
 
 template <typename T>
 class ConsequentFinder : public NodeFinder<T>
