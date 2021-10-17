@@ -2,8 +2,8 @@
 
 TSPSolution TSPDynamicProgrammingSolver::solveFor(const TSPInputMatrix &inputMatrix) {
     prepareMembers(inputMatrix);
-    solveIteratively();
-    return solveRecursively(0);
+    return solveIteratively();
+    //return solveRecursively(0);
 }
 
 TSPSolution TSPDynamicProgrammingSolver::solveRecursively(size_t node) {
@@ -53,10 +53,22 @@ void TSPDynamicProgrammingSolver::prepareMembers(const TSPInputMatrix &inputMatr
 
 TSPSolution TSPDynamicProgrammingSolver::solveIteratively() {
 
-    for(currentLevelIndex = 1; currentLevelIndex < size(); currentLevelIndex++){
+    for(currentLevelIndex = 1; currentLevelIndex < size() - 1; currentLevelIndex++){
         iterationOnLevel();
     }
-    return {};
+    TSPSolution solution;
+    for(size_t i = 0; i < currentLevel.getLength(); i++){
+        auto& currentSolution = currentLevel[i][0];
+        const auto cost = currentSolution.cost + input->getDistance(currentSolution.lastNode, 0);
+        if(cost < solution.totalCost){
+            solution.totalCost = cost;
+            solution.circuit = currentSolution.circuit;
+            solution.circuit.pushFront(0);
+            solution.circuit.pushBack(currentSolution.lastNode);
+            solution.circuit.pushBack(0);
+        }
+    }
+    return solution;
 }
 
 void TSPDynamicProgrammingSolver::iterationOnLevel() {

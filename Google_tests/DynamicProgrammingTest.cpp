@@ -18,13 +18,7 @@ TEST(DynamicSuite, GivesCorrectPathForTestFile){
     auto matrix = matrixFrom(values);
     auto output = TSPDynamicProgrammingSolver().solveFor(matrix);
     auto iterator = output.circuit.iterator();
-    size_t nodes[] = {0, 2, 1, 4, 3, 0};
-    int index = 0;
-    while(iterator.hasNext()){
-    auto node = iterator.next();
-    ASSERT_EQ(nodes[index], node);
-    index++;
-    }
+    ASSERT_EQ(output.circuit.toString(), "[0, 2, 1, 4, 3, 0]");
 }
 
 TEST(DynamicSuite, GivesCorrectPathLengthForTestFile){

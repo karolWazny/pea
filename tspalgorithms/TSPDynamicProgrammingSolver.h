@@ -8,7 +8,6 @@ class TSPDynamicProgrammingSolver : public TSPAbstractSolver {
 public:
     TSPSolution solveFor(const TSPInputMatrix &) override;
 
-    static const int BIG_PRIME = 85799449;
     class PartialSolution{
     public:
         LinkedList<size_t> circuit;
