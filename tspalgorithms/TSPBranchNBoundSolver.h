@@ -6,6 +6,8 @@
 class TSPBranchNBoundSolver : public TSPAbstractSolver{
 public:
     TSPSolution solveFor(const TSPInputMatrix& inputMatrix) override;
+private:
+    const TSPInputMatrix* input;
 };
 
 
