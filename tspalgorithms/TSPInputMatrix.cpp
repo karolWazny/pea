@@ -2,6 +2,8 @@
 
 #include <utility>
 #include <memory>
+#include <sstream>
+#include <iomanip>
 
 TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile){
     return TSPInputMatrix::from(valuesFromFile);
@@ -49,7 +51,20 @@ TSPInputMatrix TSPInputMatrix::from(std::shared_ptr<int32_t[]> valuesFromFile) {
 }
 
 std::string TSPInputMatrix::representation() const {
-    return {};
+    std::ostringstream stringStream;
+    stringStream << std::right << std::setw(6) <<"|";
+    for(size_t i = 0; i < size(); i++){
+        stringStream << std::right << std::setw(5)<<std::to_string(i);
+    }
+    stringStream << std::endl << std::string(5, '-') << "+" << std::string(size() * 5, '-') << std::endl;
+    for(size_t i = 0; i < size(); i++){
+        stringStream << std::right << std::setw(5) << std::to_string(i) << "|";
+        for(size_t j = 0; j < size(); j++){
+            stringStream << std::right << std::setw(5) << std::to_string(_values[i][j]);
+        }
+        stringStream << std::endl;
+    }
+    return stringStream.str();
 }
 
 TSPInputMatrix TSPInputMatrix::Builder::build() {
