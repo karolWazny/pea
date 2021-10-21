@@ -34,6 +34,8 @@ private:
     void branchAndBound();
     void dynamicProgramming();
 
+    void solve(const std::string& methodName, TSPAbstractSolver& solver);
+
     bool keepGoing = true;
     String input;
     TSPInputMatrix adjacencyMatrix;

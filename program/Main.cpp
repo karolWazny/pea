@@ -45,9 +45,12 @@ void Main::interpretInput() {
                 dynamicProgramming();
                 break;
             case 5:
-                measurements();
+                branchAndBound();
                 break;
             case 6:
+                measurements();
+                break;
+            case 7:
                 keepGoing = false;
                 break;
             default:
@@ -86,17 +89,26 @@ void Main::displayMatrix() {
 }
 
 void Main::bruteForce() {
-    std::cout << "Znajdowanie minimalnego cyklu Hamiltona metoda"
-                 "\nprzegladu zupelnego. Prosze czekac...\n";
-    auto result = TSPBruteForceSolver().solveFor(adjacencyMatrix);
-    std::cout << "Uzyskany wynik:\nKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
-    std::cout << "Minimalny cykl: " << result.circuit.toString() << std::endl << std::endl;
+    auto solver = TSPBruteForceSolver();
+    solve("przegladu zupelnego", solver);
 }
 
 void Main::branchAndBound() {
-    std::cout << "Ta funkcjonalnosc wkrotce sie pojawi...\n";
+
+    auto solver = TSPBranchNBoundSolver();
+    solve("podzialu i ograniczen", solver);
 }
 
 void Main::dynamicProgramming() {
-    std::cout << "Ta funkcjonalnosc wkrotce sie pojawi...\n";
+
+    auto solver = TSPDynamicProgrammingSolver();
+    solve("programowania dynamicznego", solver);
+}
+
+void Main::solve(const std::string& methodName, TSPAbstractSolver &solver) {
+    std::cout << "Znajdowanie minimalnego cyklu Hamiltona metoda\n" << methodName
+                        << ". Prosze czekac...\n";
+    auto result = solver.solveFor(adjacencyMatrix);
+    std::cout << "Uzyskany wynik:\nKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
+    std::cout << "Minimalny cykl: " << result.circuit.toString() << std::endl << std::endl;
 }
