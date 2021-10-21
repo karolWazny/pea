@@ -1,5 +1,7 @@
 #include "program/Main.h"
+#include "program/PeaSetup.h"
 
 int main() {
-    return Main().run();
+    auto setup = PeaSetup();
+    return Main(setup).run();
 }

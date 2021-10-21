@@ -4,14 +4,7 @@
 #include <memory>
 
 TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile){
-    auto builder = TSPInputMatrix::builder(valuesFromFile[0]);
-    auto size = valuesFromFile[0];
-    for(size_t from = 0; from < size; from++){
-        for(size_t to = 0; to < size; to++) {
-            builder.setDistance(from, to, valuesFromFile[from * size + to + 1]);
-        }
-    }
-    return builder.build();
+    return TSPInputMatrix::from(valuesFromFile);
 }
 
 TSPInputMatrix::TSPInputMatrix(Array<Array<int>> values) : _values(std::move(values)) {
@@ -42,6 +35,21 @@ Array<int> TSPInputMatrix::minimalOuts() const {
         }
     }
     return outs;
+}
+
+TSPInputMatrix TSPInputMatrix::from(std::shared_ptr<int32_t[]> valuesFromFile) {
+    auto builder = TSPInputMatrix::builder(valuesFromFile[0]);
+    auto size = valuesFromFile[0];
+    for(size_t from = 0; from < size; from++){
+        for(size_t to = 0; to < size; to++) {
+            builder.setDistance(from, to, valuesFromFile[from * size + to + 1]);
+        }
+    }
+    return builder.build();
+}
+
+std::string TSPInputMatrix::representation() const {
+    return {};
 }
 
 TSPInputMatrix TSPInputMatrix::Builder::build() {

@@ -11,6 +11,9 @@ public:
     [[nodiscard]] size_t size() const;
     explicit TSPInputMatrix(Array<Array<int>>);
     [[nodiscard]] Array<int> minimalOuts() const;
+    std::string representation() const;
+
+    static TSPInputMatrix from(std::shared_ptr<int32_t[]> valuesFromFile);
 
 private:
     Array<Array<int>> _values;
