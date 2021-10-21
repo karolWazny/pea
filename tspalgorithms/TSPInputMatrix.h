@@ -10,6 +10,7 @@ public:
     [[nodiscard]] int getDistance(size_t from, size_t to) const;
     [[nodiscard]] size_t size() const;
     explicit TSPInputMatrix(Array<Array<int>>);
+    [[nodiscard]] Array<int> minimalOuts() const;
 
 private:
     Array<Array<int>> _values;

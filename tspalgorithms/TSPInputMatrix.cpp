@@ -32,6 +32,18 @@ size_t TSPInputMatrix::size() const{
     return _values.getLength();
 }
 
+Array<int> TSPInputMatrix::minimalOuts() const {
+    Array<int> outs(size());
+    for(size_t i = 0; i < outs.getLength(); i++){
+        outs[i] = INT32_MAX;
+        for(size_t j = 0; j < size(); j++){
+            if(outs[i] > _values[i][j])
+                outs[i] = _values[i][j];
+        }
+    }
+    return outs;
+}
+
 TSPInputMatrix TSPInputMatrix::Builder::build() {
     return TSPInputMatrix(values);
 }
