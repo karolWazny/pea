@@ -1,2 +1,2 @@
 # pea    
-Project for university course Effective Algorithms Projecting
+Project for university course Effective Algorithms Designing.
