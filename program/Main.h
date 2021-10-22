@@ -5,22 +5,43 @@
 #include <iostream>
 
 #include "TimeMeasurer.h"
+#include "../tspalgorithms/TSPInputMatrix.h"
+#include "../tspalgorithms/TSPAbstractSolver.h"
+#include "ProgramSetup.h"
+#include "Program.h"
+#include "Operations.h"
+#include "../tspalgorithms/TSPBruteForceSolver.h"
+#include "../tspalgorithms/TSPBranchNBoundSolver.h"
+#include "../tspalgorithms/TSPDynamicProgrammingSolver.h"
 
 using String = std::string;
 
-class Main
+class Main : public Program, public Operations
 {
 public:
-    int run();
+    explicit Main(ProgramSetup&);
+    int run() override;
+    void setFunctions() override{};
 private:
     static void displayGreeting();
     static void displayMenu();
     void interpretInput();
+
     void measurements();
+    void readFromFile();
+    void displayMatrix();
+    void bruteForce();
+    void branchAndBound();
+    void dynamicProgramming();
+
+    void solve(const std::string& methodName, TSPAbstractSolver& solver);
+
     bool keepGoing = true;
     String input;
+    TSPInputMatrix adjacencyMatrix;
 
     TimeMeasurer timeMeasurer;
+
 };
 
 

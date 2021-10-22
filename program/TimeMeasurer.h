@@ -8,6 +8,7 @@
 #include "../structure_templates_lib/structures.h"
 #include "StopWatch.h"
 #include "Randomizer.h"
+#include "../tspalgorithms/TSPAbstractSolver.h"
 
 struct SingleMeasurement;
 
@@ -15,33 +16,18 @@ class TimeMeasurer {
 public:
     void runMeasurement();
 private:
-/*    Array<Array<SingleMeasurement>> singleMeasurement(int densityOption,
-                                        int sizeOption,
-                                        int probOption);
 
-    static unsigned long long prim(GraphPointer);
-    static unsigned long long kruskal(GraphPointer);
-    static unsigned long long dijkstra(GraphPointer);
-    static unsigned long long bFord(GraphPointer);
-
-    static unsigned long long (*(measuringMethods[2][2]))(GraphPointer);*/
-
-    static constexpr unsigned char densities[4] = {25, 50, 75, 99};
-    static constexpr size_t sizes[5] = {10, 20, 50, 100, 200};
-    static std::string representations[2];
-    static std::string problems[2];
-    static std::string algorithms[2][2];
+    static constexpr size_t sizes[7] = {4, 6, 8, 10, 12, 15, 20};
+    static std::string algorithms[3];
     static std::string columnHeaders;
+    static TSPAbstractSolver* solvers[3];
 };
 
 struct SingleMeasurement {
 public:
     unsigned long time;
-    unsigned char density;
     size_t size;
-    std::string representation;
-    std::string problem;
-    std::string algorithm;
+    std::string method;
 };
 
 

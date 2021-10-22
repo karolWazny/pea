@@ -17,7 +17,7 @@ set(SOURCE_FILES
         Randomizer.cpp
         TextFileReader.cpp
         StopWatch.cpp
-        TimeMeasurer.cpp)
+        TimeMeasurer.cpp ProgramSetup.cpp ProgramSetup.h Program.cpp Program.h PeaSetup.cpp PeaSetup.h)
 
 link_libraries(tspalgorithms)
 

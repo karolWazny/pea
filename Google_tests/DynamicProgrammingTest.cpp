@@ -29,3 +29,20 @@ TEST(DynamicSuite, GivesCorrectPathLengthForTestFile){
     auto iterator = output.circuit.iterator();
     ASSERT_EQ(6, output.circuit.getLength());
 }
+
+//this test is commented out due to long (over 10 secs) execution time
+/*TEST(DynamicSuite, WorksFor17Cities){
+    auto reader = TextFileReader();
+    auto values = reader.fromFile("br17.atsp");
+    auto matrix = matrixFrom(values);
+    auto output = TSPDynamicProgrammingSolver().solveFor(matrix);
+    ASSERT_EQ(1, 1);
+}*/
+
+TEST(DynamicSuite, WorksFor4Cities){
+    auto reader = TextFileReader();
+    auto values = reader.fromFile("br4.atsp");
+    auto matrix = matrixFrom(values);
+    auto output = TSPDynamicProgrammingSolver().solveFor(matrix);
+    ASSERT_EQ(1, 1);
+}

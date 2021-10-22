@@ -37,7 +37,12 @@ private:
 //wyjątek oznaczający żądanie elementu o indeksie niebędącym w tablicy
 class IndexOutOfBoundException : public std::exception
 {
-
+public:
+    char const* what() const override{
+        return message;
+    };
+private:
+    constexpr static const char message[] = "Index out of bound exception";
 };
 
 

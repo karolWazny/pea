@@ -46,6 +46,7 @@ void TSPDynamicProgrammingSolver::prepareMembers(const TSPInputMatrix &inputMatr
     currentLevel[0] = Array<PartialSolution>(size() - 1);
     //mamy jeden pusty zbiór S oraz n - 1 możliwych suffiksów
     for(size_t i = 1; i <= currentLevel[0].getLength(); i++){
+        auto buffer = input->getDistance(0, i);
         currentLevel[0][i - 1].cost = input->getDistance(0, i);
         currentLevel[0][i - 1].lastNode = i;
     }
@@ -95,7 +96,6 @@ void TSPDynamicProgrammingSolver::iterationForCurrentSet() {
         LinkedList<size_t> unusedNodes;
         size_t setIdentifier{};
         size_t numberOfHits{};
-        //todo nie jestem pewien tych przypisań do n i k
         const auto n = size() - 1;
         const auto k = set.circuit.getLength();
         for(size_t j = 1; j < size(); j++){
@@ -112,7 +112,9 @@ void TSPDynamicProgrammingSolver::iterationForCurrentSet() {
             //dla tego zbioru i z tym samym węzłem na końcu
             auto currentLastNode = iterator.next();
             auto& currentlyBestPermutation = currentLevel[setIdentifier][j];
-            const auto candidateCost = set.cost + input->getDistance(set.lastNode, currentLastNode);
+            int32_t candidateCost = set.cost + input->getDistance(set.lastNode, currentLastNode);
+            if(candidateCost < 0)
+                candidateCost = INT32_MAX;
             if(currentlyBestPermutation.cost > candidateCost){
                 //update currentlyBestPermutation:
                 //copy circuit and element-by-element,
