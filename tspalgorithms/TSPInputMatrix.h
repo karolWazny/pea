@@ -31,4 +31,6 @@ private:
 
 TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile);
 
+TSPInputMatrix randomMatrix(size_t size);
+
 #endif //PEA_TSPINPUTMATRIX_H

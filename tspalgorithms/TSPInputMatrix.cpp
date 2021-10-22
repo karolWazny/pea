@@ -4,6 +4,7 @@
 #include <memory>
 #include <sstream>
 #include <iomanip>
+#include "../program/Randomizer.h"
 
 TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile){
     return TSPInputMatrix::from(valuesFromFile);
@@ -32,7 +33,7 @@ Array<int> TSPInputMatrix::minimalOuts() const {
     for(size_t i = 0; i < outs.getLength(); i++){
         outs[i] = INT32_MAX;
         for(size_t j = 0; j < size(); j++){
-            if(outs[i] > _values[i][j])
+            if(outs[i] > _values[i][j] && i != j)
                 outs[i] = _values[i][j];
         }
     }
@@ -83,4 +84,17 @@ TSPInputMatrix::Builder::Builder(size_t numberOfNodes) {
 
 void TSPInputMatrix::Builder::setDistance(size_t from, size_t to, int distance) {
     values[from][to] = distance;
+}
+
+TSPInputMatrix randomMatrix(size_t size){
+    auto values = std::shared_ptr<int32_t[]>(new int32_t[size * size + 1]);
+    values[0] = size;
+    Randomizer randomizer;
+    for(size_t i = 1; i < size * size + 1; i++){
+        values[i] = randomizer.getInt(300);
+    }
+    for(int i = 0; i < size; i++){
+        values[i * size + i + 1] = INT32_MAX;
+    }
+    return TSPInputMatrix::from(values);
 }

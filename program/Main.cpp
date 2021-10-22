@@ -63,8 +63,11 @@ void Main::interpretInput() {
 }
 
 void Main::measurements() {
-    //timeMeasurer.runMeasurement();
-    std::cout << "Ta funkcjonalnosc wkrotce sie pojawi...\n";
+    try{
+        timeMeasurer.runMeasurement();
+    } catch (std::exception& e){
+        std::cout << e.what() << std::endl;
+    }
 }
 
 Main::Main(ProgramSetup & setup) : adjacencyMatrix(0) {
