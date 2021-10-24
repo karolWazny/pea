@@ -8,11 +8,10 @@ class TSPBruteForceSolver : public TSPAbstractSolver {
 public:
     TSPSolution solveFor(const TSPInputMatrix &) override;
 private:
-    void goDeeper();
-    void compareAndUpdateBestPath();
+    bool nextPermutation();
+    void compareCurrentPermutation();
 
-    LinkedList<size_t> currentBranch;
-    LinkedList<size_t> unusedNodes;
+    size_t* allNodes{};
     const TSPInputMatrix* inputMatrix{};
     TSPSolution solution;
 };
