@@ -17,8 +17,6 @@ public:
     };
 private:
 
-    TSPSolution solveRecursively(size_t node);
-    TSPSolution recursionEdge(size_t node);
     TSPSolution solveIteratively();
     void prepareMembers(const TSPInputMatrix& inputMatrix);
     void iterationOnLevel();
