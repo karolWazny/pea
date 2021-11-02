@@ -12,8 +12,8 @@ void TSPDynamicProgrammingSolver::prepareMembers(const TSPInputMatrix &inputMatr
         nodes.pushBack(i);
     }
 
-    currentLevel = Array<Array<PartialSolution>>(1);
-    currentLevel[0] = Array<PartialSolution>(size() - 1);
+    currentLevel = ffarray<ffarray<PartialSolution>>(1);
+    currentLevel[0] = ffarray<PartialSolution>(size() - 1);
     //mamy jeden pusty zbiór S oraz n - 1 możliwych suffiksów
     for(size_t i = 1; i <= currentLevel[0].getLength(); i++){
         auto buffer = input->getDistance(0, i);
@@ -108,8 +108,8 @@ void TSPDynamicProgrammingSolver::iterationForCurrentSet() {
 
 void TSPDynamicProgrammingSolver::updateMembersForCurrentLevel() {
     previousLevel = currentLevel;
-    currentLevel = Array<Array<PartialSolution>>(math::newton(size() - 1, currentLevelIndex));
+    currentLevel = ffarray<ffarray<PartialSolution>>(math::newton(size() - 1, currentLevelIndex));
     for(size_t j = 0; j < currentLevel.getLength(); j++){
-        currentLevel[j] = Array<PartialSolution>(size() - currentLevelIndex - 1);
+        currentLevel[j] = ffarray<PartialSolution>(size() - currentLevelIndex - 1);
     }
 }

@@ -8,6 +8,6 @@ set(HEADER_FILES
         ArrayIterator.h)
 
 set(SOURCE_FILES
-        index.cpp)
+        index.cpp ffarray.h)
 
 add_library(array_lib STATIC ${HEADER_FILES} ${SOURCE_FILES})

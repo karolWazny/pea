@@ -3,6 +3,7 @@
 
 #include "TSPAbstractSolver.h"
 #include "mathfunctions.h"
+#include "../structure_templates_lib/array_lib/ffarray.h"
 
 class TSPDynamicProgrammingSolver : public TSPAbstractSolver {
 public:
@@ -28,8 +29,8 @@ private:
 
     LinkedList<size_t> nodes;
     const TSPInputMatrix* input{};
-    Array<Array<PartialSolution>> currentLevel;
-    Array<Array<PartialSolution>> previousLevel;
+    ffarray<ffarray<PartialSolution>> currentLevel;
+    ffarray<ffarray<PartialSolution>> previousLevel;
 
     size_t currentLevelIndex{};
     size_t currentSetIndex{};
