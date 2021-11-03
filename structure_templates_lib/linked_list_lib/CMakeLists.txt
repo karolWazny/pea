@@ -11,6 +11,6 @@ set(HEADER_FILES
         )
 
 set(SOURCE_FILES
-        index.cpp)
+        index.cpp ffqueue.h ffstack.h)
 
 add_library(linked_list_lib STATIC ${HEADER_FILES} ${SOURCE_FILES})

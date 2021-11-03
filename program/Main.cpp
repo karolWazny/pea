@@ -70,7 +70,7 @@ void Main::measurements() {
     }
 }
 
-Main::Main(ProgramSetup & setup) : adjacencyMatrix(0) {
+Main::Main(ProgramSetup & setup) {
     setup.setup(*this);
 }
 

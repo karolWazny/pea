@@ -10,7 +10,7 @@ TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile){
     return TSPInputMatrix::from(valuesFromFile);
 }
 
-TSPInputMatrix::TSPInputMatrix(Array<Array<int>> values) : _values(std::move(values)) {
+TSPInputMatrix::TSPInputMatrix(ffarray<ffarray<int>> values) : _values(std::move(values)) {
 
 }
 
@@ -73,9 +73,9 @@ TSPInputMatrix TSPInputMatrix::Builder::build() {
 }
 
 TSPInputMatrix::Builder::Builder(size_t numberOfNodes) {
-    values = Array<Array<int>>(numberOfNodes);
+    values = ffarray<ffarray<int>>(numberOfNodes);
     for(size_t i = 0; i < numberOfNodes; i++){
-        values[i] = Array<int>(numberOfNodes);
+        values[i] = ffarray<int>(numberOfNodes);
         for(int j = 0; j < numberOfNodes; j++){
             values[i][j] = INT32_MAX;
         }

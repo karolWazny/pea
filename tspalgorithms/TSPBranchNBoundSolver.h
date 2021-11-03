@@ -2,6 +2,7 @@
 #define PEA_TSPBRANCHNBOUNDSOLVER_H
 
 #include "TSPAbstractSolver.h"
+#include "../structure_templates_lib/structures.h"
 
 class TSPBranchNBoundSolver : public TSPAbstractSolver{
 public:
@@ -12,13 +13,12 @@ private:
     int calculateHeuristic(int previousHeuristic, size_t nextNode);
     void updateSolution(int cost);
 
-    LinkedList<size_t> unusedNodes;
-    LinkedList<size_t> currentPath;
+    ffqueue<size_t> unusedNodes;
+    ffstack<size_t> currentPath;
     int minimalValue{};
     Array<int> minOuts{};
     const TSPInputMatrix* input{};
     TSPSolution solution{};
 };
-
 
 #endif //PEA_TSPBRANCHNBOUNDSOLVER_H

@@ -5,18 +5,19 @@
 
 class TSPInputMatrix {
 public:
+    explicit TSPInputMatrix(ffarray<ffarray<int>>);
+    TSPInputMatrix() = default;
     class Builder;
     static TSPInputMatrix::Builder builder(size_t nodes);
     [[nodiscard]] int getDistance(size_t from, size_t to) const;
     [[nodiscard]] size_t size() const;
-    explicit TSPInputMatrix(Array<Array<int>>);
     [[nodiscard]] Array<int> minimalOuts() const;
-    std::string representation() const;
+    [[nodiscard]] std::string representation() const;
 
     static TSPInputMatrix from(std::shared_ptr<int32_t[]> valuesFromFile);
 
 private:
-    Array<Array<int>> _values;
+    ffarray<ffarray<int>> _values;
 };
 
 class TSPInputMatrix::Builder {
@@ -26,7 +27,7 @@ public:
     void setDistance(size_t from, size_t to, int distance);
 
 private:
-    Array<Array<int>> values;
+    ffarray<ffarray<int>> values{};
 };
 
 TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile);

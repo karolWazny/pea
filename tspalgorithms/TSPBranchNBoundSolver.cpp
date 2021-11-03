@@ -11,14 +11,15 @@ void TSPBranchNBoundSolver::prepareMembers(const TSPInputMatrix &inputMatrix) {
     minOuts = input->minimalOuts();
     solution = TSPSolution();
     minimalValue = 0;
-    unusedNodes = LinkedList<size_t>();
-    currentPath = LinkedList<size_t>();
-    for(size_t i = 0; i < minOuts.getLength();){
+    unusedNodes = ffqueue<size_t>(inputMatrix.size() + 1);
+    currentPath = ffstack<size_t>(inputMatrix.size());
+    for(size_t i = 0; i < minOuts.getLength() - 1;){
         minimalValue += minOuts[i++];
-        unusedNodes.pushBack(i);
+        //unusedNodes.pushBack(i);
+        unusedNodes.enqueue(i);
     }
-    unusedNodes.removeLast();
-    currentPath.pushBack(0);
+    minimalValue += minOuts[minOuts.getLength() - 1];
+    currentPath.push(0);
 }
 
 void TSPBranchNBoundSolver::solveRecursively(int heuristicSoFar) {
@@ -28,25 +29,27 @@ void TSPBranchNBoundSolver::solveRecursively(int heuristicSoFar) {
             updateSolution(totalCostOfCurrentPath);
     }
     for(size_t i = 0; i < unusedNodes.getLength(); i++){
-        auto currentNode = unusedNodes.removeFirst();
+        //auto currentNode = unusedNodes.removeFirst();
+        auto currentNode = unusedNodes.dequeue();
         auto newHeuristic = calculateHeuristic(heuristicSoFar, currentNode);
         if(newHeuristic < solution.totalCost){
-            currentPath.pushBack(currentNode);
+            currentPath.push(currentNode);
             solveRecursively(newHeuristic);
-            currentPath.removeLast();
+            currentPath.pop();
         }
-        unusedNodes.pushBack(currentNode);
+        //unusedNodes.pushBack(currentNode);
+        unusedNodes.enqueue(currentNode);
     }
 }
 
 int TSPBranchNBoundSolver::calculateHeuristic(int previousHeuristic, size_t nextNode) {
-    return previousHeuristic - minOuts[currentPath.getLast()] + input->getDistance(currentPath.getLast(), nextNode);
+    return previousHeuristic - minOuts[currentPath.getCurrent()] + input->getDistance(currentPath.getCurrent(), nextNode);
 }
 
 void TSPBranchNBoundSolver::updateSolution(int cost) {
     solution.totalCost = cost;
     solution.circuit = LinkedList<size_t>();
-    auto iterator = currentPath.iterator();
+    auto iterator = currentPath.upwardIterator();
     while(iterator.hasNext()){
         solution.circuit.pushBack(iterator.next());
     }
