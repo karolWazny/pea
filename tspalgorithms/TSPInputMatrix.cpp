@@ -61,7 +61,10 @@ std::string TSPInputMatrix::representation() const {
     for(size_t i = 0; i < size(); i++){
         stringStream << std::right << std::setw(5) << std::to_string(i) << "|";
         for(size_t j = 0; j < size(); j++){
-            stringStream << std::right << std::setw(5) << std::to_string(_values[i][j]);
+            if(i != j)
+                stringStream << std::right << std::setw(5) << std::to_string(_values[i][j]);
+            else
+                stringStream << std::right << std::setw(5) << std::to_string(0);
         }
         stringStream << std::endl;
     }

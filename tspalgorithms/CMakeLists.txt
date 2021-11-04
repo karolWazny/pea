@@ -13,7 +13,7 @@ set(SOURCE_FILES
         index.cpp
         TSPInputMatrix.cpp
         TSPBruteForceSolver.cpp
-        TSPDynamicProgrammingSolver.cpp TSPDynamicProgrammingSolver.h TSPBranchNBoundSolver.cpp TSPBranchNBoundSolver.h mathfunctions.cpp mathfunctions.h)
+        TSPDynamicProgrammingSolver.cpp TSPDynamicProgrammingSolver.h TSPBranchNBoundSolver.cpp TSPBranchNBoundSolver.h mathfunctions.cpp mathfunctions.h atsp.h)
 
 link_libraries(structure_templates_lib)
 

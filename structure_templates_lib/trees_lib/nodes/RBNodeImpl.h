@@ -14,8 +14,8 @@ class RBNodeImpl : public RBNode<T>
 public:
     RBNodeImpl(Node<T>*, Colored*);
 
-    bool isBlack() const override;
-    bool isRed() const override;
+    [[nodiscard]] bool isBlack() const override;
+    [[nodiscard]] bool isRed() const override;
     void paintBlack() override;
     void paintRed() override;
 
@@ -26,8 +26,8 @@ public:
     NodePointer<T> getLeft() const override;
     void setRight(NodePointer<T>) override;
     NodePointer<T> getRight() const override;
-    bool isNil() const override;
-    std::string toString() const override;
+    [[nodiscard]] bool isNil() const override;
+    [[nodiscard]] std::string toString() const override;
 #if DEBUG
     int checkAmountOfBlackToLeaves() override;
 #endif

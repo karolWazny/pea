@@ -9,9 +9,9 @@ TSPSolution TSPBruteForceSolver::solveFor(const TSPInputMatrix &input) {
 
     this->inputMatrix = &input;
 
-    while(nextPermutation()){
+    do {
         compareCurrentPermutation();
-    }
+    } while(nextPermutation());
 
     delete allNodes;
     return solution;
