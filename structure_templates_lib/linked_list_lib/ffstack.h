@@ -27,6 +27,9 @@ public:
 #endif
         return elements[--stackPtr];
     };
+    size_t numberOfElements(){
+        return stackPtr;
+    };
     void push(T element){
 #if DEBUG
         if(stackPtr == size){

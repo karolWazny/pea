@@ -3,6 +3,7 @@
 
 #include "LinkedListItem.h"
 #include "ListIterator.h"
+#include "ffstack.h"
 #include <string>
 #include <functional>
 
@@ -43,6 +44,7 @@ public:
         bool hasNext() override;
     };
     std::string toString();
+
 private:
     std::weak_ptr<INextable<type>> lastIndex;
     //wartownik trzymający wskaźnik na pierwszy element;
@@ -371,5 +373,4 @@ LinkedList<type> LinkedList<type>::copy() {
     }
     return output;
 }
-
 #endif //SDIZO_1_LINKEDLIST_H

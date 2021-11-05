@@ -6,11 +6,7 @@ TSPSolution TSPDynamicProgrammingSolver::solveFor(const TSPInputMatrix &inputMat
 }
 
 void TSPDynamicProgrammingSolver::prepareMembers(const TSPInputMatrix &inputMatrix) {
-    nodes = LinkedList<size_t>();
     this->input = &inputMatrix;
-    for(size_t i = 1; i < size(); i++){
-        nodes.pushBack(i);
-    }
 
     currentLevel = ffarray<ffarray<PartialSolution>>(1);
     currentLevel[0] = ffarray<PartialSolution>(size() - 1);
