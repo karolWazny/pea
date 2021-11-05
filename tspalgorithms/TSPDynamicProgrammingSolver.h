@@ -4,6 +4,7 @@
 #include "TSPAbstractSolver.h"
 #include "mathfunctions.h"
 #include "../structure_templates_lib/array_lib/ffarray.h"
+#include "../structure_templates_lib/rbtree_lib/BRTree.h"
 
 class TSPDynamicProgrammingSolver : public TSPAbstractSolver {
 public:
@@ -12,7 +13,7 @@ public:
     class PartialSolution{
     public:
         LinkedList<size_t> circuit;
-        RedBlackTree<size_t> nodesUsed;
+        BRTree nodesUsed;
         size_t lastNode{};
         int cost{INT32_MAX};
     };
