@@ -60,7 +60,7 @@ void TimeMeasurer::runMeasurement() {
 
         ofstream.close();
 
-        unsigned long long times[3] = {0, 0, 0};
+        long double times[3] = {0, 0, 0};
         for(int i = 0; i < 100; i++){
             gotoxy(10, 2);
             std::cout << std::right << std::setw(3) << std::to_string(i + 1)
@@ -77,7 +77,7 @@ void TimeMeasurer::runMeasurement() {
                 if(result.totalCost == 10){
                     result.totalCost++;
                 }
-                times[solverIndex] += stopWatch.getLastMeasurmentPiccosec();
+                times[solverIndex] += stopWatch.getLastMeasurementsFloat();
             }
         }
         for(int solverIndex = 0; solverIndex < 3; solverIndex++){

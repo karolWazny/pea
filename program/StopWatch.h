@@ -8,12 +8,14 @@ public:
     StopWatch();
     void start();
     void stop();
-    unsigned long long getLastMeasurmentPiccosec();
+    [[nodiscard]] unsigned long long getLastMeasurmentPiccosec() const;
+    [[nodiscard]] long double getLastMeasurementsFloat() const;
 private:
     LARGE_INTEGER startStamp;
     LARGE_INTEGER stopStamp;
     LARGE_INTEGER frequency;
     LARGE_INTEGER timeElapsedPiccosec;
+    long double timeElapsedDouble;
 };
 
 

@@ -25,7 +25,7 @@ private:
 
 struct SingleMeasurement {
 public:
-    unsigned long time;
+    long double time;
     size_t size;
     std::string method;
 };
