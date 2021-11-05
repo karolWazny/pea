@@ -97,7 +97,7 @@ void TSPDynamicProgrammingSolver::iterationForCurrentSet() {
                 //update last node (in case this is the first permutation found)
                 if(!currentlyBestPermutation.lastNode){
                     currentlyBestPermutation.lastNode = currentLastNode;
-                    currentlyBestPermutation.nodesUsed = set.nodesUsed.copy();
+                    set.nodesUsed.copyTo(currentlyBestPermutation.nodesUsed);
                 }
                 //update cost (of course)
                 currentlyBestPermutation.cost = candidateCost;

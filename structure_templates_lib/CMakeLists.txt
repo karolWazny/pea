@@ -15,6 +15,7 @@ add_subdirectory(array_lib)
 add_subdirectory(binary_heap_lib)
 add_subdirectory(linked_list_lib)
 add_subdirectory(trees_lib)
+add_subdirectory(rbtree_lib)
 add_subdirectory(map_lib)
 
 target_link_libraries(structure_templates_lib
@@ -23,4 +24,5 @@ target_link_libraries(structure_templates_lib
         linked_list_lib
         trees_lib
         map_lib
+        rbtree_lib
         )
