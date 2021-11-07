@@ -29,7 +29,6 @@ void TSPBranchNBoundSolver::solveRecursively(int heuristicSoFar) {
             updateSolution(totalCostOfCurrentPath);
     }
     for(size_t i = 0; i < unusedNodes.getLength(); i++){
-        //auto currentNode = unusedNodes.removeFirst();
         auto currentNode = unusedNodes.dequeue();
         auto newHeuristic = calculateHeuristic(heuristicSoFar, currentNode);
         if(newHeuristic < solution.totalCost){
@@ -37,7 +36,6 @@ void TSPBranchNBoundSolver::solveRecursively(int heuristicSoFar) {
             solveRecursively(newHeuristic);
             currentPath.pop();
         }
-        //unusedNodes.pushBack(currentNode);
         unusedNodes.enqueue(currentNode);
     }
 }

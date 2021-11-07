@@ -7,18 +7,15 @@ template <typename T>
 class ffarray{
 public:
     explicit ffarray(size_t demandedSize) : size(demandedSize){
-        T* table;
         if(demandedSize)
             table = new T[demandedSize];
         else
             table = nullptr;
         elementsShared = std::shared_ptr<T[]>(table);
     };
-    //ffarray() : size(0), table(nullptr), elementsShared(nullptr){};
-    ffarray() : size(0), elementsShared(nullptr){};
+    ffarray() : size(0), table(nullptr), elementsShared(nullptr){};
     T& operator[](size_t index) const{
-        //return table[index];
-        return elementsShared[index];
+        return table[index];
     };
 
     [[nodiscard]] size_t getLength() const {
@@ -26,7 +23,7 @@ public:
     }
 private:
     std::shared_ptr<T[]> elementsShared;
-    //T* table;
+    T* table;
     size_t size;
 };
 

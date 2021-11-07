@@ -12,7 +12,6 @@ void TSPDynamicProgrammingSolver::prepareMembers(const TSPInputMatrix &inputMatr
     currentLevel[0] = ffarray<PartialSolution>(size() - 1);
     //mamy jeden pusty zbiór S oraz n - 1 możliwych suffiksów
     for(size_t i = 1; i <= currentLevel[0].getLength(); i++){
-        auto buffer = input->getDistance(0, i);
         currentLevel[0][i - 1].cost = input->getDistance(0, i);
         currentLevel[0][i - 1].lastNode = i;
     }

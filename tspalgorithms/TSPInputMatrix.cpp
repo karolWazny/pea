@@ -64,7 +64,7 @@ std::string TSPInputMatrix::representation() const {
             if(i != j)
                 stringStream << std::right << std::setw(5) << std::to_string(_values[i][j]);
             else
-                stringStream << std::right << std::setw(5) << std::to_string(0);
+                stringStream << std::right << std::setw(5) << '-';
         }
         stringStream << std::endl;
     }
