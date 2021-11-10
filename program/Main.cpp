@@ -22,8 +22,9 @@ void Main::displayMenu() {
                       "3. Brute force (przeglad zupelny).\n";
     menuText += "4. Programowanie dynamiczne.\n"
                 "5. Metoda podzialu i ograniczen\n"
-                "6. Automatyczne pomiary czasu\n";
-    menuText += "7. Zakoncz program.\n";
+                "6. Automatyczne pomiary czasu\n"
+                "7. Generuj losowy graf\n";
+    menuText += "8. Zakoncz program.\n";
     std::cout << menuText;
 }
 
@@ -51,6 +52,9 @@ void Main::interpretInput() {
                 measurements();
                 break;
             case 7:
+                generateMatrix();
+                break;
+            case 8:
                 keepGoing = false;
                 break;
             default:
@@ -114,4 +118,11 @@ void Main::solve(const std::string& methodName, TSPAbstractSolver &solver) {
     auto result = solver.solveFor(adjacencyMatrix);
     std::cout << "Uzyskany wynik:\nKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
     std::cout << "Minimalny cykl: " << result.circuit.toString() << std::endl << std::endl;
+}
+
+void Main::generateMatrix() {
+    std::cout << "How big'a matrix do you want?\n";
+    adjacencyMatrix = randomMatrix(readInt());
+    std::cout << "Matrix has been generated.\nMatrix has you.\n";
+    displayMatrix();
 }

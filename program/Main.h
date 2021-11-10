@@ -33,6 +33,7 @@ private:
     void bruteForce();
     void branchAndBound();
     void dynamicProgramming();
+    void generateMatrix();
 
     void solve(const std::string& methodName, TSPAbstractSolver& solver);
 
