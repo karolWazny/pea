@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include "../program/Randomizer.h"
+#include "PlanarVector.h"
 
 TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile){
     return TSPInputMatrix::from(valuesFromFile);
@@ -90,12 +91,23 @@ void TSPInputMatrix::Builder::setDistance(size_t from, size_t to, int distance) 
 }
 
 TSPInputMatrix randomMatrix(size_t size){
+    Randomizer randomizer;
+    auto points = ffarray<PlanarVector>(size);
+    for(size_t i = 0; i < size; i++){
+        points[i].setX(randomizer.getInt(300));
+        points[i].setY(randomizer.getInt(300));
+    }
+
     auto values = std::shared_ptr<int32_t[]>(new int32_t[size * size + 1]);
     values[0] = size;
-    Randomizer randomizer;
-    for(size_t i = 1; i < size * size + 1; i++){
-        values[i] = randomizer.getInt(300);
+
+    for(size_t i = 0; i < size; i++){
+        for(size_t j = 0; j < size; j++){
+            double distance = (points[i] - points[j]).getModulus();
+            values[i * size + j + 1] = std::lround(distance);
+        }
     }
+
     for(int i = 0; i < size; i++){
         values[i * size + i + 1] = INT32_MAX;
     }
