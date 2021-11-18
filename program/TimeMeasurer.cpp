@@ -8,7 +8,6 @@ std::string TimeMeasurer::algorithms[3] = {"brute_force", "Held-Karp", "BnB"};
 std::string TimeMeasurer::columnHeaders = "TIME\tSIZE\tMETHOD";
 TSPAbstractSolver* TimeMeasurer::solvers[3] = {new TSPBruteForceSolver(), new TSPDynamicProgrammingSolver(),
                                               new TSPBranchNBoundSolver()};
-//unsigned long long(*(TimeMeasurer::measuringMethods[2][2]))(GraphPointer) = {{prim, kruskal}, {dijkstra, bFord}};
 
 void gotoxy(short x, short y)
 {
