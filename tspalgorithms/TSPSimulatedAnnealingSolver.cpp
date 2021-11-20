@@ -8,8 +8,10 @@ Randomizer TSPSimulatedAnnealingSolver::intRandom = Randomizer();
 TSPSolution TSPSimulatedAnnealingSolver::solveFor(const TSPInputMatrix &matrix) {
     prepareMembers(matrix);
     while(keepGoing()){
-        calculateNextCandidateSolution();
-        evaluateCandidateSolution();
+        for(currentIteration = 0; currentIteration < iterations; currentIteration++){
+            calculateNextCandidateSolution();
+            evaluateCandidateSolution();
+        }
         updateParameters();
     }
     return buildSolution();

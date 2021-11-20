@@ -9,8 +9,8 @@ class TSPSimulatedAnnealingSolver : public TSPAbstractSolver {
 public:
     explicit TSPSimulatedAnnealingSolver(double temperature = 5000,
                                 double coolingConstant = 0.999,
-                                size_t iterations = UINT64_MAX,
-                                double minimalTemperature = 20)
+                                size_t iterations = 20,
+                                double minimalTemperature = 50)
                                 : startTemp(temperature),
                                 coolingConstant(coolingConstant < 1.0 ? coolingConstant : 0.99),
                                 iterations(iterations),
@@ -47,7 +47,6 @@ private:
     };
     void updateParameters(){
         currentTemp *= coolingConstant;
-        currentIteration++;
     };
     void evaluateCandidateSolution();
     [[nodiscard]] bool acceptStochastically() const;
