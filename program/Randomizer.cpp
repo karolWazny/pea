@@ -2,7 +2,7 @@
 
 Randomizer::Randomizer() {
     generator = std::mt19937_64(randomDevice());
-    distribution = std::uniform_int_distribution<unsigned long>();
+    intDistribution = std::uniform_int_distribution<unsigned long>();
 }
 
 int Randomizer::getInt() {
@@ -15,7 +15,7 @@ int Randomizer::getInt(int max) {
 }
 
 unsigned long Randomizer::getULong() {
-    return distribution(generator);
+    return intDistribution(generator);
 }
 
 unsigned long Randomizer::getULong(unsigned long max) {
