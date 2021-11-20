@@ -10,11 +10,13 @@ public:
     explicit TSPSimulatedAnnealingSolver(double temperature = 5000,
                                 double coolingConstant = 0.999,
                                 size_t iterations = 20,
-                                double minimalTemperature = 50)
+                                double minimalTemperature = 50,
+                                int tries = 1)
                                 : startTemp(temperature),
                                 coolingConstant(coolingConstant < 1.0 ? coolingConstant : 0.99),
                                 iterations(iterations),
-                                minimalTemperature(minimalTemperature){};
+                                minimalTemperature(minimalTemperature),
+                                tries(tries){};
 
     TSPSolution solveFor(const TSPInputMatrix& matrix) override;
 
@@ -62,6 +64,9 @@ private:
         else
             return acceptStochastically();
     };
+    void prepareForNextTry();
+
+    int tries;
 
     const TSPInputMatrix* input{};
     double startTemp;
@@ -76,7 +81,7 @@ private:
     long long candidateCost{};
 
     ffarray<int> bestFound;
-    size_t bestCost{};
+    long long bestCost{};
 
     size_t index{};
     size_t secondIndex{};

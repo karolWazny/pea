@@ -7,12 +7,15 @@ Randomizer TSPSimulatedAnnealingSolver::intRandom = Randomizer();
 
 TSPSolution TSPSimulatedAnnealingSolver::solveFor(const TSPInputMatrix &matrix) {
     prepareMembers(matrix);
-    while(keepGoing()){
-        for(currentIteration = 0; currentIteration < iterations; currentIteration++){
-            calculateNextCandidateSolution();
-            evaluateCandidateSolution();
+    for(int i = 0; i < tries; i++){
+        prepareForNextTry();
+        while(keepGoing()){
+            for(currentIteration = 0; currentIteration < iterations; currentIteration++){
+                calculateNextCandidateSolution();
+                evaluateCandidateSolution();
+            }
+            updateParameters();
         }
-        updateParameters();
     }
     return buildSolution();
 }
@@ -104,16 +107,20 @@ TSPSolution TSPSimulatedAnnealingSolver::buildSolution() {
 
 void TSPSimulatedAnnealingSolver::prepareMembers(const TSPInputMatrix &matrix) {
     input = &matrix;
-    currentIteration = 0;
-    currentTemp = startTemp;
     state = ffarray<int>(input->size() - 1);
     for(size_t i = 0; i < state.getLength(); i++){
         state[i] = i + 1;
     }
-    math::fisherYatesShuffle(state);
-    bestFound = state.copy();
-    calculateCandidateCost();
+    prepareForNextTry();
     bestCost = candidateCost;
+    bestFound = state.copy();
+}
+
+void TSPSimulatedAnnealingSolver::prepareForNextTry() {
+    currentIteration = 0;
+    currentTemp = startTemp;
+    math::fisherYatesShuffle(state);
+    calculateCandidateCost();
     currentCost = candidateCost;
 }
 
@@ -156,5 +163,4 @@ void TSPSimulatedAnnealingSolver::setMinimalTemperature(double minimalTemperatur
 double TSPSimulatedAnnealingSolver::getMinimalTemperature() const {
     return minimalTemperature;
 }
-
 
