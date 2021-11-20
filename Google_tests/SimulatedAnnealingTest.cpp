@@ -19,7 +19,7 @@ TEST(SASuite, BigDataTest){
     auto values = reader.fromFile("ft53.atsp");
     auto matrix = matrixFrom(values);
     for(int j = 0; j < 100; j++){
-        auto output = TSPSimulatedAnnealingSolver(500000, 0.999, 1000000, 20, 8).solveFor(matrix);
+        auto output = TSPSimulatedAnnealingSolver(500000, 0.999, 100000, 20, 8).solveFor(matrix);
         for(int i = 0; i < 53; i++){
             ASSERT_TRUE(output.circuit.contains(i));
         }
@@ -30,6 +30,6 @@ TEST(SASuite, BigDataTest){
             cost += matrix.getDistance(output.circuit.get(i), output.circuit.get(i + 1));
         }
         ASSERT_EQ(output.totalCost, cost);
-        std::cout << std::to_string(output.totalCost) << std::endl;
+        //std::cout << std::to_string(output.totalCost) << std::endl;
     }
 }
