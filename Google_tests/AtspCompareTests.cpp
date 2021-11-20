@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "../tspalgorithms/atsp.h"
 
+/*
 TEST(CompareSuite, giveSameOutputForSameInputWithBrute){
     for(int i = 4; i <= 12; i++){
         for(int j = 0; j < 8; j++){
@@ -43,4 +44,4 @@ TEST(CompareSuite, giveSameOutputForSameInputMediumInstance){
             ASSERT_EQ(dynamicSolution.totalCost, bnbSolution.totalCost);
         }
     }
-}
+}*/

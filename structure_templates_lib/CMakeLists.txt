@@ -7,7 +7,7 @@ set(SOURCE_FILES
         index.cpp)
 
 set(HEADER_FILES
-        structures.h)
+        structures.h OrderedCollection.h)
 
 add_library(structure_templates_lib ${SOURCE_FILES} ${HEADER_FILES})
 

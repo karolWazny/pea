@@ -4,14 +4,15 @@
 #include <string>
 #include <functional>
 #include "ArrayIterator.h"
+#include "../OrderedCollection.h"
 
 //szablon klasy implementującej tablicę dynamiczną
 template <typename T>
-class Array
+class Array : public OrderedCollection<T>
 {
 public:
     Array<T>();
-    Array<T>(size_t initialSize);
+    explicit Array<T>(size_t initialSize);
     void putAtPosition(T, const size_t);
     void swap(const size_t, const size_t);
     T removeAt(const size_t index);
@@ -22,7 +23,7 @@ public:
     T removeFirst();
     T get(const size_t index);
     bool isEmpty();
-    size_t getLength() const;
+    [[nodiscard]] size_t getLength() const;
     std::string toString();
     T& operator[](size_t) const;
     size_t forEach(std::function<bool(T&)>);

@@ -2,6 +2,8 @@
 #define SDIZO2_RANDOMIZER_H
 
 #include <random>
+#include <iostream>
+#include <string>
 
 class Randomizer {
 public:
