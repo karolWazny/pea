@@ -16,7 +16,7 @@ public:
 private:
     std::random_device randomDevice;
     std::mt19937_64 generator;
-    std::uniform_int_distribution<unsigned long> distribution;
+    std::uniform_int_distribution<unsigned long> intDistribution;
 };
 
 #endif //SDIZO2_RANDOMIZER_H

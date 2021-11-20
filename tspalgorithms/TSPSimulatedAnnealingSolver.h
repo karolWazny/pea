@@ -2,14 +2,17 @@
 #define PEA_TSPSIMULATEDANNEALINGSOLVER_H
 
 #include "TSPAbstractSolver.h"
+#include "../program/RealRandom.h"
+#include "../program/Randomizer.h"
 
 class TSPSimulatedAnnealingSolver : public TSPAbstractSolver {
 public:
-    explicit TSPSimulatedAnnealingSolver(double temperature = 500,
-                                double coolingConstant = 0.99,
-                                size_t iterations = 10000,
-                                double minimalTemperature = 50):startTemp(temperature),
-                                coolingConstant(coolingConstant),
+    explicit TSPSimulatedAnnealingSolver(double temperature = 5000,
+                                double coolingConstant = 0.999,
+                                size_t iterations = 20,
+                                double minimalTemperature = 50)
+                                : startTemp(temperature),
+                                coolingConstant(coolingConstant < 1.0 ? coolingConstant : 0.99),
                                 iterations(iterations),
                                 minimalTemperature(minimalTemperature){};
 
@@ -25,7 +28,40 @@ public:
     [[nodiscard]] double getMinimalTemperature() const;
 
 private:
+    static RealRandom<double> realRandom;
+    static Randomizer intRandom;
+
     void prepareMembers(const TSPInputMatrix& matrix);
+    void calculateCandidateCost();
+    TSPSolution buildSolution();
+    void calculateIndexesForNextMove();
+    void calculateNextCandidateSolution();
+    void swapVertices();
+    void rollbackSwapVertices(){
+        swapVertices();
+    };
+    void recalculateCandidateCost();
+    void updateBest(){
+        bestCost = candidateCost;
+        bestFound = state.copy();
+    };
+    void updateParameters(){
+        currentTemp *= coolingConstant;
+    };
+    void evaluateCandidateSolution();
+    [[nodiscard]] bool acceptStochastically() const;
+    [[nodiscard]] bool acceptDeterministically() const{
+        return candidateCost <= currentCost;
+    };
+    [[nodiscard]] double probability() const{
+        return exp(double(currentCost - candidateCost)/currentTemp);
+    };
+    bool acceptCandidate(){
+        if(acceptDeterministically())
+            return true;
+        else
+            return acceptStochastically();
+    };
 
     const TSPInputMatrix* input{};
     double startTemp;
@@ -36,10 +72,16 @@ private:
     size_t currentIteration{};
 
     ffarray<int> state;
-    size_t currentCost{};
+    long long currentCost{};
+    long long candidateCost{};
 
     ffarray<int> bestFound;
     size_t bestCost{};
+
+    size_t index{};
+    size_t secondIndex{};
+    size_t preIndex{};
+    size_t postIndex{};
 
     [[nodiscard]] bool keepGoing() const{
         return currentTemp > minimalTemperature && currentIteration < iterations;
