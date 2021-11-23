@@ -34,8 +34,6 @@ private:
     static Randomizer intRandom;
 
     void prepareMembers(const TSPInputMatrix& matrix);
-    void calculateCandidateCost();
-    TSPSolution buildSolution();
     void calculateIndexesForNextMove();
     void calculateNextCandidateSolution();
     void swapVertices();

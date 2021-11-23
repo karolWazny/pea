@@ -8,9 +8,7 @@ class TSPTabuSearchSolver : public TSPStochasticSolver {
 public:
     TSPSolution solveFor(const TSPInputMatrix& matrix) override;
 private:
-    void calculateCurrentCost();
     void prepareMembers(const TSPInputMatrix& matrix);
-    TSPSolution buildSolution();
     void updateMembers();
 
     void runAlgorithm();

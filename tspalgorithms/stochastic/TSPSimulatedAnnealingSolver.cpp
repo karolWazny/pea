@@ -84,19 +84,8 @@ void TSPSimulatedAnnealingSolver::swapVertices() {
 }
 
 void TSPSimulatedAnnealingSolver::calculateIndexesForNextMove() {
-    firstIndex = intRandom.getULong(state.getLength() - 1);
-    secondIndex = (firstIndex + 1) % state.getLength();
-}
-
-TSPSolution TSPSimulatedAnnealingSolver::buildSolution() {
-    TSPSolution solution;
-    solution.totalCost = bestCost;
-    solution.circuit.pushBack(0);
-    for(size_t i = 0; i < bestFound.getLength(); i++){
-        solution.circuit.pushBack(bestFound[i]);
-    }
-    solution.circuit.pushBack(0);
-    return solution;
+    firstIndex = intRandom.getULong(state.getLength() - 2);
+    secondIndex = firstIndex + intRandom.getULong(state.getLength() - 2 - firstIndex) + 1;
 }
 
 void TSPSimulatedAnnealingSolver::prepareMembers(const TSPInputMatrix &matrix) {
@@ -106,7 +95,7 @@ void TSPSimulatedAnnealingSolver::prepareMembers(const TSPInputMatrix &matrix) {
         state[i] = i + 1;
     }
     prepareForNextTry();
-    bestCost = candidateCost;
+    bestCost = currentCost;
     bestFound = state.copy();
 }
 
@@ -114,16 +103,7 @@ void TSPSimulatedAnnealingSolver::prepareForNextTry() {
     iteration = 0;
     currentTemp = startTemp;
     math::fisherYatesShuffle(state);
-    calculateCandidateCost();
-    currentCost = candidateCost;
-}
-
-void TSPSimulatedAnnealingSolver::calculateCandidateCost() {
-    candidateCost = input->getDistance(0, state[0]);
-    for(size_t i = 0; i < state.getLength() - 1; i++){
-        candidateCost += input->getDistance(state[i], state[i + 1]);
-    }
-    candidateCost += input->getDistance(state[state.getLength() - 1], 0);
+    calculateCurrentCost();
 }
 
 void TSPSimulatedAnnealingSolver::setStartTemp(double startTemp) {

@@ -5,6 +5,10 @@
 
 class TSPStochasticSolver : public TSPAbstractSolver {
 protected:
+    void calculateCurrentCost();
+
+    TSPSolution buildSolution();
+
     const TSPInputMatrix* input{};
 
     long long bestCost{};

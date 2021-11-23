@@ -26,25 +26,6 @@ void TSPTabuSearchSolver::prepareMembers(const TSPInputMatrix &matrix) {
     bestCost = currentCost;
 }
 
-void TSPTabuSearchSolver::calculateCurrentCost() {
-    currentCost = input->getDistance(0, state[0]);
-    for(size_t i = 0; i < state.getLength() - 1; i++){
-        currentCost += input->getDistance(state[i], state[i + 1]);
-    }
-    currentCost += input->getDistance(state[state.getLength() - 1], 0);
-}
-
-TSPSolution TSPTabuSearchSolver::buildSolution() {
-    TSPSolution solution;
-    solution.totalCost = bestCost;
-    solution.circuit.pushBack(0);
-    for(size_t i = 0; i < state.getLength(); i++){
-        solution.circuit.pushBack(state[i]);
-    }
-    solution.circuit.pushBack(0);
-    return solution;
-}
-
 void TSPTabuSearchSolver::runAlgorithm() {
     for(iteration = 0; iteration < 1000; iteration++){
         candidateCost = INT64_MAX;
