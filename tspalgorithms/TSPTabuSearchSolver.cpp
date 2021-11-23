@@ -68,7 +68,7 @@ void TSPTabuSearchSolver::evaluateSwapping(size_t index1, size_t index2) {
         secondIndex = index2;
         candidateCost = potentialCost;
         foundNewBest = true;
-    } else if (isNotTabu(index1, index2) && isPossiblyBetter(candidateCost)){
+    } else if (isNotTabu(index1, index2) && isPossiblyBetter(potentialCost)){
         firstIndex = index1;
         secondIndex = index2;
         candidateCost = potentialCost;
