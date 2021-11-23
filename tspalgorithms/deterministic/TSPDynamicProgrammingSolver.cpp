@@ -51,7 +51,7 @@ void TSPDynamicProgrammingSolver::iterationForCurrentSet() {
         // do tego zbioru tworzymy zbiór S' jako S + {x},
         // następnie tworzymy wszystkie możliwe g(S', x)
 
-        //tworzymy alias dla previousLevel[index][i], żeby było wygodniej pracować
+        //tworzymy alias dla previousLevel[firstIndex][i], żeby było wygodniej pracować
         auto& set = previousLevel[currentSetIndex][i];
         set.circuit.pushBack(set.lastNode);
         set.nodesUsed.put(set.lastNode);

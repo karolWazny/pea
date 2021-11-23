@@ -7,24 +7,26 @@ set(HEADER_FILES
         TSPInputMatrix.h
         TSPAbstractSolver.h
         TSPSolution.h
-        TSPBruteForceSolver.h
-        TSPDynamicProgrammingSolver.h
-        TSPBranchNBoundSolver.h
+        deterministic/TSPBruteForceSolver.h
+        deterministic/TSPDynamicProgrammingSolver.h
+        deterministic/TSPBranchNBoundSolver.h
         mathfunctions.h
         PlanarVector.h
-        TSPTabuSearchSolver.h
-        TSPSimulatedAnnealingSolver.h)
+        stochastic/TSPTabuSearchSolver.h
+        stochastic/TSPSimulatedAnnealingSolver.h
+        stochastic/TSPStochasticSolver.h)
 
 set(SOURCE_FILES
         index.cpp
         TSPInputMatrix.cpp
-        TSPBruteForceSolver.cpp
-        TSPDynamicProgrammingSolver.cpp
-        TSPBranchNBoundSolver.cpp
+        deterministic/TSPBruteForceSolver.cpp
+        deterministic/TSPDynamicProgrammingSolver.cpp
+        deterministic/TSPBranchNBoundSolver.cpp
         mathfunctions.cpp
         PlanarVector.cpp
-        TSPTabuSearchSolver.cpp
-        TSPSimulatedAnnealingSolver.cpp)
+        stochastic/TSPTabuSearchSolver.cpp
+        stochastic/TSPSimulatedAnnealingSolver.cpp
+        stochastic/TSPStochasticSolver.cpp)
 
 link_libraries(structure_templates_lib)
 

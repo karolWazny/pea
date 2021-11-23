@@ -2,7 +2,7 @@
 
 #include "../program/TextFileReader.h"
 #include "../tspalgorithms/TSPInputMatrix.h"
-#include "../tspalgorithms/TSPDynamicProgrammingSolver.h"
+#include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
 
 TEST(DynamicSuite, GivesCorrectCostForTestFile){
     auto reader = TextFileReader();

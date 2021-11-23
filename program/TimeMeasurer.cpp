@@ -1,7 +1,7 @@
 #include "TimeMeasurer.h"
-#include "../tspalgorithms/TSPBruteForceSolver.h"
-#include "../tspalgorithms/TSPDynamicProgrammingSolver.h"
-#include "../tspalgorithms/TSPBranchNBoundSolver.h"
+#include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
+#include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
+#include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
 #include <iomanip>
 
 std::string TimeMeasurer::algorithms[3] = {"brute_force", "Held-Karp", "BnB"};

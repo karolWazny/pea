@@ -1,8 +1,8 @@
 #ifndef PEA_TSPBRANCHNBOUNDSOLVER_H
 #define PEA_TSPBRANCHNBOUNDSOLVER_H
 
-#include "TSPAbstractSolver.h"
-#include "../structure_templates_lib/structures.h"
+#include "../TSPAbstractSolver.h"
+#include "../../structure_templates_lib/structures.h"
 
 class TSPBranchNBoundSolver : public TSPAbstractSolver{
 public:

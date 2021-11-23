@@ -1,11 +1,11 @@
 #ifndef PEA_TSPSIMULATEDANNEALINGSOLVER_H
 #define PEA_TSPSIMULATEDANNEALINGSOLVER_H
 
-#include "TSPAbstractSolver.h"
-#include "../program/RealRandom.h"
-#include "../program/Randomizer.h"
+#include "../../program/RealRandom.h"
+#include "../../program/Randomizer.h"
+#include "TSPStochasticSolver.h"
 
-class TSPSimulatedAnnealingSolver : public TSPAbstractSolver {
+class TSPSimulatedAnnealingSolver : public TSPStochasticSolver {
 public:
     explicit TSPSimulatedAnnealingSolver(double temperature = 5000,
                                 double coolingConstant = 0.999,
@@ -42,7 +42,7 @@ private:
     void rollbackSwapVertices(){
         swapVertices();
     };
-    void recalculateCandidateCost();
+    void recalculateCandidateCost(size_t index1, size_t index2);
     void updateBest(){
         bestCost = candidateCost;
         bestFound = state.copy();
@@ -68,28 +68,14 @@ private:
 
     int tries;
 
-    const TSPInputMatrix* input{};
     double startTemp;
     double minimalTemperature;
     double currentTemp{};
     double coolingConstant;
     size_t iterations;
-    size_t currentIteration{};
-
-    ffarray<int> state;
-    long long currentCost{};
-    long long candidateCost{};
-
-    ffarray<int> bestFound;
-    long long bestCost{};
-
-    size_t index{};
-    size_t secondIndex{};
-    size_t preIndex{};
-    size_t postIndex{};
 
     [[nodiscard]] bool keepGoing() const{
-        return currentTemp > minimalTemperature && currentIteration < iterations;
+        return currentTemp > minimalTemperature && iteration < iterations;
     };
 };
 

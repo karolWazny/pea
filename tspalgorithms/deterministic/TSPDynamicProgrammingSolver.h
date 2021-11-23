@@ -1,10 +1,10 @@
 #ifndef PEA_TSPDYNAMICPROGRAMMINGSOLVER_H
 #define PEA_TSPDYNAMICPROGRAMMINGSOLVER_H
 
-#include "TSPAbstractSolver.h"
-#include "mathfunctions.h"
-#include "../structure_templates_lib/array_lib/ffarray.h"
-#include "../structure_templates_lib/rbtree_lib/BRTree.h"
+#include "../TSPAbstractSolver.h"
+#include "../mathfunctions.h"
+#include "../../structure_templates_lib/array_lib/ffarray.h"
+#include "../../structure_templates_lib/rbtree_lib/BRTree.h"
 
 class TSPDynamicProgrammingSolver : public TSPAbstractSolver {
 public:

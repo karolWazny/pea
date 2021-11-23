@@ -1,8 +1,8 @@
 #ifndef PEA_ATSP_H
 #define PEA_ATSP_H
 
-#include "TSPBranchNBoundSolver.h"
-#include "TSPDynamicProgrammingSolver.h"
-#include "TSPBruteForceSolver.h"
+#include "deterministic/TSPBranchNBoundSolver.h"
+#include "deterministic/TSPDynamicProgrammingSolver.h"
+#include "deterministic/TSPBruteForceSolver.h"
 
 #endif //PEA_ATSP_H

@@ -1,21 +1,20 @@
 #ifndef PEA_TSPTABUSEARCHSOLVER_H
 #define PEA_TSPTABUSEARCHSOLVER_H
 
-#include "TSPAbstractSolver.h"
+#include "../TSPAbstractSolver.h"
+#include "TSPStochasticSolver.h"
 
-class TSPTabuSearchSolver : public TSPAbstractSolver {
+class TSPTabuSearchSolver : public TSPStochasticSolver {
 public:
     TSPSolution solveFor(const TSPInputMatrix& matrix) override;
 private:
-    const TSPInputMatrix* input{};
-
     void calculateCurrentCost();
     void prepareMembers(const TSPInputMatrix& matrix);
     TSPSolution buildSolution();
     void updateMembers();
 
     void runAlgorithm();
-    [[nodiscard]] int candidateSolution(size_t index1, size_t index2) const;
+    [[nodiscard]] long long candidateSolution(size_t index1, size_t index2) const;
 
     void evaluateSwapping(size_t index1, size_t index2);
     bool isNotTabu(size_t index1,  size_t index2){
@@ -28,22 +27,9 @@ private:
         return potentialCost < candidateCost;
     }
 
-    size_t firstIndex{};
-    size_t secondIndex{};
-
-    size_t iteration{};
-
-    int candidateCost{};
-
     int tabuLength{5};
 
-    int bestCost{};
-    ffarray<int> bestState;
-
-    int currentCost{};
-    ffarray<int> state;
-
-    ffarray<ffarray<int>> tabu;
+    ffarray<ffarray<long long>> tabu;
 
     bool foundNewBest{};
 };

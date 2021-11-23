@@ -2,7 +2,7 @@
 #define PEA_TSPBRUTEFORCESOLVER_H
 
 
-#include "TSPAbstractSolver.h"
+#include "../TSPAbstractSolver.h"
 
 class TSPBruteForceSolver : public TSPAbstractSolver {
 public:

@@ -1,5 +1,5 @@
 #include "TSPSimulatedAnnealingSolver.h"
-#include "mathfunctions.h"
+#include "../mathfunctions.h"
 #include <cmath>
 
 RealRandom<double> TSPSimulatedAnnealingSolver::realRandom = RealRandom<double>(0.0, 1.0);
@@ -10,7 +10,7 @@ TSPSolution TSPSimulatedAnnealingSolver::solveFor(const TSPInputMatrix &matrix) 
     for(int i = 0; i < tries; i++){
         prepareForNextTry();
         while(keepGoing()){
-            for(currentIteration = 0; currentIteration < iterations; currentIteration++){
+            for(iteration = 0; iteration < iterations; iteration++){
                 calculateNextCandidateSolution();
                 evaluateCandidateSolution();
             }
@@ -37,61 +37,55 @@ bool TSPSimulatedAnnealingSolver::acceptStochastically() const {
 
 void TSPSimulatedAnnealingSolver::calculateNextCandidateSolution() {
     calculateIndexesForNextMove();
-    recalculateCandidateCost();
+    recalculateCandidateCost(firstIndex, secondIndex);
     swapVertices();
 }
 
-void TSPSimulatedAnnealingSolver::recalculateCandidateCost() {
-    candidateCost = currentCost;
-    //todo uprościć ładnie ten kod
-    if(!index){
-        candidateCost -= input->getDistance(0, state[index])
-                + input->getDistance(state[index], state[secondIndex])
-                + input->getDistance(state[secondIndex], state[postIndex]);
+void TSPSimulatedAnnealingSolver::recalculateCandidateCost(size_t index1, size_t index2) {
+    if(index1 > index2)
+        std::swap(index1, index2);
 
-        candidateCost += input->getDistance(0, state[secondIndex])
-                + input->getDistance(state[secondIndex], state[index])
-                + input->getDistance(state[index], state[postIndex]);
-    } else if(!secondIndex){
-        candidateCost -= input->getDistance(state[preIndex], state[index])
-                + input->getDistance(state[index], 0)
-                + input->getDistance(0, state[secondIndex])
-                + input->getDistance(state[secondIndex], state[postIndex]);
-
-        candidateCost += input->getDistance(0, state[index])
-                + input->getDistance(state[index], state[postIndex])
-                + input->getDistance(state[preIndex], state[secondIndex])
-                + input->getDistance(state[secondIndex], 0);
-    } else if(secondIndex == state.getLength() - 1){
-        candidateCost -= input->getDistance(state[preIndex], state[index])
-                + input->getDistance(state[index], state[secondIndex])
-                + input->getDistance(state[secondIndex], 0);
-
-        candidateCost += input->getDistance(state[preIndex], state[secondIndex])
-                + input->getDistance(state[secondIndex], state[index])
-                + input->getDistance(state[index], 0);
+    long long cost = currentCost;
+    long long deltaCost{};
+    size_t preElement, postElement;
+    if(!index1){
+        preElement = 0;
     } else {
-        candidateCost -= input->getDistance(state[preIndex], state[index])
-                + input->getDistance(state[index], state[secondIndex])
-                + input->getDistance(state[secondIndex], state[postIndex]);
-
-        candidateCost += input->getDistance(state[preIndex], state[secondIndex])
-                + input->getDistance(state[secondIndex], state[index])
-                + input->getDistance(state[index], state[postIndex]);
+        preElement = state[index1 - 1];
     }
+
+    deltaCost -= input->getDistance(preElement, state[index1]);
+    deltaCost += input->getDistance(preElement, state[index2]);
+
+    deltaCost -= input->getDistance(state[index1], state[index1 + 1]);
+    deltaCost += input->getDistance(state[index2], state[index1 + 1]);
+
+    deltaCost -= input->getDistance(state[index2 - 1], state[index2]);
+    deltaCost += input->getDistance(state[index2 - 1], state[index1]);
+
+    if(index2 == state.getLength() - 1) {
+        postElement = 0;
+    } else {
+        postElement = state[index2 + 1];
+    }
+
+    deltaCost -= input->getDistance(state[index2], postElement);
+    deltaCost += input->getDistance(state[index1], postElement);
+
+    if(index2 == index1 + 1){
+        deltaCost += input->getDistance(state[index1], state[index2]);
+        deltaCost += input->getDistance(state[index2], state[index1]);
+    }
+    candidateCost =  cost + deltaCost;
 }
 
 void TSPSimulatedAnnealingSolver::swapVertices() {
-    auto buffer = state[index];
-    state[index] = state[secondIndex];
-    state[secondIndex] = buffer;
+    std::swap(state[firstIndex], state[secondIndex]);
 }
 
 void TSPSimulatedAnnealingSolver::calculateIndexesForNextMove() {
-    index = intRandom.getULong(state.getLength() - 1);
-    secondIndex = (index + 1) % state.getLength();
-    preIndex = index == 0 ? state.getLength() - 1 : index - 1;
-    postIndex = (index + 2) % state.getLength();
+    firstIndex = intRandom.getULong(state.getLength() - 1);
+    secondIndex = (firstIndex + 1) % state.getLength();
 }
 
 TSPSolution TSPSimulatedAnnealingSolver::buildSolution() {
@@ -117,7 +111,7 @@ void TSPSimulatedAnnealingSolver::prepareMembers(const TSPInputMatrix &matrix) {
 }
 
 void TSPSimulatedAnnealingSolver::prepareForNextTry() {
-    currentIteration = 0;
+    iteration = 0;
     currentTemp = startTemp;
     math::fisherYatesShuffle(state);
     calculateCandidateCost();

@@ -2,7 +2,7 @@
 
 #include "../program/TextFileReader.h"
 #include "../tspalgorithms/TSPInputMatrix.h"
-#include "../tspalgorithms/TSPBruteForceSolver.h"
+#include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
 
 TEST(BruteSuite, GivesCorrectCostForTestFile){
     auto reader = TextFileReader();

@@ -1,5 +1,5 @@
 #include "TSPTabuSearchSolver.h"
-#include "mathfunctions.h"
+#include "../mathfunctions.h"
 
 TSPSolution TSPTabuSearchSolver::solveFor(const TSPInputMatrix &matrix) {
     prepareMembers(matrix);
@@ -13,9 +13,9 @@ void TSPTabuSearchSolver::prepareMembers(const TSPInputMatrix &matrix) {
     for(size_t i = 0; i < state.getLength(); i++){
         state[i] = i + 1;
     }
-    tabu = ffarray<ffarray<int>>(input->size() - 2);
+    tabu = ffarray<ffarray<long long>>(input->size() - 2);
     for(size_t i = 0; i < tabu.getLength(); i++){
-        tabu[i] = ffarray<int>(tabu.getLength() - i);
+        tabu[i] = ffarray<long long>(tabu.getLength() - i);
         for(size_t j = 0; j < tabu[i].getLength(); j++){
             tabu[i][j] = 0;
         }
@@ -47,7 +47,7 @@ TSPSolution TSPTabuSearchSolver::buildSolution() {
 
 void TSPTabuSearchSolver::runAlgorithm() {
     for(iteration = 0; iteration < 1000; iteration++){
-        candidateCost = INT32_MAX;
+        candidateCost = INT64_MAX;
         foundNewBest = false;
 
         for(size_t j = 0; j < tabu.getLength(); j++){
@@ -75,11 +75,9 @@ void TSPTabuSearchSolver::evaluateSwapping(size_t index1, size_t index2) {
     }
 }
 
-int TSPTabuSearchSolver::candidateSolution(size_t index1, size_t index2) const {
-    if(index1 > index2)
-        std::swap(index1, index2);
-    int cost = currentCost;
-    int deltaCost{};
+long long TSPTabuSearchSolver::candidateSolution(size_t index1, size_t index2) const {
+    long long cost = currentCost;
+    long long deltaCost{};
     size_t preElement, postElement;
     if(!index1){
         preElement = 0;
@@ -113,13 +111,16 @@ int TSPTabuSearchSolver::candidateSolution(size_t index1, size_t index2) const {
 }
 
 void TSPTabuSearchSolver::updateMembers() {
-    auto buffer = state[firstIndex];
-    state[firstIndex] = state[secondIndex];
-    state[secondIndex] = buffer;
-    currentCost = candidateCost;
+    if(candidateCost != INT64_MAX){
+        auto buffer = state[firstIndex];
+        state[firstIndex] = state[secondIndex];
+        state[secondIndex] = buffer;
+        currentCost = candidateCost;
+        tabu[firstIndex][secondIndex - firstIndex - 1] = iteration;
+    }
 
     if(foundNewBest){
-        bestState = state.copy();
+        bestFound = state.copy();
         bestCost = currentCost;
     }
 }

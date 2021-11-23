@@ -2,7 +2,7 @@
 
 #include "../program/TextFileReader.h"
 #include "../tspalgorithms/TSPInputMatrix.h"
-#include "../tspalgorithms/TSPBranchNBoundSolver.h"
+#include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
 
 TEST(BnBSuite, GivesCorrectCostForTestFile){
     auto reader = TextFileReader();

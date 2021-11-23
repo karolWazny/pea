@@ -10,9 +10,9 @@
 #include "ProgramSetup.h"
 #include "Program.h"
 #include "Operations.h"
-#include "../tspalgorithms/TSPBruteForceSolver.h"
-#include "../tspalgorithms/TSPBranchNBoundSolver.h"
-#include "../tspalgorithms/TSPDynamicProgrammingSolver.h"
+#include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
+#include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
+#include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
 
 using String = std::string;
 
