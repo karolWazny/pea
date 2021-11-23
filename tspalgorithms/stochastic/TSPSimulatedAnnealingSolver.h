@@ -40,7 +40,6 @@ private:
     void rollbackSwapVertices(){
         swapVertices();
     };
-    void recalculateCandidateCost(size_t index1, size_t index2);
     void updateBest(){
         bestCost = candidateCost;
         bestFound = state.copy();

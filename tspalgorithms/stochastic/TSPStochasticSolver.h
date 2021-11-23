@@ -7,6 +7,8 @@ class TSPStochasticSolver : public TSPAbstractSolver {
 protected:
     void calculateCurrentCost();
 
+    long long costAfterSwapping(size_t index1, size_t index2);
+
     TSPSolution buildSolution();
 
     const TSPInputMatrix* input{};

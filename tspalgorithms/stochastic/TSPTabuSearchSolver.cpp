@@ -42,7 +42,7 @@ void TSPTabuSearchSolver::runAlgorithm() {
 }
 
 void TSPTabuSearchSolver::evaluateSwapping(size_t index1, size_t index2) {
-    auto potentialCost = candidateSolution(index1, index2);
+    auto potentialCost = costAfterSwapping(index1, index2);
     bool aspirates = satisfiesAspiration(potentialCost, index1, index2);
     if(aspirates){
         firstIndex = index1;
@@ -54,41 +54,6 @@ void TSPTabuSearchSolver::evaluateSwapping(size_t index1, size_t index2) {
         secondIndex = index2;
         candidateCost = potentialCost;
     }
-}
-
-long long TSPTabuSearchSolver::candidateSolution(size_t index1, size_t index2) const {
-    long long cost = currentCost;
-    long long deltaCost{};
-    size_t preElement, postElement;
-    if(!index1){
-        preElement = 0;
-    } else {
-        preElement = state[index1 - 1];
-    }
-
-    deltaCost -= input->getDistance(preElement, state[index1]);
-    deltaCost += input->getDistance(preElement, state[index2]);
-
-    deltaCost -= input->getDistance(state[index1], state[index1 + 1]);
-    deltaCost += input->getDistance(state[index2], state[index1 + 1]);
-
-    deltaCost -= input->getDistance(state[index2 - 1], state[index2]);
-    deltaCost += input->getDistance(state[index2 - 1], state[index1]);
-
-    if(index2 == state.getLength() - 1) {
-        postElement = 0;
-    } else {
-        postElement = state[index2 + 1];
-    }
-
-    deltaCost -= input->getDistance(state[index2], postElement);
-    deltaCost += input->getDistance(state[index1], postElement);
-
-    if(index2 == index1 + 1){
-        deltaCost += input->getDistance(state[index1], state[index2]);
-        deltaCost += input->getDistance(state[index2], state[index1]);
-    }
-    return cost + deltaCost;
 }
 
 void TSPTabuSearchSolver::updateMembers() {

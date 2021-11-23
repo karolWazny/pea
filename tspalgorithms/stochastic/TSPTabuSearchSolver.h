@@ -12,7 +12,6 @@ private:
     void updateMembers();
 
     void runAlgorithm();
-    [[nodiscard]] long long candidateSolution(size_t index1, size_t index2) const;
 
     void evaluateSwapping(size_t index1, size_t index2);
     bool isNotTabu(size_t index1,  size_t index2){
