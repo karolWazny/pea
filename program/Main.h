@@ -34,6 +34,8 @@ private:
     void branchAndBound();
     void dynamicProgramming();
     void generateMatrix();
+    void solveSA();
+    void solveTS();
 
     void solve(const std::string& methodName, TSPAbstractSolver& solver);
 

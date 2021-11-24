@@ -17,14 +17,16 @@ void Main::displayGreeting() {
 }
 
 void Main::displayMenu() {
-    String menuText = "1. Wczytaj graf z pliku\n"
-                      "2. Wyswietl macierz sasiedztwa aktualnego grafu\n"
-                      "3. Brute force (przeglad zupelny).\n";
-    menuText += "4. Programowanie dynamiczne.\n"
-                "5. Metoda podzialu i ograniczen\n"
-                "6. Automatyczne pomiary czasu\n"
-                "7. Generuj losowy graf\n";
-    menuText += "8. Zakoncz program.\n";
+    String menuText = "1. Automatyczne pomiary czasu\n"
+                      "2. Wczytaj graf z pliku\n"
+                      "3. Generuj losowy graf\n"
+                      "4. Wyswietl macierz sasiedztwa aktualnego grafu\n"
+                      "5. Brute force (przeglad zupelny).\n";
+    menuText += "6. Programowanie dynamiczne.\n"
+                "7. Metoda podzialu i ograniczen\n"
+                "8. Symulowane wyżarzanie\n"
+                "9. Tabu search\n";
+    menuText += "10. Zakoncz program.\n";
     std::cout << menuText;
 }
 
@@ -34,27 +36,33 @@ void Main::interpretInput() {
         option = std::stoi(input);
         switch(option){
             case 1:
-                readFromFile();
-                break;
-            case 2:
-                displayMatrix();
-                break;
-            case 3:
-                bruteForce();
-                break;
-            case 4:
-                dynamicProgramming();
-                break;
-            case 5:
-                branchAndBound();
-                break;
-            case 6:
                 measurements();
                 break;
-            case 7:
+            case 2:
+                readFromFile();
+                break;
+            case 3:
                 generateMatrix();
                 break;
+            case 4:
+                displayMatrix();
+                break;
+            case 5:
+                bruteForce();
+                break;
+            case 6:
+                dynamicProgramming();
+                break;
+            case 7:
+                branchAndBound();
+                break;
             case 8:
+                solveSA();
+                break;
+            case 9:
+                solveTS();
+                break;
+            case 10:
                 keepGoing = false;
                 break;
             default:
@@ -125,4 +133,12 @@ void Main::generateMatrix() {
     adjacencyMatrix = randomMatrix(readInt());
     std::cout << "Matrix has been generated.\nMatrix has you.\n";
     displayMatrix();
+}
+
+void Main::solveSA() {
+
+}
+
+void Main::solveTS() {
+
 }
