@@ -13,6 +13,8 @@
 #include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
 #include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
 #include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
+#include "../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
+#include "../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
 
 using String = std::string;
 

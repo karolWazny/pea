@@ -24,7 +24,7 @@ void Main::displayMenu() {
                       "5. Brute force (przeglad zupelny).\n";
     menuText += "6. Programowanie dynamiczne.\n"
                 "7. Metoda podzialu i ograniczen\n"
-                "8. Symulowane wyżarzanie\n"
+                "8. Symulowane wyzarzanie\n"
                 "9. Tabu search\n";
     menuText += "10. Zakoncz program.\n";
     std::cout << menuText;
@@ -123,9 +123,15 @@ void Main::dynamicProgramming() {
 void Main::solve(const std::string& methodName, TSPAbstractSolver &solver) {
     std::cout << "Znajdowanie minimalnego cyklu Hamiltona metoda\n" << methodName
                         << ". Prosze czekac...\n";
+    auto stopWatch = StopWatch();
+    stopWatch.start();
     auto result = solver.solveFor(adjacencyMatrix);
-    std::cout << "Uzyskany wynik:\nKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
-    std::cout << "Minimalny cykl: " << result.circuit.toString() << std::endl << std::endl;
+    stopWatch.stop();
+    std::cout << "Uzyskany wynik:\n\tKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
+    std::cout << "\tMinimalny cykl: " << result.circuit.toString() << std::endl
+                    << "\tRozmiar instancji (N): " << std::to_string(adjacencyMatrix.size()) << std::endl
+                    << "\tCzas: " << std::to_string(stopWatch.getLastMeasurementsFloat() / 100000) << " s" << std::endl
+                    << std::endl;
 }
 
 void Main::generateMatrix() {
@@ -136,9 +142,36 @@ void Main::generateMatrix() {
 }
 
 void Main::solveSA() {
-
+    bool readFromFile = false;
+    std::string filename = "saparams.txt";
+    TSPSimulatedAnnealingSolver::Parameters params(40.0, 0.9999999, adjacencyMatrix.size() * adjacencyMatrix.size() * 2.0, 0.1, 2 * adjacencyMatrix.size());
+    if(std::filesystem::exists(filename)) {
+        std::cout << "Znaleziono plik z parametrami.\nWczytywanie parametrow...\n";
+        std::ifstream stream;
+        stream.open(filename);
+        try {
+            params = TSPSimulatedAnnealingSolver::Parameters::from(stream);
+            readFromFile = true;
+            std::cout << "Wczytano parametry z pliku.\n";
+        } catch (const std::exception& e) {
+            std::cout << "Problem z odczytem z pliku." << std::endl;
+        }
+    }
+    if(!readFromFile){
+        std::cout << "Generowanie parametrow domyslnych..." << std::endl;
+        std::cout << "Tworzenie nowego pliku z konfiguracja..." << std::endl;
+        std::ofstream ofstream;
+        ofstream.open(filename);
+        ofstream << params.parse();
+        std::cout << "Utworzono nowy plik z konfiguracja." << std::endl;
+    }
+    auto solver = TSPSimulatedAnnealingSolver(params);
+    solve("symulowanego wyzarzania",solver);
+    std::cout << "Dla nastepujacych wartosci parametrow:" << std::endl;
+    std::cout << params.parse() << std::endl;
 }
 
 void Main::solveTS() {
-
+    auto solver = TSPTabuSearchSolver();
+    solve("tabu search",solver);
 }

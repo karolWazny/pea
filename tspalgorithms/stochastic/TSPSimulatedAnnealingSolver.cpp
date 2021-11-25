@@ -1,16 +1,17 @@
 #include "TSPSimulatedAnnealingSolver.h"
 #include "../mathfunctions.h"
 #include <cmath>
+#include <sstream>
 
 RealRandom<double> TSPSimulatedAnnealingSolver::realRandom = RealRandom<double>(0.0, 1.0);
 Randomizer TSPSimulatedAnnealingSolver::intRandom = Randomizer();
 
 TSPSolution TSPSimulatedAnnealingSolver::solveFor(const TSPInputMatrix &matrix) {
     prepareMembers(matrix);
-    for(int i = 0; i < tries; i++){
+    for(int i = 0; i < getTries(); i++){
         prepareForNextTry();
         while(keepGoing()){
-            for(iteration = 0; iteration < iterations; iteration++){
+            for(iteration = 0; iteration < getIterations(); iteration++){
                 calculateNextCandidateSolution();
                 evaluateCandidateSolution();
             }
@@ -63,40 +64,86 @@ void TSPSimulatedAnnealingSolver::prepareMembers(const TSPInputMatrix &matrix) {
 
 void TSPSimulatedAnnealingSolver::prepareForNextTry() {
     iteration = 0;
-    currentTemp = startTemp;
+    currentTemp = getStartTemp();
     math::fisherYatesShuffle(state);
     calculateCurrentCost();
 }
 
 void TSPSimulatedAnnealingSolver::setStartTemp(double startTemp) {
-    TSPSimulatedAnnealingSolver::startTemp = startTemp;
+    params.setStartTemp(startTemp);
 }
 
 void TSPSimulatedAnnealingSolver::setCoolingConstant(double coolingConstant) {
-    TSPSimulatedAnnealingSolver::coolingConstant = coolingConstant;
+    params.setCoolingConstant(coolingConstant);
 }
 
 void TSPSimulatedAnnealingSolver::setIterations(size_t iterations) {
-    TSPSimulatedAnnealingSolver::iterations = iterations;
+    params.setIterations(iterations);
 }
 
 double TSPSimulatedAnnealingSolver::getStartTemp() const {
-    return startTemp;
+    return params.getStartTemp();
 }
 
 double TSPSimulatedAnnealingSolver::getCoolingConstant() const {
-    return coolingConstant;
+    return params.getCoolingConstant();
 }
 
 size_t TSPSimulatedAnnealingSolver::getIterations() const {
-    return iterations;
+    return params.getIterations();
 }
 
 void TSPSimulatedAnnealingSolver::setMinimalTemperature(double minimalTemperature) {
-    TSPSimulatedAnnealingSolver::minimalTemperature = minimalTemperature;
+    params.setMinimalTemp(minimalTemperature);
 }
 
 double TSPSimulatedAnnealingSolver::getMinimalTemperature() const {
-    return minimalTemperature;
+    return params.getMinimalTemp();
+}
+
+int TSPSimulatedAnnealingSolver::getTries() const {
+    return params.getTries();
+}
+
+void TSPSimulatedAnnealingSolver::setTries(int tries) {
+    params.setTries(tries);
+}
+
+TSPSimulatedAnnealingSolver::Parameters TSPSimulatedAnnealingSolver::Parameters::from(const std::string& string) {
+    auto stream = std::stringstream(string);
+    return from(stream);
+}
+
+TSPSimulatedAnnealingSolver::Parameters TSPSimulatedAnnealingSolver::Parameters::from(std::istream &stream) {
+    std::string buffer;
+    Parameters output;
+    while(!stream.eof()){
+        stream >> buffer;
+        if(buffer == "TRIES")
+            stream >> output.tries;
+        else if (buffer == "START_TEMP")
+            stream >> output.startTemp;
+        else if (buffer == "MIN_TEMP")
+            stream >> output.minimalTemp;
+        else if (buffer == "COOLING_CONST")
+            stream >> output.coolingConstant;
+        else if (buffer == "ITERATIONS")
+            stream >> output.iterations;
+        else
+            std::getline(stream, buffer);
+    }
+    return output;
+}
+
+std::string TSPSimulatedAnnealingSolver::Parameters::parse() {
+    std::stringstream stream;
+
+    stream << "TRIES\t" << std::to_string(tries) << std::endl
+            << "START_TEMP\t" << std::to_string(startTemp) << std::endl
+            << "MIN_TEMP\t" << std::to_string(minimalTemp) << std::endl
+            << "COOLING_CONST\t" << std::to_string(coolingConstant) << std::endl
+            << "ITERATIONS\t" << std::to_string(iterations) << std::endl;
+
+    return stream.str();
 }
 

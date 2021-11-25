@@ -12,11 +12,46 @@ public:
                                 size_t iterations = 20,
                                 double minimalTemperature = 50,
                                 int tries = 1)
-                                : startTemp(temperature),
-                                coolingConstant(coolingConstant < 1.0 ? coolingConstant : 0.99),
-                                iterations(iterations),
-                                minimalTemperature(minimalTemperature),
-                                tries(tries){};
+                                : params(temperature,
+                                         coolingConstant,
+                                         iterations,
+                                         minimalTemperature,
+                                         tries){};
+
+    class Parameters{
+    public:
+        explicit Parameters(double temperature = 5000,
+                            double coolingConstant = 0.999,
+                            size_t iterations = 20,
+                            double minimalTemperature = 50,
+                            int tries = 1)
+                : startTemp(temperature),
+                  coolingConstant(coolingConstant < 1.0 ? coolingConstant : 0.99),
+                  iterations(iterations),
+                  minimalTemp(minimalTemperature),
+                  tries(tries){};
+        static Parameters from(const std::string& string);
+        static Parameters from(std::istream& stream);
+        std::string parse();
+        [[nodiscard]] int getTries() const{return tries;}
+        [[nodiscard]] double getStartTemp() const{return startTemp;}
+        [[nodiscard]] double getMinimalTemp() const{return minimalTemp;}
+        [[nodiscard]] double getCoolingConstant() const{return coolingConstant;}
+        [[nodiscard]] size_t getIterations() const{return iterations;}
+        void setTries(int tries){this->tries = tries;}
+        void setStartTemp(double startTemp){this->startTemp = startTemp;}
+        void setMinimalTemp(double minimalTemp){this->minimalTemp = minimalTemp;}
+        void setCoolingConstant(double coolingConstant){this->coolingConstant = (coolingConstant < 1.0 ? coolingConstant : 0.99);}
+        void setIterations(size_t iterations){this->iterations = iterations;}
+    private:
+        int tries;
+        double startTemp;
+        double minimalTemp;
+        double coolingConstant;
+        size_t iterations;
+    };
+
+    explicit TSPSimulatedAnnealingSolver(Parameters params) : params(params){};
 
     TSPSolution solveFor(const TSPInputMatrix& matrix) override;
 
@@ -24,10 +59,14 @@ public:
     void setCoolingConstant(double coolingConstant);
     void setIterations(size_t iterations);
     void setMinimalTemperature(double minimalTemperature);
+    void setTries(int tries);
     [[nodiscard]] double getStartTemp() const;
     [[nodiscard]] double getCoolingConstant() const;
     [[nodiscard]] size_t getIterations() const;
     [[nodiscard]] double getMinimalTemperature() const;
+    [[nodiscard]] int getTries() const;
+
+
 
 private:
     static RealRandom<double> realRandom;
@@ -45,7 +84,7 @@ private:
         bestFound = state.copy();
     };
     void updateParameters(){
-        currentTemp *= coolingConstant;
+        currentTemp *= getCoolingConstant();
     };
     void evaluateCandidateSolution();
     [[nodiscard]] bool acceptStochastically() const;
@@ -63,16 +102,12 @@ private:
     };
     void prepareForNextTry();
 
-    int tries;
+    Parameters params;
 
-    double startTemp;
-    double minimalTemperature;
     double currentTemp{};
-    double coolingConstant;
-    size_t iterations;
 
     [[nodiscard]] bool keepGoing() const{
-        return currentTemp > minimalTemperature && iteration < iterations;
+        return currentTemp > getMinimalTemperature() && iteration < getIterations();
     };
 };
 
