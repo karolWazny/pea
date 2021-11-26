@@ -32,7 +32,7 @@ public:
                   tries(tries){};
         static Parameters from(const std::string& string);
         static Parameters from(std::istream& stream);
-        std::string parse();
+        std::string parse() const;
         [[nodiscard]] int getTries() const{return tries;}
         [[nodiscard]] double getStartTemp() const{return startTemp;}
         [[nodiscard]] double getMinimalTemp() const{return minimalTemp;}

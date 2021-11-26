@@ -142,36 +142,23 @@ void Main::generateMatrix() {
 }
 
 void Main::solveSA() {
-    bool readFromFile = false;
-    std::string filename = "saparams.txt";
-    TSPSimulatedAnnealingSolver::Parameters params(40.0, 0.9999999, adjacencyMatrix.size() * adjacencyMatrix.size() * 2.0, 0.1, 2 * adjacencyMatrix.size());
-    if(std::filesystem::exists(filename)) {
-        std::cout << "Znaleziono plik z parametrami.\nWczytywanie parametrow...\n";
-        std::ifstream stream;
-        stream.open(filename);
-        try {
-            params = TSPSimulatedAnnealingSolver::Parameters::from(stream);
-            readFromFile = true;
-            std::cout << "Wczytano parametry z pliku.\n";
-        } catch (const std::exception& e) {
-            std::cout << "Problem z odczytem z pliku." << std::endl;
-        }
-    }
-    if(!readFromFile){
-        std::cout << "Generowanie parametrow domyslnych..." << std::endl;
-        std::cout << "Tworzenie nowego pliku z konfiguracja..." << std::endl;
-        std::ofstream ofstream;
-        ofstream.open(filename);
-        ofstream << params.parse();
-        std::cout << "Utworzono nowy plik z konfiguracja." << std::endl;
-    }
-    auto solver = TSPSimulatedAnnealingSolver(params);
-    solve("symulowanego wyzarzania",solver);
-    std::cout << "Dla nastepujacych wartosci parametrow:" << std::endl;
-    std::cout << params.parse() << std::endl;
+    solveStochasticallyWithParameters
+            <TSPSimulatedAnnealingSolver>
+            ("symulowanego wyzarzania",
+             "saparams.txt",
+             TSPSimulatedAnnealingSolver::Parameters(
+                     40.0, 0.9999999,
+                     adjacencyMatrix.size() * adjacencyMatrix.size() * 2.0,
+                     0.1, 2 * adjacencyMatrix.size()));
 }
 
 void Main::solveTS() {
-    auto solver = TSPTabuSearchSolver();
-    solve("tabu search",solver);
+    solveStochasticallyWithParameters
+            <TSPTabuSearchSolver>
+            ("Tabu Search",
+             "tsparams.txt",
+             TSPTabuSearchSolver::Parameters(
+                     3 * adjacencyMatrix.size(),
+                     2 * adjacencyMatrix.size()));
 }
+

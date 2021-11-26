@@ -135,7 +135,7 @@ TSPSimulatedAnnealingSolver::Parameters TSPSimulatedAnnealingSolver::Parameters:
     return output;
 }
 
-std::string TSPSimulatedAnnealingSolver::Parameters::parse() {
+std::string TSPSimulatedAnnealingSolver::Parameters::parse() const {
     std::stringstream stream;
 
     stream << "TRIES\t" << std::to_string(tries) << std::endl
