@@ -46,33 +46,29 @@ std::string timeString(){
     return outputString;
 }
 
-void TimeMeasurer::writeToFile(std::string filename, LinkedList<SingleMeasurement> elements){
+void TimeMeasurer::writeToFile(){
     std::ofstream ofstream = std::ofstream(filename);
 
     ofstream << columnHeaders;
-    auto iterator = elements.iterator();
+    auto iterator = measurements.iterator();
     while(iterator.hasNext()) {
         ofstream << "\n" << iterator.next();
     }
 }
 
 void TimeMeasurer::runMeasurement() {
-
-    std::string filename = timeString() + ".txt";
-    LinkedList<SingleMeasurement> measurements;
-    auto stopWatch = StopWatch();
-    clear();
-    gotoxy(0,0);
-    std::cout << "PERFORMING MEASUREMENTS\n";
-    std::cout << "Size:\nInstance:\nAlgorithm:";
-    for(int sizeIndex = 0; sizeIndex < 5; sizeIndex++){
+    filename = timeString() + ".txt";
+    measurements = LinkedList<SingleMeasurement>();
+    prepareDisplay();
+    sizeIndex = 0;
+    /*for(sizeIndex = 0; sizeIndex < 5; sizeIndex++){
 
         gotoxy(7, 1);
         std::cout << std::right << std::setw(2) << std::to_string(sizes[sizeIndex]);
         std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(7)
                 << ")";
 
-        writeToFile(filename, measurements);
+        writeToFile();
 
         long double times[3] = {0, 0, 0};
         for(int i = 0; i < 100; i++){
@@ -101,16 +97,18 @@ void TimeMeasurer::runMeasurement() {
             measurement.time = times[solverIndex];
             measurements.pushBack(measurement);
         }
-    }
+    }*/
 
-    for(int sizeIndex = 5; sizeIndex < 7; sizeIndex++){
+    someMeasurements(5, 0);
+
+    /*for(sizeIndex = 5; sizeIndex < 7; sizeIndex++){
 
         gotoxy(7, 1);
         std::cout << std::right << std::setw(2) << std::to_string(sizes[sizeIndex]);
         std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(7)
                   << ")";
 
-        writeToFile(filename, measurements);
+        writeToFile();
 
         unsigned long long times[3] = {0, 0, 0};
         for(int i = 0; i < 100; i++){
@@ -139,9 +137,58 @@ void TimeMeasurer::runMeasurement() {
             measurement.time = times[solverIndex];
             measurements.pushBack(measurement);
         }
-    }
+    }*/
+
+    someMeasurements(7, 1);
 
     std::cout << "\n";
-    writeToFile(filename, measurements);
+    writeToFile();
     clear();
+}
+
+void TimeMeasurer::someMeasurements(int upperSizeIndexBound, int lowerSolverIndexBound) {
+    for(sizeIndex = 0; sizeIndex < upperSizeIndexBound; sizeIndex++){
+
+        gotoxy(7, 1);
+        std::cout << std::right << std::setw(2) << std::to_string(sizes[sizeIndex]);
+        std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(7)
+                  << ")";
+
+        writeToFile();
+
+        long double times[5] = {0, 0, 0, 0, 0};
+        for(int i = 0; i < 100; i++){
+            gotoxy(10, 2);
+            std::cout << std::right << std::setw(3) << std::to_string(i + 1)
+                      << " out of 100";
+            auto problemInstance = randomMatrix(sizes[sizeIndex]);
+            for(int solverIndex = lowerSolverIndexBound; solverIndex < 5; solverIndex ++) {
+                gotoxy(11, 3);
+                std::cout << std::setw(20) << algorithms[solverIndex]
+                          << " (" << std::to_string(solverIndex + 1) << " out of "
+                          << std::to_string(5) << ")";
+                stopWatch.start();
+                auto result = solvers[solverIndex]->solveFor(problemInstance);
+                stopWatch.stop();
+                if(result.totalCost == 10){
+                    result.totalCost++;
+                }
+                times[solverIndex] += stopWatch.getLastMeasurementsFloat();
+            }
+        }
+        for(int solverIndex = lowerSolverIndexBound; solverIndex < 5; solverIndex++){
+            SingleMeasurement measurement;
+            measurement.method = algorithms[solverIndex];
+            measurement.size = sizes[sizeIndex];
+            measurement.time = times[solverIndex];
+            measurements.pushBack(measurement);
+        }
+    }
+}
+
+void TimeMeasurer::prepareDisplay() {
+    clear();
+    gotoxy(0,0);
+    std::cout << "PERFORMING MEASUREMENTS\n";
+    std::cout << "Size:\nInstance:\nAlgorithm:";
 }

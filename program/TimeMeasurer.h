@@ -17,11 +17,20 @@ public:
     void runMeasurement();
 private:
 
-    void writeToFile(std::string filename, LinkedList<SingleMeasurement> elements);
+    void writeToFile();
+    void someMeasurements(int upperSizeIndexBound, int lowerSolverIndexBound);
+
+    void prepareDisplay();
+
     static constexpr size_t sizes[10] = {4, 6, 8, 10, 12, 15, 20, 30, 50, 100};
     static std::string algorithms[5];
     static std::string columnHeaders;
     static std::unique_ptr<TSPAbstractSolver> solvers[5];
+    int sizeIndex{};
+
+    LinkedList<SingleMeasurement> measurements;
+    StopWatch stopWatch;
+    std::string filename;
 };
 
 struct SingleMeasurement {
