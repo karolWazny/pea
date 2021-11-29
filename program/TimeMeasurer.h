@@ -17,10 +17,11 @@ public:
     void runMeasurement();
 private:
 
-    static constexpr size_t sizes[7] = {4, 6, 8, 10, 12, 15, 20};
-    static std::string algorithms[3];
+    void writeToFile(std::string filename, LinkedList<SingleMeasurement> elements);
+    static constexpr size_t sizes[10] = {4, 6, 8, 10, 12, 15, 20, 30, 50, 100};
+    static std::string algorithms[5];
     static std::string columnHeaders;
-    static TSPAbstractSolver* solvers[3];
+    static std::unique_ptr<TSPAbstractSolver> solvers[5];
 };
 
 struct SingleMeasurement {

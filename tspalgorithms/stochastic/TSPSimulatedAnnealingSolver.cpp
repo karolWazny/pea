@@ -109,6 +109,10 @@ void TSPSimulatedAnnealingSolver::setTries(int tries) {
     params.setTries(tries);
 }
 
+void TSPSimulatedAnnealingSolver::setParameters(TSPSimulatedAnnealingSolver::Parameters parameters) {
+    this->params = parameters;
+}
+
 TSPSimulatedAnnealingSolver::Parameters TSPSimulatedAnnealingSolver::Parameters::from(const std::string& string) {
     auto stream = std::stringstream(string);
     return from(stream);

@@ -41,7 +41,7 @@ void AVLRemover<T>::remove(T key) {
             child->setParent(nodeToRemoveParent);
             nodeToRemoveParent->setSide(child, nodeToRemoveSide);
             nodeToRemoveParent->addBalance(!nodeToRemoveSide);
-            currentNode = RootFinder<T>(child).find();
+            NodeUtility<T>::currentNode = RootFinder<T>(child).find();
             restoreFrom(nodeToRemoveParent);
             return;
         }//przypadek symetryczny: tylko lewy syn
@@ -51,13 +51,13 @@ void AVLRemover<T>::remove(T key) {
             child->setParent(nodeToRemoveParent);
             nodeToRemoveParent->setSide(child, nodeToRemoveSide);
             nodeToRemoveParent->addBalance(!nodeToRemoveSide);
-            currentNode = RootFinder<T>(child).find();
+            NodeUtility<T>::currentNode = RootFinder<T>(child).find();
             restoreFrom(nodeToRemoveParent);
             return;
         }//przypadek: usuwamy węzeł bezdzietny
         else if(nodeToRemove->getRight()->isNil() && nodeToRemove->getLeft()->isNil())
         {
-            currentNode = nodeToRemoveParent;
+            NodeUtility<T>::currentNode = nodeToRemoveParent;
             nodeToRemoveParent->setSide(nullptr, nodeToRemoveSide);
             restoreFrom(nodeToRemoveParent);
             return;
@@ -74,7 +74,7 @@ void AVLRemover<T>::remove(T key) {
             child->setLeft(left);
 
             child->setBalanceFactor(nodeToRemove->getBalanceFactor() - 1);
-            currentNode = RootFinder<T>(child).find();
+            NodeUtility<T>::currentNode = RootFinder<T>(child).find();
             restoreFrom(child);
             return;
         }//przypadek każdy inny: oba syny, prawy to nie następnik
@@ -83,14 +83,14 @@ void AVLRemover<T>::remove(T key) {
             auto successorFinder = ConsequentFinder<T>(nodeToRemove);
             auto successor = avlcast(successorFinder.find());
             auto sParent = avlcast(successor->getParent());
-            auto liberator = ConsequentLiberator<T>(currentNode);//w tym momencie w currentnode jest root
+            auto liberator = ConsequentLiberator<T>(NodeUtility<T>::currentNode);//w tym momencie w currentnode jest root
             liberator.free(successor);
             //podmianka
             successor->setBalanceFactor(nodeToRemove->getBalanceFactor());
             auto replacer = NodeReplacer<T>(nodeToRemove);
             replacer.replaceWithNode(successor);
             sParent->addBalance(Side::RIGHT);//gałąź z lewej zrobiła się lżejsza
-            currentNode = RootFinder<T>(successor).find();
+            NodeUtility<T>::currentNode = RootFinder<T>(successor).find();
             restoreFrom(sParent);
             return;
         }
@@ -99,12 +99,12 @@ void AVLRemover<T>::remove(T key) {
 
 template<typename T>
 AVLRemover<T>::AVLRemover(NodePointer<T> root) {
-    currentNode = root;
+    NodeUtility<T>::currentNode = root;
 }
 
 template<typename T>
 bool AVLRemover<T>::findNode(T key) {
-    auto finder = KeyFinder<T>(currentNode);
+    auto finder = KeyFinder<T>(NodeUtility<T>::currentNode);
     finder.setDesiredKey(key);
     nodeToRemove = avlcast(finder.find());
     return finder.nodeFound();

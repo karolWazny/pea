@@ -43,7 +43,7 @@ void NodeRotator<T>::rotate(NodePointer<T> node) {
     nodeToRotate->setSide(buffer, !direction);
     buffer->setParent(nodeToRotate);
     nodeToRotate->setParent(child);
-    currentNode = nodeToRotate;
+    NodeUtility<T>::currentNode = nodeToRotate;
 }
 
 template<typename T>

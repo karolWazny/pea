@@ -2,12 +2,19 @@
 #include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
 #include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
 #include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
+#include "../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
+#include "../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
 #include <iomanip>
+#include <chrono>
+#include <sstream>
 
-std::string TimeMeasurer::algorithms[3] = {"brute_force", "Held-Karp", "BnB"};
+std::string TimeMeasurer::algorithms[5] = {"brute_force", "Held-Karp", "BnB", "SA", "TS"};
 std::string TimeMeasurer::columnHeaders = "TIME\tSIZE\tMETHOD";
-TSPAbstractSolver* TimeMeasurer::solvers[3] = {new TSPBruteForceSolver(), new TSPDynamicProgrammingSolver(),
-                                              new TSPBranchNBoundSolver()};
+std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[5] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
+                std::unique_ptr<TSPAbstractSolver>(new TSPDynamicProgrammingSolver()),
+                std::unique_ptr<TSPAbstractSolver>(new TSPBranchNBoundSolver()),
+                std::unique_ptr<TSPAbstractSolver>(new TSPSimulatedAnnealingSolver()),
+                std::unique_ptr<TSPAbstractSolver>(new TSPTabuSearchSolver())};
 
 void gotoxy(short x, short y)
 {
@@ -29,9 +36,29 @@ std::ostream& operator<<(std::ostream& ostream, const SingleMeasurement meas) {
     return ostream;
 }
 
+std::string timeString(){
+    std::stringstream output;
+    const auto timePoint = std::chrono::system_clock::now();
+    const auto t_c = std::chrono::system_clock::to_time_t(timePoint);
+    output << std::put_time(std::localtime(&t_c), "%F_%T");
+    auto outputString = output.str();
+    std::replace(outputString.begin(), outputString.end(), ':', '-');
+    return outputString;
+}
+
+void TimeMeasurer::writeToFile(std::string filename, LinkedList<SingleMeasurement> elements){
+    std::ofstream ofstream = std::ofstream(filename);
+
+    ofstream << columnHeaders;
+    auto iterator = elements.iterator();
+    while(iterator.hasNext()) {
+        ofstream << "\n" << iterator.next();
+    }
+}
+
 void TimeMeasurer::runMeasurement() {
 
-    auto startTime = std::time(0);
+    std::string filename = timeString() + ".txt";
     LinkedList<SingleMeasurement> measurements;
     auto stopWatch = StopWatch();
     clear();
@@ -45,19 +72,7 @@ void TimeMeasurer::runMeasurement() {
         std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(7)
                 << ")";
 
-        std::string filename = std::to_string(startTime);
-        filename += "meas";
-        filename += std::to_string(sizeIndex);
-        filename += ".txt";
-        std::ofstream ofstream = std::ofstream(filename);
-
-        ofstream << columnHeaders;
-        auto iterator = measurements.iterator();
-        while(iterator.hasNext()) {
-            ofstream << "\n" << iterator.next();
-        }
-
-        ofstream.close();
+        writeToFile(filename, measurements);
 
         long double times[3] = {0, 0, 0};
         for(int i = 0; i < 100; i++){
@@ -95,19 +110,7 @@ void TimeMeasurer::runMeasurement() {
         std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(7)
                   << ")";
 
-        std::string filename = std::to_string(startTime);
-        filename += "meas";
-        filename += std::to_string(sizeIndex);
-        filename += ".txt";
-        std::ofstream ofstream = std::ofstream(filename);
-
-        ofstream << columnHeaders;
-        auto iterator = measurements.iterator();
-        while(iterator.hasNext()) {
-            ofstream << "\n" << iterator.next();
-        }
-
-        ofstream.close();
+        writeToFile(filename, measurements);
 
         unsigned long long times[3] = {0, 0, 0};
         for(int i = 0; i < 100; i++){
@@ -139,14 +142,6 @@ void TimeMeasurer::runMeasurement() {
     }
 
     std::cout << "\n";
-    std::string filename = std::to_string(startTime);
-    filename += "meas.txt";
-    std::ofstream ofstream = std::ofstream(filename);
-
-    ofstream << columnHeaders;
-    auto iterator = measurements.iterator();
-    while(iterator.hasNext()) {
-        ofstream << "\n" << iterator.next();
-    }
+    writeToFile(filename, measurements);
     clear();
 }

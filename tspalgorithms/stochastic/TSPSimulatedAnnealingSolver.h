@@ -60,6 +60,7 @@ public:
     void setIterations(size_t iterations);
     void setMinimalTemperature(double minimalTemperature);
     void setTries(int tries);
+    void setParameters(Parameters parameters);
     [[nodiscard]] double getStartTemp() const;
     [[nodiscard]] double getCoolingConstant() const;
     [[nodiscard]] size_t getIterations() const;

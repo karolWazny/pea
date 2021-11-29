@@ -31,6 +31,7 @@ public:
     [[nodiscard]]int getTries() const{return params.getTries();};
     void setTabuLength(int length){params.setTabuLength(length);};
     void setTries(int retries){ params.setTries(retries);};
+    void setParameters(Parameters parameters){this->params = parameters;};
 private:
     void prepareForNextTry();
     void prepareMembers(const TSPInputMatrix& matrix);

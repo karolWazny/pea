@@ -56,7 +56,7 @@ void PutPropertyRestorer<T>::restoreFrom(RBNodePtr<T> freshNode) {
 
 template<typename T>
 void PutPropertyRestorer<T>::updateGenealogy() {
-    currentNode = startingNode;
+    NodeUtility<T>::currentNode = startingNode;
     parent = rbcast(startingNode->getParent());
     grand = rbcast(parent->getParent());
     if(parent == grand->getLeft())
