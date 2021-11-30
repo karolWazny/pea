@@ -8,11 +8,11 @@
 #include <chrono>
 #include <sstream>
 
-std::string TimeMeasurer::algorithms[5] = {"brute_force", "Held-Karp", "BnB", "SA", "TS"};
+std::string TimeMeasurer::algorithms[algorithmsAmount] = {"brute_force", "BnB", "Held-Karp", "SA", "TS"};
 std::string TimeMeasurer::columnHeaders = "TIME\tSIZE\tMETHOD";
-std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[5] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
-                std::unique_ptr<TSPAbstractSolver>(new TSPDynamicProgrammingSolver()),
+std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[algorithmsAmount] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
                 std::unique_ptr<TSPAbstractSolver>(new TSPBranchNBoundSolver()),
+                std::unique_ptr<TSPAbstractSolver>(new TSPDynamicProgrammingSolver()),
                 std::unique_ptr<TSPAbstractSolver>(new TSPSimulatedAnnealingSolver()),
                 std::unique_ptr<TSPAbstractSolver>(new TSPTabuSearchSolver())};
 
@@ -61,85 +61,12 @@ void TimeMeasurer::runMeasurement() {
     measurements = LinkedList<SingleMeasurement>();
     prepareDisplay();
     sizeIndex = 0;
-    /*for(sizeIndex = 0; sizeIndex < 5; sizeIndex++){
-
-        gotoxy(7, 1);
-        std::cout << std::right << std::setw(2) << std::to_string(sizes[sizeIndex]);
-        std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(7)
-                << ")";
-
-        writeToFile();
-
-        long double times[3] = {0, 0, 0};
-        for(int i = 0; i < 100; i++){
-            gotoxy(10, 2);
-            std::cout << std::right << std::setw(3) << std::to_string(i + 1)
-                        << " out of 100";
-            auto problemInstance = randomMatrix(sizes[sizeIndex]);
-            for(int solverIndex = 0; solverIndex < 3; solverIndex ++) {
-                gotoxy(11, 3);
-                std::cout << std::setw(20) << algorithms[solverIndex]
-                        << " (" << std::to_string(solverIndex + 1) << " out of "
-                        << std::to_string(3) << ")";
-                stopWatch.start();
-                auto result = solvers[solverIndex]->solveFor(problemInstance);
-                stopWatch.stop();
-                if(result.totalCost == 10){
-                    result.totalCost++;
-                }
-                times[solverIndex] += stopWatch.getLastMeasurementsFloat();
-            }
-        }
-        for(int solverIndex = 0; solverIndex < 3; solverIndex++){
-            SingleMeasurement measurement;
-            measurement.method = algorithms[solverIndex];
-            measurement.size = sizes[sizeIndex];
-            measurement.time = times[solverIndex];
-            measurements.pushBack(measurement);
-        }
-    }*/
 
     someMeasurements(5, 0);
 
-    /*for(sizeIndex = 5; sizeIndex < 7; sizeIndex++){
+    someMeasurements(7, 2);
 
-        gotoxy(7, 1);
-        std::cout << std::right << std::setw(2) << std::to_string(sizes[sizeIndex]);
-        std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(7)
-                  << ")";
-
-        writeToFile();
-
-        unsigned long long times[3] = {0, 0, 0};
-        for(int i = 0; i < 100; i++){
-            gotoxy(10, 2);
-            std::cout << std::right << std::setw(3) << std::to_string(i + 1)
-                      << " out of 100";
-            auto problemInstance = randomMatrix(sizes[sizeIndex]);
-            for(int solverIndex = 1; solverIndex < 3; solverIndex ++) {
-                gotoxy(11, 3);
-                std::cout << std::setw(20) << algorithms[solverIndex]
-                          << " (" << std::to_string(solverIndex + 1) << " out of "
-                          << std::to_string(3) << ")";
-                stopWatch.start();
-                auto result = solvers[solverIndex]->solveFor(problemInstance);
-                stopWatch.stop();
-                if(result.totalCost == 10){
-                    result.totalCost++;
-                }
-                times[solverIndex] += stopWatch.getLastMeasurmentPiccosec();
-            }
-        }
-        for(int solverIndex = 1; solverIndex < 3; solverIndex++){
-            SingleMeasurement measurement;
-            measurement.method = algorithms[solverIndex];
-            measurement.size = sizes[sizeIndex];
-            measurement.time = times[solverIndex];
-            measurements.pushBack(measurement);
-        }
-    }*/
-
-    someMeasurements(7, 1);
+    someMeasurements(10, 3);
 
     std::cout << "\n";
     writeToFile();
@@ -151,7 +78,7 @@ void TimeMeasurer::someMeasurements(int upperSizeIndexBound, int lowerSolverInde
 
         gotoxy(7, 1);
         std::cout << std::right << std::setw(2) << std::to_string(sizes[sizeIndex]);
-        std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(7)
+        std::cout << " (" << std::to_string(sizeIndex + 1) << " out of " << std::to_string(sizesAmount)
                   << ")";
 
         writeToFile();
@@ -166,7 +93,7 @@ void TimeMeasurer::someMeasurements(int upperSizeIndexBound, int lowerSolverInde
                 gotoxy(11, 3);
                 std::cout << std::setw(20) << algorithms[solverIndex]
                           << " (" << std::to_string(solverIndex + 1) << " out of "
-                          << std::to_string(5) << ")";
+                          << std::to_string(algorithmsAmount) << ")";
                 stopWatch.start();
                 auto result = solvers[solverIndex]->solveFor(problemInstance);
                 stopWatch.stop();

@@ -22,10 +22,13 @@ private:
 
     void prepareDisplay();
 
-    static constexpr size_t sizes[10] = {4, 6, 8, 10, 12, 15, 20, 30, 50, 100};
-    static std::string algorithms[5];
+    static constexpr int sizesAmount = 10;
+    static constexpr int algorithmsAmount = 5;
+
+    static constexpr size_t sizes[sizesAmount] = {4, 6, 8, 10, 12, 15, 20, 30, 50, 100};
+    static std::string algorithms[algorithmsAmount];
     static std::string columnHeaders;
-    static std::unique_ptr<TSPAbstractSolver> solvers[5];
+    static std::unique_ptr<TSPAbstractSolver> solvers[algorithmsAmount];
     int sizeIndex{};
 
     LinkedList<SingleMeasurement> measurements;
