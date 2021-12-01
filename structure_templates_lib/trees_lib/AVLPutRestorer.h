@@ -24,7 +24,7 @@ template<typename T>
 void AVLPutRestorer<T>::restoreFrom(AVLNodePtr<T> freshNode) {
     if(freshNode->getParent()->isNil())
     {
-        currentNode = freshNode;
+        NodeUtility<T>::currentNode = freshNode;
         return;
     }
     current = freshNode;
@@ -94,9 +94,9 @@ void AVLPutRestorer<T>::performRotations() {
         c = 0;
         auto rotator = NodeRotator<T>();
         rotator.rotate(currentParent, parentSide);
-        currentNode = RootFinder<T>(currentParent).find();
+        NodeUtility<T>::currentNode = RootFinder<T>(currentParent).find();
         rotator.rotate(currentGrand, !parentSide);
-        currentNode = RootFinder<T>(currentGrand).find();
+        NodeUtility<T>::currentNode = RootFinder<T>(currentGrand).find();
         current->setBalanceFactor(0);
         currentParent->setBalanceFactor(b);
         currentGrand->setBalanceFactor(a);
@@ -111,7 +111,7 @@ void AVLPutRestorer<T>::performRotations() {
         }
         auto rotator = NodeRotator<T>();
         rotator.rotate(currentGrand, !parentSide);
-        currentNode = RootFinder<T>(currentParent).find();
+        NodeUtility<T>::currentNode = RootFinder<T>(currentParent).find();
         currentParent->setBalanceFactor(b);
         currentGrand->setBalanceFactor(a);
     }

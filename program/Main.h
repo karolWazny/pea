@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <filesystem>
 
 #include "TimeMeasurer.h"
 #include "../tspalgorithms/TSPInputMatrix.h"
@@ -13,6 +14,8 @@
 #include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
 #include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
 #include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
+#include "../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
+#include "../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
 
 using String = std::string;
 
@@ -34,6 +37,10 @@ private:
     void branchAndBound();
     void dynamicProgramming();
     void generateMatrix();
+    void solveSA();
+    void solveTS();
+    void saveMatrix();
+
 
     void solve(const std::string& methodName, TSPAbstractSolver& solver);
 
@@ -43,6 +50,37 @@ private:
 
     TimeMeasurer timeMeasurer;
 
+    template <typename T>
+    void solveStochasticallyWithParameters(const std::string& methodName,
+                                           const std::string& fileName,
+                                           typename T::Parameters defaultParams){
+        bool readFromFile = false;
+        typename T::Parameters params = defaultParams;
+        if(std::filesystem::exists(fileName)) {
+            std::cout << "Znaleziono plik z parametrami.\nWczytywanie parametrow...\n";
+            std::ifstream stream;
+            stream.open(fileName);
+            try {
+                params = T::Parameters::from(stream);
+                readFromFile = true;
+                std::cout << "Wczytano parametry z pliku.\n";
+            } catch (const std::exception& e) {
+                std::cout << "Problem z odczytem z pliku." << std::endl;
+            }
+        }
+        if(!readFromFile){
+            std::cout << "Generowanie parametrow domyslnych..." << std::endl;
+            std::cout << "Tworzenie nowego pliku z konfiguracja..." << std::endl;
+            std::ofstream ofstream;
+            ofstream.open(fileName);
+            ofstream << params.parse();
+            std::cout << "Utworzono nowy plik z konfiguracja." << std::endl;
+        }
+        auto solver = T(params);
+        solve("symulowanego wyzarzania",solver);
+        std::cout << "Dla nastepujacych wartosci parametrow:" << std::endl;
+        std::cout << params.parse() << std::endl;
+    };
 };
 
 

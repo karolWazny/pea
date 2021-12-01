@@ -27,8 +27,8 @@ void RBPutter<T>::put(T key) {
     auto freshNode = rbcast(putter.getFreshNode());
     auto restorer = PutPropertyRestorer<T>();//do tego miejsca zgodnie z oczekiwaniami
     restorer.restoreFrom(freshNode);
-    currentNode = restorer.obtainRoot();
-    rbcast(currentNode)->paintBlack();
+    NodeUtility<T>::currentNode = restorer.obtainRoot();
+    rbcast(NodeUtility<T>::currentNode)->paintBlack();
 }
 
 #endif //SDIZO_1_RBPUTTER_H

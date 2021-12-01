@@ -37,17 +37,17 @@ NodePutter<T>::NodePutter(NodePointer<T> root) {
 
 template<typename T>
 void NodePutter<T>::put(T key) {
-    currentNode = root;
+    NodeUtility<T>::currentNode = root;
     auto finder = PlaceToPutFinder<T>(root);
     finder.setKeyToBePut(key);
     finder.find();
     sideOfPlaceToPut = finder.getPlaceSide();
-    currentNode = finder.getFound();
+    NodeUtility<T>::currentNode = finder.getFound();
     freshNode = factory->createNode(key);
-    currentNode->setSide(freshNode, sideOfPlaceToPut);
-    if(!currentNode->isNil())
-        freshNode->setParent(currentNode);
-    currentNode = freshNode;
+    NodeUtility<T>::currentNode->setSide(freshNode, sideOfPlaceToPut);
+    if(!NodeUtility<T>::currentNode->isNil())
+        freshNode->setParent(NodeUtility<T>::currentNode);
+    NodeUtility<T>::currentNode = freshNode;
 }
 
 template<typename T>

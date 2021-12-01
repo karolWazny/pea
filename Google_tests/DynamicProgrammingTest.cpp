@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 
-#include "../program/TextFileReader.h"
+#include "../program/file/AtspFileHandler.h"
 #include "../tspalgorithms/TSPInputMatrix.h"
 #include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
 
 TEST(DynamicSuite, GivesCorrectCostForTestFile){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPDynamicProgrammingSolver().solveFor(matrix);
@@ -13,7 +13,7 @@ TEST(DynamicSuite, GivesCorrectCostForTestFile){
 }
 
 TEST(DynamicSuite, GivesCorrectPathForTestFile){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPDynamicProgrammingSolver().solveFor(matrix);
@@ -22,7 +22,7 @@ TEST(DynamicSuite, GivesCorrectPathForTestFile){
 }
 
 TEST(DynamicSuite, GivesCorrectPathLengthForTestFile){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPDynamicProgrammingSolver().solveFor(matrix);
@@ -32,7 +32,7 @@ TEST(DynamicSuite, GivesCorrectPathLengthForTestFile){
 
 //this test is commented out due to long (over 10 secs) execution time
 /*TEST(DynamicSuite, WorksFor17Cities){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("br17.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPDynamicProgrammingSolver().solveFor(matrix);
@@ -40,7 +40,7 @@ TEST(DynamicSuite, GivesCorrectPathLengthForTestFile){
 }*/
 
 TEST(DynamicSuite, WorksFor4Cities){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("br4.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPDynamicProgrammingSolver().solveFor(matrix);

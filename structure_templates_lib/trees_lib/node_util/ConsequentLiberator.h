@@ -19,7 +19,7 @@ private:
 
 template<typename T>
 ConsequentLiberator<T>::ConsequentLiberator(NodePointer<T> root) {
-    currentNode = root;
+    NodeUtility<T>::currentNode = root;
 }
 
 template<typename T>

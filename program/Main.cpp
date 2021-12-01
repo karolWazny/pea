@@ -1,5 +1,14 @@
 #include "Main.h"
+#include "file/TxtFileHandler.h"
 #include <filesystem>
+
+bool hasEnding (std::string const &fullString, std::string const &ending) {
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}
 
 int Main::run() {
     displayGreeting();
@@ -17,14 +26,17 @@ void Main::displayGreeting() {
 }
 
 void Main::displayMenu() {
-    String menuText = "1. Wczytaj graf z pliku\n"
-                      "2. Wyswietl macierz sasiedztwa aktualnego grafu\n"
-                      "3. Brute force (przeglad zupelny).\n";
-    menuText += "4. Programowanie dynamiczne.\n"
-                "5. Metoda podzialu i ograniczen\n"
-                "6. Automatyczne pomiary czasu\n"
-                "7. Generuj losowy graf\n";
-    menuText += "8. Zakoncz program.\n";
+    String menuText = "1. Automatyczne pomiary czasu\n"
+                      "2. Wczytaj graf z pliku\n"
+                      "3. Generuj losowy graf\n"
+                      "4. Wyswietl macierz sasiedztwa aktualnego grafu\n"
+                      "5. Brute force (przeglad zupelny).\n";
+    menuText += "6. Programowanie dynamiczne.\n"
+                "7. Metoda podzialu i ograniczen\n"
+                "8. Symulowane wyzarzanie\n"
+                "9. Tabu search\n";
+    menuText += "10. Zakoncz program.\n"
+                "100. Zapisz graf do pliku\n\n";
     std::cout << menuText;
 }
 
@@ -34,28 +46,37 @@ void Main::interpretInput() {
         option = std::stoi(input);
         switch(option){
             case 1:
-                readFromFile();
-                break;
-            case 2:
-                displayMatrix();
-                break;
-            case 3:
-                bruteForce();
-                break;
-            case 4:
-                dynamicProgramming();
-                break;
-            case 5:
-                branchAndBound();
-                break;
-            case 6:
                 measurements();
                 break;
-            case 7:
+            case 2:
+                readFromFile();
+                break;
+            case 3:
                 generateMatrix();
                 break;
+            case 4:
+                displayMatrix();
+                break;
+            case 5:
+                bruteForce();
+                break;
+            case 6:
+                dynamicProgramming();
+                break;
+            case 7:
+                branchAndBound();
+                break;
             case 8:
+                solveSA();
+                break;
+            case 9:
+                solveTS();
+                break;
+            case 10:
                 keepGoing = false;
+                break;
+            case 100:
+                saveMatrix();
                 break;
             default:
                 throw 4;
@@ -86,7 +107,21 @@ void Main::readFromFile() {
                      "Sprawdz poprawnosc sciezki i sprobuj jeszcze raz.\n";
         return;
     }
-    auto fileContent = TextFileReader().fromFile(filename);
+
+    std::string atspSuffix = ".atsp";
+    std::string txtSuffix = ".txt";
+
+    std::shared_ptr<int[]> fileContent;
+
+    if(hasEnding(filename, atspSuffix)){
+        fileContent = AtspFileHandler().fromFile(filename);
+    } else if(hasEnding(filename, txtSuffix)) {
+        fileContent = TxtFileHandler().fromFile(filename);
+    } else {
+        std::cout << "Nieznane rozszerzenie pliku.\n"
+                     "Dopuszczalne rozszerzenia: .atsp i .txt.\n";
+        return;
+    }
     adjacencyMatrix = TSPInputMatrix::from(fileContent);
     std::cout<< "Udalo sie wczytac macierz sasiedztwa z pliku.\n\n";
 }
@@ -115,9 +150,15 @@ void Main::dynamicProgramming() {
 void Main::solve(const std::string& methodName, TSPAbstractSolver &solver) {
     std::cout << "Znajdowanie minimalnego cyklu Hamiltona metoda\n" << methodName
                         << ". Prosze czekac...\n";
+    auto stopWatch = StopWatch();
+    stopWatch.start();
     auto result = solver.solveFor(adjacencyMatrix);
-    std::cout << "Uzyskany wynik:\nKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
-    std::cout << "Minimalny cykl: " << result.circuit.toString() << std::endl << std::endl;
+    stopWatch.stop();
+    std::cout << "Uzyskany wynik:\n\tKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
+    std::cout << "\tMinimalny cykl: " << result.circuit.toString() << std::endl
+                    << "\tRozmiar instancji (N): " << std::to_string(adjacencyMatrix.size()) << std::endl
+                    << "\tCzas: " << std::to_string(stopWatch.getLastMeasurementsFloat() / 100000) << " s" << std::endl
+                    << std::endl;
 }
 
 void Main::generateMatrix() {
@@ -126,3 +167,44 @@ void Main::generateMatrix() {
     std::cout << "Matrix has been generated.\nMatrix has you.\n";
     displayMatrix();
 }
+
+void Main::solveSA() {
+    solveStochasticallyWithParameters
+            <TSPSimulatedAnnealingSolver>
+            ("symulowanego wyzarzania",
+             "saparams.txt",
+             TSPSimulatedAnnealingSolver::Parameters(
+                     40.0, 0.9999999,
+                     adjacencyMatrix.size() * adjacencyMatrix.size() * 2.0,
+                     0.1, 2 * adjacencyMatrix.size()));
+}
+
+void Main::solveTS() {
+    solveStochasticallyWithParameters
+            <TSPTabuSearchSolver>
+            ("Tabu Search",
+             "tsparams.txt",
+             TSPTabuSearchSolver::Parameters(
+                     3 * adjacencyMatrix.size(),
+                     2 * adjacencyMatrix.size()));
+}
+
+void Main::saveMatrix() {
+    std::cout << "Podaj nazwe pliku: ";
+    auto filename = readStr();
+
+    std::string atspSuffix = ".atsp";
+    std::string txtSuffix = ".txt";
+
+    if(hasEnding(filename, atspSuffix)){
+        AtspFileHandler().toFile(adjacencyMatrix, filename);
+    } else if(hasEnding(filename, txtSuffix)) {
+        TxtFileHandler().toFile(adjacencyMatrix, filename);
+    } else {
+        std::cout << "Nieznane rozszerzenie pliku.\n"
+                     "Dopuszczalne rozszerzenia: .atsp i .txt.\n";
+        return;
+    }
+    std::cout << "Zapisano plik poprawnie pod nazwa " << filename << "." << std::endl << std::endl;
+}
+

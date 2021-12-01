@@ -30,9 +30,9 @@ void NodeReplacer<T>::replaceWithNode(NodePointer<T> replacementNode) {
 
 template<typename T>
 void NodeReplacer<T>::replace() {
-    auto parent = currentNode->getParent();
+    auto parent = NodeUtility<T>::currentNode->getParent();
     Side nodeToReplaceSide= Side::RIGHT;
-    if(parent->getLeft() == currentNode)
+    if(parent->getLeft() == NodeUtility<T>::currentNode)
     {
         nodeToReplaceSide = Side::LEFT;
     }
@@ -44,15 +44,15 @@ void NodeReplacer<T>::replace() {
 
     if(!replacement->isNil())
     {
-        auto left = currentNode->getLeft();
+        auto left = NodeUtility<T>::currentNode->getLeft();
         replacement->setLeft(left);
         left->setParent(replacement);
 
-        auto right = currentNode->getRight();
+        auto right = NodeUtility<T>::currentNode->getRight();
         replacement->setRight(right);
         right->setParent(replacement);
 
-        currentNode = replacement;
+        NodeUtility<T>::currentNode = replacement;
     }
 }
 

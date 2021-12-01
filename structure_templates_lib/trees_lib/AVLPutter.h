@@ -30,7 +30,7 @@ void AVLPutter<T>::put(T key) {
     restorer.restoreFrom(avlcast(freshNode));
     if(freshNode->getParent()->isNil())
         freshNode->setParent(nullptr);
-    currentNode = putter.obtainRoot();
+    NodeUtility<T>::currentNode = putter.obtainRoot();
 }
 
 #endif //SDIZO_1_AVLPUTTER_H
