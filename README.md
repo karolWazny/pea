@@ -1,4 +1,5 @@
 # pea    
+Needed C++20      
 Program na zaliczenie projektu z Projektowania Efektywnych Algorytmów.
 Ja korzystałem z CLiona przy tworzeniu tego projektu (szablon C++ executable).
 Aby zbudować u siebie, należy stworzyć projekt w CLionie w oparciu o ten szablon i skopiować zawartość repozytorium do katalogu głównego projektu.
