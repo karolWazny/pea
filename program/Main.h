@@ -39,6 +39,8 @@ private:
     void generateMatrix();
     void solveSA();
     void solveTS();
+    void saveMatrix();
+
 
     void solve(const std::string& methodName, TSPAbstractSolver& solver);
 

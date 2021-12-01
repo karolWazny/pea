@@ -1,12 +1,13 @@
-#include "TextFileReader.h"
+#include <iomanip>
+#include "AtspFileHandler.h"
 
-std::shared_ptr<int32_t[]> TextFileReader::fromFile(const std::string& filename) {
+std::shared_ptr<int32_t[]> AtspFileHandler::fromFile(const std::string& filename) {
     read(filename);
     auto output = fileContent;
     return output;
 }
 
-void TextFileReader::read(const std::string& filename) {
+void AtspFileHandler::read(const std::string& filename) {
     std::ifstream stream;
     stream.open(filename);
     std::string buffer;
@@ -30,4 +31,24 @@ void TextFileReader::read(const std::string& filename) {
             std::getline(stream, buffer);
         }
     }
+}
+
+void AtspFileHandler::toFile(const TSPInputMatrix& matrix, std::string filename) {
+    std::ofstream stream;
+    stream.open(filename);
+
+    stream << "NAME: " << filename << std::endl;
+
+    stream << "TYPE: ATSP\nCOMMENT:\nDIMENSION: " << std::to_string(matrix.size()) << std::endl;
+
+    stream << "EDGE_WEIGHT_TYPE: EXPLICIT\nEDGE_WEIGHT_FORMAT: FULL_MATRIX\nEDGE_WEIGHT_SECTION" << std::endl;
+
+    for(int i = 0; i < matrix.size(); i++){
+        for(int j = 0; j < matrix.size(); j++){
+            stream << std::right << std::setw(5) << std::to_string(matrix.getDistance(i, j)) << " ";
+        }
+        stream << std::endl;
+    }
+
+    stream << "EOF";
 }

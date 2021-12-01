@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 
 #include "../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
-#include "../program/TextFileReader.h"
+#include "../program/file/AtspFileHandler.h"
 
 TEST(TSSuite, OutputPathLengthTest){
     TSPTabuSearchSolver solver;
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("br17.atsp");
     auto matrix = matrixFrom(values);
     //std::cout << std::to_string(matrix.size());
@@ -17,7 +17,7 @@ TEST(TSSuite, OutputPathLengthTest){
 
 TEST(TSSuite, BR17Test){
     TSPTabuSearchSolver solver;
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("br17.atsp");
     auto matrix = matrixFrom(values);
     for(int j = 0; j < 100; j++){

@@ -1,5 +1,14 @@
 #include "Main.h"
+#include "file/TxtFileHandler.h"
 #include <filesystem>
+
+bool hasEnding (std::string const &fullString, std::string const &ending) {
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}
 
 int Main::run() {
     displayGreeting();
@@ -26,7 +35,8 @@ void Main::displayMenu() {
                 "7. Metoda podzialu i ograniczen\n"
                 "8. Symulowane wyzarzanie\n"
                 "9. Tabu search\n";
-    menuText += "10. Zakoncz program.\n";
+    menuText += "10. Zakoncz program.\n"
+                "100. Zapisz graf do pliku\n\n";
     std::cout << menuText;
 }
 
@@ -65,6 +75,9 @@ void Main::interpretInput() {
             case 10:
                 keepGoing = false;
                 break;
+            case 100:
+                saveMatrix();
+                break;
             default:
                 throw 4;
         }
@@ -94,7 +107,21 @@ void Main::readFromFile() {
                      "Sprawdz poprawnosc sciezki i sprobuj jeszcze raz.\n";
         return;
     }
-    auto fileContent = TextFileReader().fromFile(filename);
+
+    std::string atspSuffix = ".atsp";
+    std::string txtSuffix = ".txt";
+
+    std::shared_ptr<int[]> fileContent;
+
+    if(hasEnding(filename, atspSuffix)){
+        fileContent = AtspFileHandler().fromFile(filename);
+    } else if(hasEnding(filename, txtSuffix)) {
+        fileContent = TxtFileHandler().fromFile(filename);
+    } else {
+        std::cout << "Nieznane rozszerzenie pliku.\n"
+                     "Dopuszczalne rozszerzenia: .atsp i .txt.\n";
+        return;
+    }
     adjacencyMatrix = TSPInputMatrix::from(fileContent);
     std::cout<< "Udalo sie wczytac macierz sasiedztwa z pliku.\n\n";
 }
@@ -160,5 +187,24 @@ void Main::solveTS() {
              TSPTabuSearchSolver::Parameters(
                      3 * adjacencyMatrix.size(),
                      2 * adjacencyMatrix.size()));
+}
+
+void Main::saveMatrix() {
+    std::cout << "Podaj nazwe pliku: ";
+    auto filename = readStr();
+
+    std::string atspSuffix = ".atsp";
+    std::string txtSuffix = ".txt";
+
+    if(hasEnding(filename, atspSuffix)){
+        AtspFileHandler().toFile(adjacencyMatrix, filename);
+    } else if(hasEnding(filename, txtSuffix)) {
+        TxtFileHandler().toFile(adjacencyMatrix, filename);
+    } else {
+        std::cout << "Nieznane rozszerzenie pliku.\n"
+                     "Dopuszczalne rozszerzenia: .atsp i .txt.\n";
+        return;
+    }
+    std::cout << "Zapisano plik poprawnie pod nazwa " << filename << "." << std::endl << std::endl;
 }
 

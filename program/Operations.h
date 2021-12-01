@@ -4,7 +4,7 @@
 
 #include <string>
 #include "Randomizer.h"
-#include "TextFileReader.h"
+#include "file/AtspFileHandler.h"
 
 class Operations {
 public:

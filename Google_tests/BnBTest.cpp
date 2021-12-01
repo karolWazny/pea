@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 
-#include "../program/TextFileReader.h"
+#include "../program/file/AtspFileHandler.h"
 #include "../tspalgorithms/TSPInputMatrix.h"
 #include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
 
 TEST(BnBSuite, GivesCorrectCostForTestFile){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPBranchNBoundSolver().solveFor(matrix);
@@ -13,7 +13,7 @@ TEST(BnBSuite, GivesCorrectCostForTestFile){
 }
 
 TEST(BnBSuite, GivesCorrectPathForTestFile){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPBranchNBoundSolver().solveFor(matrix);
@@ -28,7 +28,7 @@ TEST(BnBSuite, GivesCorrectPathForTestFile){
 }
 
 TEST(BnBSuite, GivesCorrectPathLengthForTestFile){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPBranchNBoundSolver().solveFor(matrix);

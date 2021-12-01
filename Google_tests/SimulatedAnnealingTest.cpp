@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 
 #include "../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
-#include "../program/TextFileReader.h"
+#include "../program/file/AtspFileHandler.h"
 
 TEST(SASuite, OutputPathLengthTest){
     TSPSimulatedAnnealingSolver solver;
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     auto matrix = matrixFrom(values);
     auto output = TSPSimulatedAnnealingSolver().solveFor(matrix);
@@ -15,7 +15,7 @@ TEST(SASuite, OutputPathLengthTest){
 
 TEST(SASuite, BR17Test){
     TSPSimulatedAnnealingSolver solver;
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("br17.atsp");
     auto matrix = matrixFrom(values);
     for(int j = 0; j < 100; j++){

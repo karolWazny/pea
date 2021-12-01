@@ -1,9 +1,9 @@
 #include "gtest/gtest.h"
 
-#include "../program/TextFileReader.h"
+#include "../program/file/AtspFileHandler.h"
 
 TEST(FileReaderSuite, ReadCorrectFileTest){
-    auto reader = TextFileReader();
+    auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     size_t correctValues[] = {5,
                               INT32_MAX, 9999, 1, 9999, 9999,

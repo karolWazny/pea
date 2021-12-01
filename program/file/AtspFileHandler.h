@@ -5,10 +5,12 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include "FileHandler.h"
 
-class TextFileReader {
+class AtspFileHandler : public FileHandler{
 public:
-    std::shared_ptr<int32_t[]> fromFile(const std::string& filename);
+    std::shared_ptr<int32_t[]> fromFile(const std::string& filename) override;
+    void toFile(const TSPInputMatrix& matrix, std::string filename) override;
 
 private:
     void read(const std::string&);
