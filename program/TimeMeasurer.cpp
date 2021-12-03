@@ -64,7 +64,7 @@ void TimeMeasurer::runMeasurement() {
 
     someMeasurements(5, 0);
 
-    someMeasurements(7, 2);
+    someMeasurements(7, 1);
 
     someMeasurements(10, 3);
 
@@ -74,7 +74,7 @@ void TimeMeasurer::runMeasurement() {
 }
 
 void TimeMeasurer::someMeasurements(int upperSizeIndexBound, int lowerSolverIndexBound) {
-    for(sizeIndex = 0; sizeIndex < upperSizeIndexBound; sizeIndex++){
+    for(; sizeIndex < upperSizeIndexBound; sizeIndex++){
 
         gotoxy(7, 1);
         std::cout << std::right << std::setw(2) << std::to_string(sizes[sizeIndex]);
