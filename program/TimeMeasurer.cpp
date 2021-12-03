@@ -9,7 +9,7 @@
 #include <sstream>
 
 std::string TimeMeasurer::algorithms[algorithmsAmount] = {"brute_force", "BnB", "Held-Karp", "SA", "TS"};
-std::string TimeMeasurer::columnHeaders = "TIME\tSIZE\tMETHOD";
+std::string TimeMeasurer::columnHeaders = "SIZE\tTIME\tMETHOD";
 std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[algorithmsAmount] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
                 std::unique_ptr<TSPAbstractSolver>(new TSPBranchNBoundSolver()),
                 std::unique_ptr<TSPAbstractSolver>(new TSPDynamicProgrammingSolver()),
@@ -30,8 +30,8 @@ void clear() {
 }
 
 std::ostream& operator<<(std::ostream& ostream, const SingleMeasurement meas) {
-    ostream << std::to_string(meas.time) << "\t"
-            << std::to_string(meas.size) << "\t"
+    ostream << std::to_string(meas.size) << "\t"
+            << std::to_string(meas.time) << "\t"
             << meas.method;
     return ostream;
 }
