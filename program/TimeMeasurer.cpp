@@ -57,7 +57,7 @@ void TimeMeasurer::writeToFile(){
 }
 
 void TimeMeasurer::runMeasurement() {
-    filename = timeString() + ".txt";
+    filename = timeString() + "-all_solvers.txt";
     measurements = LinkedList<SingleMeasurement>();
     prepareDisplay();
     sizeIndex = 0;
