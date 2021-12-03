@@ -13,9 +13,7 @@ namespace math {
         static Randomizer rand;
         for(size_t i = 0; i < collection.getLength() - 1; i++){
             size_t index = rand.getULong(collection.getLength() - i - 1) + i;
-            auto buffer = collection[i];
-            collection[i] = collection[index];
-            collection[index] = buffer;
+            std::swap(collection[i], collection[index]);
         }
     }
 }
