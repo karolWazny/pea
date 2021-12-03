@@ -16,4 +16,6 @@ To build on your machine using CLion, create new project and copy repo contents 
 To use UnitTests install GoogleTest framework (https://github.com/google/googletest) in Google_tests dir:
 https://www.jetbrains.com/help/clion/creating-google-test-run-debug-configuration-for-test.html
 I provide this code under the terms of GPLv2.       
-Due to components used for performing time measurements, the project needs to be compiled with MSVC.
+Due to components used for performing time measurements, the project needs to be compiled with MSVC.      
+       
+For most of th time executable in /bin is not the current build!
