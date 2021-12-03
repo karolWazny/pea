@@ -13,7 +13,6 @@ TSPSolution TSPTabuSearchSolver::solveFor(const TSPInputMatrix &matrix) {
 
 void TSPTabuSearchSolver::prepareForNextTry() {
     for(size_t i = 0; i < tabu.getLength(); i++){
-        tabu[i] = ffarray<long long>(tabu.getLength() - i);
         for(size_t j = 0; j < tabu[i].getLength(); j++){
             tabu[i][j] = 0;
         }
@@ -31,10 +30,13 @@ void TSPTabuSearchSolver::prepareMembers(const TSPInputMatrix &matrix) {
         state[i] = i + 1;
     }
     tabu = ffarray<ffarray<long long>>(input->size() - 2);
+    for(size_t i = 0; i < tabu.getLength(); i++){
+        tabu[i] = ffarray<long long>(tabu.getLength() - i);
+    }
 }
 
 void TSPTabuSearchSolver::runAlgorithm() {
-    for(iteration = 0; iteration < 1000; iteration++){
+    for(iteration = 0; iteration < getIterations(); iteration++){
         candidateCost = INT64_MAX;
         foundNewBest = false;
 
@@ -87,6 +89,8 @@ TSPTabuSearchSolver::Parameters TSPTabuSearchSolver::Parameters::from(std::istre
             stream >> output.tries;
         else if (buffer == "TABU_LENGTH")
             stream >> output.tabuLength;
+        else if (buffer == "ITERATIONS")
+            stream >> output.iterations;
         else
             std::getline(stream, buffer);
     }
@@ -102,8 +106,8 @@ std::string TSPTabuSearchSolver::Parameters::parse() const {
     std::stringstream stream;
 
     stream << "TRIES\t" << std::to_string(tries) << std::endl
-           << "TABU_LENGTH\t" << std::to_string(tabuLength) << std::endl;
+           << "TABU_LENGTH\t" << std::to_string(tabuLength) << std::endl
+           << "ITERATIONS\t" << std::to_string(iterations) << std::endl;
 
     return stream.str();
 }
-

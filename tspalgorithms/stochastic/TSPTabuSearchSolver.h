@@ -8,19 +8,26 @@ class TSPTabuSearchSolver : public TSPStochasticSolver {
 public:
     class Parameters{
     public:
-        explicit Parameters(int tabuLength = 5, int retries = 1):
-                tabuLength(tabuLength), tries(retries){};
+        explicit Parameters(int tabuLength = 5, int retries = 1,
+                            long long iterations = 1000):
+                tabuLength(tabuLength), tries(retries),
+                iterations(iterations){};
         [[nodiscard]]int getTabuLength() const{return tabuLength;};
         [[nodiscard]]int getTries() const{return tries;};
         void setTabuLength(int length){tabuLength = length;};
         void setTries(int retries){ this->tries = retries;};
 
+        [[nodiscard]] long long int getIterations() const{return iterations;};
+
+        void setIterations(long long int iterations){Parameters::iterations = iterations;};
+
         static Parameters from(const std::string& string);
         static Parameters from(std::istream& stream);
-        std::string parse() const;
+        [[nodiscard]] std::string parse() const;
     private:
         int tabuLength;
         int tries;
+        long long iterations;
     };
     explicit TSPTabuSearchSolver(int tabuLength = 5, int retries = 1) :
                             params(tabuLength, retries){};
@@ -29,8 +36,10 @@ public:
 
     [[nodiscard]]int getTabuLength() const{return params.getTabuLength();};
     [[nodiscard]]int getTries() const{return params.getTries();};
+    [[nodiscard]] long long getIterations() const{return this->params.getIterations();};
     void setTabuLength(int length){params.setTabuLength(length);};
     void setTries(int retries){ params.setTries(retries);};
+    void setIterations(long long iterations){this->params.setIterations(iterations);};
     void setParameters(Parameters parameters){this->params = parameters;};
 private:
     void prepareForNextTry();
