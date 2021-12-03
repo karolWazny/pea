@@ -12,9 +12,10 @@ TSPSolution TSPTabuSearchSolver::solveFor(const TSPInputMatrix &matrix) {
 }
 
 void TSPTabuSearchSolver::prepareForNextTry() {
+    auto initialValue = - params.getTabuLength() - 1;
     for(size_t i = 0; i < tabu.getLength(); i++){
         for(size_t j = 0; j < tabu[i].getLength(); j++){
-            tabu[i][j] = 0;
+            tabu[i][j] = initialValue;
         }
     }
     math::fisherYatesShuffle(state);
