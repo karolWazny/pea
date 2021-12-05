@@ -21,7 +21,6 @@ void TSPTabuSearchSolver::prepareForNextTry() {
     math::fisherYatesShuffle(state);
 
     calculateCurrentCost();
-    bestCost = currentCost;
 }
 
 void TSPTabuSearchSolver::prepareMembers(const TSPInputMatrix &matrix) {
@@ -34,6 +33,7 @@ void TSPTabuSearchSolver::prepareMembers(const TSPInputMatrix &matrix) {
     for(size_t i = 0; i < tabu.getLength(); i++){
         tabu[i] = ffarray<long long>(tabu.getLength() - i);
     }
+    bestCost = INT64_MAX;
 }
 
 void TSPTabuSearchSolver::runAlgorithm() {
