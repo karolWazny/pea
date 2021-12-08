@@ -174,9 +174,9 @@ void Main::solveSA() {
             ("symulowanego wyzarzania",
              "saparams.txt",
              TSPSimulatedAnnealingSolver::Parameters(
-                     40.0, 0.9999999,
-                     adjacencyMatrix.size() * adjacencyMatrix.size() * 2.0,
-                     0.1, 2 * adjacencyMatrix.size()));
+                     100.0, 0.9,
+                     adjacencyMatrix.size() * adjacencyMatrix.size() * 0.2,
+                     1, 8));
 }
 
 void Main::solveTS() {
@@ -186,7 +186,7 @@ void Main::solveTS() {
              "tsparams.txt",
              TSPTabuSearchSolver::Parameters(
                      3 * adjacencyMatrix.size(),
-                     2 * adjacencyMatrix.size()));
+                     8));
 }
 
 void Main::saveMatrix() {

@@ -108,7 +108,7 @@ private:
     double currentTemp{};
 
     [[nodiscard]] bool keepGoing() const{
-        return currentTemp > getMinimalTemperature() && iteration < getIterations();
+        return currentTemp > getMinimalTemperature();
     };
 };
 

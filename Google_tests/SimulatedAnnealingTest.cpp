@@ -19,7 +19,7 @@ TEST(SASuite, BR17Test){
     auto values = reader.fromFile("br17.atsp");
     auto matrix = matrixFrom(values);
     for(int j = 0; j < 100; j++){
-        auto output = TSPSimulatedAnnealingSolver(5000000, 0.999, 10000, 20, 8).solveFor(matrix);
+        auto output = TSPSimulatedAnnealingSolver().solveFor(matrix);
         for(int i = 0; i < 17; i++){
             ASSERT_TRUE(output.circuit.contains(i));
         }
