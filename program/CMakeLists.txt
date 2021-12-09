@@ -9,7 +9,7 @@ set(HEADER_FILES
         Randomizer.h
         file/AtspFileHandler.h
         StopWatch.h
-        TimeMeasurer.h)
+        testers/TimeMeasurer.h)
 
 set(SOURCE_FILES
         Main.cpp
@@ -17,7 +17,7 @@ set(SOURCE_FILES
         Randomizer.cpp
         file/AtspFileHandler.cpp
         StopWatch.cpp
-        TimeMeasurer.cpp ProgramSetup.cpp ProgramSetup.h Program.cpp Program.h PeaSetup.cpp PeaSetup.h RealRandom.cpp RealRandom.h file/TxtFileHandler.cpp file/TxtFileHandler.h file/FileHandler.cpp file/FileHandler.h)
+        testers/TimeMeasurer.cpp ProgramSetup.cpp ProgramSetup.h Program.cpp Program.h PeaSetup.cpp PeaSetup.h RealRandom.cpp RealRandom.h file/TxtFileHandler.cpp file/TxtFileHandler.h file/FileHandler.cpp file/FileHandler.h testers/SATester.cpp testers/SATester.h testers/TSTester.cpp testers/TSTester.h)
 
 link_libraries(tspalgorithms)
 

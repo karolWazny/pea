@@ -5,7 +5,7 @@
 #include <iostream>
 #include <filesystem>
 
-#include "TimeMeasurer.h"
+#include "testers/TimeMeasurer.h"
 #include "../tspalgorithms/TSPInputMatrix.h"
 #include "../tspalgorithms/TSPAbstractSolver.h"
 #include "ProgramSetup.h"

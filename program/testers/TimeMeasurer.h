@@ -5,10 +5,10 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
-#include "../structure_templates_lib/structures.h"
-#include "StopWatch.h"
-#include "Randomizer.h"
-#include "../tspalgorithms/TSPAbstractSolver.h"
+#include "../../structure_templates_lib/structures.h"
+#include "../StopWatch.h"
+#include "../Randomizer.h"
+#include "../../tspalgorithms/TSPAbstractSolver.h"
 
 struct SingleMeasurement;
 

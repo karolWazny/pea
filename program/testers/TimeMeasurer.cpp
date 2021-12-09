@@ -1,9 +1,9 @@
 #include "TimeMeasurer.h"
-#include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
-#include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
-#include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
-#include "../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
-#include "../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
+#include "../../tspalgorithms/deterministic/TSPBruteForceSolver.h"
+#include "../../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
+#include "../../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
+#include "../../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
+#include "../../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
 #include <iomanip>
 #include <chrono>
 #include <sstream>
