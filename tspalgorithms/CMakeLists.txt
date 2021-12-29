@@ -26,7 +26,7 @@ set(SOURCE_FILES
         PlanarVector.cpp
         stochastic/TSPTabuSearchSolver.cpp
         stochastic/TSPSimulatedAnnealingSolver.cpp
-        stochastic/TSPStochasticSolver.cpp)
+        stochastic/TSPStochasticSolver.cpp third/GeneticSolver.cpp third/GeneticSolver.h)
 
 link_libraries(structure_templates_lib)
 
