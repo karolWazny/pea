@@ -16,19 +16,20 @@ public:
         int breed{};
         double crossoverProbability{};
         double mutationProbability{};
-        MutationMethod mutationMethod{};
+        MutationMethod mutationMethod{MutationMethod::REVERSE};
     };
 
     class Builder {
+    public:
+
     private:
-        MutationMethod mutationMethod{MutationMethod::REVERSE};
-        int population{30};
-        int breed{90};
-        double crossoverProbability{0.6};
-        double mutationProbability{0.01};
+        Parameters parameters;
     };
 
+    TSPSolution solveFor(const TSPInputMatrix& input) override;
+
 private:
+    Parameters parameters;
 
 };
 
