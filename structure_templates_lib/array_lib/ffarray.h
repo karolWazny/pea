@@ -1,7 +1,7 @@
 #ifndef PEA_FFARRAY_H
 #define PEA_FFARRAY_H
 
-#include <vector>
+#include <memory>
 #include "../OrderedCollection.h"
 
 template <typename T>

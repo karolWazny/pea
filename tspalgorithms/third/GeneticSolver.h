@@ -3,13 +3,12 @@
 
 
 #include "../TSPAbstractSolver.h"
+#include "Individual.h"
+#include "Mutation.h"
+#include "../../program/RealRandom.h"
 
 class GeneticSolver : public TSPAbstractSolver {
 public:
-    enum class MutationMethod{
-        REVERSE,
-        RANDOM
-    };
 
     class Parameters {
     public:
@@ -27,23 +26,28 @@ public:
         Parameters parameters;
     };
 
-    class Individual{
-    public:
-        ffarray<int> permutation;
-        long long cost{};
-    };
-
     TSPSolution solveFor(const TSPInputMatrix& input) override;
 
 private:
     void prepareMembers();
     long long calculateCost(const Individual& individual);
+    Individual chooseTournamentStyle();
+    void applyMutationToBreed();
+    void applyCrossoverToBreed();
+    void createNewBreed();
+    void assessPopulation();
+    void setBreedAsParents();
+
+    static RealRandom<double> random;
 
     Parameters parameters;
     ffarray<Individual> population;
     ffarray<Individual> breed;
     const TSPInputMatrix* input{};
-};
+    Individual currentlyBest;
 
+    std::function<void(Individual&)> mutate;
+    void crossover(Individual&, Individual&);
+};
 
 #endif //PEA_GENETICSOLVER_H

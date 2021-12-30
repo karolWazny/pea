@@ -9,12 +9,17 @@ namespace math {
     unsigned long long newton(unsigned long long n, unsigned long long k);
 
     template <typename T>
-    void fisherYatesShuffle(OrderedCollection<T> &collection) {
+    void fisherYatesShuffle(OrderedCollection<T> &collection, long long firstIndex, long long secondIndex) {
         static Randomizer rand;
-        for(size_t i = 0; i < collection.getLength() - 1; i++){
+        for(long long i = firstIndex; i < secondIndex - 1; i++){
             size_t index = rand.getULong(collection.getLength() - i - 1) + i;
             std::swap(collection[i], collection[index]);
         }
+    }
+
+    template <typename T>
+    void fisherYatesShuffle(OrderedCollection<T> &collection) {
+        fisherYatesShuffle(collection, 0, collection.getLength());
     }
 
     template <typename T>
