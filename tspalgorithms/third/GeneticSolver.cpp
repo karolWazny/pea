@@ -108,23 +108,28 @@ TSPSolution GeneticSolver::buildSolutionFromBest() {
     return solution;
 }
 
-GeneticSolver::Builder &GeneticSolver::Builder::withPopulation(int) {
+GeneticSolver::Builder &GeneticSolver::Builder::withPopulation(int population) {
+    parameters.population = population;
     return *this;
 }
 
-GeneticSolver::Builder &GeneticSolver::Builder::withBreed(int) {
+GeneticSolver::Builder &GeneticSolver::Builder::withBreed(int breed) {
+    parameters.breed = breed;
     return *this;
 }
 
-GeneticSolver::Builder &GeneticSolver::Builder::withCrossoverRate(double) {
+GeneticSolver::Builder &GeneticSolver::Builder::withCrossoverRate(double rate) {
+    parameters.crossoverProbability = rate;
     return *this;
 }
 
-GeneticSolver::Builder &GeneticSolver::Builder::withMutationRate(double) {
+GeneticSolver::Builder &GeneticSolver::Builder::withMutationRate(double rate) {
+    parameters.mutationProbability = rate;
     return *this;
 }
 
-GeneticSolver::Builder &GeneticSolver::Builder::withMutationMethod(MutationMethod) {
+GeneticSolver::Builder &GeneticSolver::Builder::withMutationMethod(MutationMethod method) {
+    parameters.mutationMethod = method;
     return *this;
 }
 
