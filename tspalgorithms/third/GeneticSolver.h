@@ -12,6 +12,7 @@ public:
     };
 
     class Parameters {
+    public:
         int population{};
         int breed{};
         double crossoverProbability{};
@@ -26,11 +27,22 @@ public:
         Parameters parameters;
     };
 
+    class Individual{
+    public:
+        ffarray<int> permutation;
+        long long cost{};
+    };
+
     TSPSolution solveFor(const TSPInputMatrix& input) override;
 
 private:
-    Parameters parameters;
+    void prepareMembers();
+    long long calculateCost(const Individual& individual);
 
+    Parameters parameters;
+    ffarray<Individual> population;
+    ffarray<Individual> breed;
+    const TSPInputMatrix* input{};
 };
 
 
