@@ -12,8 +12,8 @@ Mutation MutationFactory::createMutation(MutationMethod method) {
             return [](Individual& individual){
                 static Randomizer rand;
                 ffarray<int>& permutation = individual.permutation;
-                auto firstIndex = rand.getULong(permutation.getLength());
-                auto secondIndex = rand.getULong(permutation.getLength());
+                auto firstIndex = rand.getULong(permutation.getLength() - 1);
+                auto secondIndex = rand.getULong(permutation.getLength() - 1);
                 if(firstIndex > secondIndex)
                     std::swap(firstIndex, secondIndex);
                 while(firstIndex < secondIndex){
@@ -26,8 +26,8 @@ Mutation MutationFactory::createMutation(MutationMethod method) {
             return [](Individual& individual){
                 static Randomizer rand;
                 ffarray<int>& permutation = individual.permutation;
-                auto firstIndex = rand.getULong(permutation.getLength() + 1);
-                auto secondIndex = rand.getULong(permutation.getLength() + 1);
+                auto firstIndex = rand.getULong(permutation.getLength());
+                auto secondIndex = rand.getULong(permutation.getLength());
                 if(firstIndex > secondIndex)
                     std::swap(firstIndex, secondIndex);
                 math::fisherYatesShuffle(permutation, firstIndex, secondIndex);

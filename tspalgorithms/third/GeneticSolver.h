@@ -2,6 +2,8 @@
 #define PEA_GENETICSOLVER_H
 
 
+#include <utility>
+
 #include "../TSPAbstractSolver.h"
 #include "Individual.h"
 #include "Mutation.h"
@@ -12,16 +14,21 @@ public:
 
     class Parameters {
     public:
-        int population{};
-        int breed{};
-        double crossoverProbability{};
-        double mutationProbability{};
+        int population{30};
+        int breed{30};
+        double crossoverProbability{1.0};
+        double mutationProbability{0.01};
         MutationMethod mutationMethod{MutationMethod::REVERSE};
     };
 
     class Builder {
     public:
-
+        Builder& withPopulation(int);
+        Builder& withBreed(int);
+        Builder& withCrossoverRate(double);
+        Builder& withMutationRate(double);
+        Builder& withMutationMethod(MutationMethod);
+        GeneticSolver build();
     private:
         Parameters parameters;
     };
@@ -29,6 +36,7 @@ public:
     TSPSolution solveFor(const TSPInputMatrix& input) override;
 
 private:
+    explicit GeneticSolver(Mutation mutation) : mutate(std::move(mutation)){};
     void prepareMembers();
     long long calculateCost(const Individual& individual);
     Individual chooseTournamentStyle();
@@ -38,6 +46,8 @@ private:
     void assessPopulation();
     void setBreedAsParents();
 
+    TSPSolution buildSolutionFromBest();
+
     static RealRandom<double> random;
 
     Parameters parameters;
@@ -46,7 +56,7 @@ private:
     const TSPInputMatrix* input{};
     Individual currentlyBest;
 
-    std::function<void(Individual&)> mutate;
+    Mutation mutate;
     void crossover(Individual&, Individual&);
 };
 

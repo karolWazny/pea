@@ -5,11 +5,9 @@
 RealRandom<double> GeneticSolver::random = RealRandom(0.0);
 
 TSPSolution GeneticSolver::solveFor(const TSPInputMatrix &inputMatrix) {
-    TSPSolution solution;
     this->input = &inputMatrix;
 
     prepareMembers();
-
 
     for(int i = 0; i < 100; i++){
         assessPopulation();
@@ -18,29 +16,15 @@ TSPSolution GeneticSolver::solveFor(const TSPInputMatrix &inputMatrix) {
         applyMutationToBreed();
         setBreedAsParents();
     }
-
-
-
-    for(int i = 0; i < input->size(); i++){
-        solution.circuit.pushBack(i);
-    }
-    solution.circuit.pushBack(0);
-    solution.totalCost = 0;
-    auto iterator = solution.circuit.iterator();
-    auto second = iterator.next();
-    while(iterator.hasNext()){
-        auto first = second;
-        second = iterator.next();
-        solution.totalCost += input->getDistance(first, second);
-    }
-    return solution;
+    return buildSolutionFromBest();
 }
 
 void GeneticSolver::prepareMembers() {
     population = ffarray<Individual>(parameters.population);
-    for(int i = 0; i < breed.getLength(); i++){
-        Individual& ind = breed[i];
-        for(int j = 0; j < input->size() - 1; j++){
+    for(int i = 0; i < population.getLength(); i++){
+        Individual& ind = population[i];
+        ind.permutation = ffarray<int>(input->size() - 1);
+        for(int j = 0; j < ind.permutation.getLength(); j++){
             ind.permutation[j] = j + 1;
         }
         math::fisherYatesShuffle(ind.permutation);
@@ -64,7 +48,7 @@ Individual GeneticSolver::chooseTournamentStyle() {
     long long currentWinnerIndex{};
     Randomizer rand;
     for(int i = 0; i < 8; i++){
-        auto index = rand.getULong(population.getLength());
+        auto index = rand.getULong(population.getLength() - 1);
         if(population[index].cost < cost){
             cost = population[index].cost;
             currentWinnerIndex = index;
@@ -89,7 +73,10 @@ void GeneticSolver::applyCrossoverToBreed() {
 }
 
 void GeneticSolver::createNewBreed() {
-
+    breed = ffarray<Individual>(parameters.population);
+    for(int i = 0; i < breed.getLength(); i++){
+        breed[i] = chooseTournamentStyle();
+    }
 }
 
 void GeneticSolver::crossover(Individual &, Individual &) {
@@ -99,7 +86,7 @@ void GeneticSolver::crossover(Individual &, Individual &) {
 void GeneticSolver::assessPopulation() {
     for(int i = 0; i < population.getLength(); i++){
         population[i].cost = calculateCost(population[i]);
-        if(population[i].cost <= currentlyBest.cost) {
+        if(population[i].cost < currentlyBest.cost) {
             currentlyBest.cost = population[i].cost;
             currentlyBest.permutation = population[i].permutation.copy();
         }
@@ -108,4 +95,43 @@ void GeneticSolver::assessPopulation() {
 
 void GeneticSolver::setBreedAsParents() {
     population = breed;
+}
+
+TSPSolution GeneticSolver::buildSolutionFromBest() {
+    TSPSolution solution;
+    solution.circuit.pushBack(0);
+    for(int i = 0; i < currentlyBest.permutation.getLength(); i++){
+        solution.circuit.pushBack(currentlyBest.permutation[i]);
+    }
+    solution.circuit.pushBack(0);
+    solution.totalCost = currentlyBest.cost;
+    return solution;
+}
+
+GeneticSolver::Builder &GeneticSolver::Builder::withPopulation(int) {
+    return *this;
+}
+
+GeneticSolver::Builder &GeneticSolver::Builder::withBreed(int) {
+    return *this;
+}
+
+GeneticSolver::Builder &GeneticSolver::Builder::withCrossoverRate(double) {
+    return *this;
+}
+
+GeneticSolver::Builder &GeneticSolver::Builder::withMutationRate(double) {
+    return *this;
+}
+
+GeneticSolver::Builder &GeneticSolver::Builder::withMutationMethod(MutationMethod) {
+    return *this;
+}
+
+GeneticSolver GeneticSolver::Builder::build() {
+    auto factory = MutationFactory();
+    auto method = factory.createMutation(parameters.mutationMethod);
+    GeneticSolver solver(method);
+    solver.parameters = parameters;
+    return solver;
 }

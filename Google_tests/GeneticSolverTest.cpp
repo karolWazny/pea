@@ -4,10 +4,12 @@
 #include "../program/file/AtspFileHandler.h"
 
 TEST(GeneticSuite, OutputPathLengthTest){
+    auto builder = GeneticSolver::Builder();
+
     auto reader = AtspFileHandler();
     auto values = reader.fromFile("testfile.atsp");
     auto matrix = matrixFrom(values);
-    auto output = GeneticSolver().solveFor(matrix);
+    auto output = GeneticSolver::Builder().build().solveFor(matrix);
     ASSERT_EQ(6, output.circuit.getLength());
     std::cout << std::to_string(output.totalCost) << std::endl;
 }
@@ -17,7 +19,7 @@ TEST(GeneticSuite, BR17Test){
     auto values = reader.fromFile("br17.atsp");
     auto matrix = matrixFrom(values);
     for(int j = 0; j < 100; j++){
-        auto output = GeneticSolver().solveFor(matrix);
+        auto output = GeneticSolver::Builder().build().solveFor(matrix);
         for(int i = 0; i < 17; i++){
             ASSERT_TRUE(output.circuit.contains(i));
         }
