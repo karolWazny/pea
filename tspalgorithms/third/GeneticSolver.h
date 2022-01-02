@@ -8,6 +8,7 @@
 #include "Individual.h"
 #include "Mutation.h"
 #include "../../program/RealRandom.h"
+#include "../../program/Randomizer.h"
 
 class GeneticSolver : public TSPAbstractSolver {
 public:
@@ -16,8 +17,9 @@ public:
     public:
         int population{30};
         int breed{30};
-        double crossoverProbability{1.0};
-        double mutationProbability{0.01};
+        int generations{200};
+        double crossoverProbability{0.6};
+        double mutationProbability{0.3};
         MutationMethod mutationMethod{MutationMethod::REVERSE};
     };
 
@@ -46,13 +48,17 @@ private:
     void assessPopulation();
     void setBreedAsParents();
 
-    TSPSolution buildSolutionFromBest();
+    Individual produceChild(Individual&, Individual&, int, int);
+
+    [[nodiscard]] TSPSolution buildSolutionFromBest() const;
 
     static RealRandom<double> random;
+    static Randomizer intRandom;
 
     Parameters parameters;
     ffarray<Individual> population;
     ffarray<Individual> breed;
+    LinkedList<Individual> crossoverBreed;
     const TSPInputMatrix* input{};
     Individual currentlyBest;
 

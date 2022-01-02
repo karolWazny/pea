@@ -1,15 +1,17 @@
 #include "GeneticSolver.h"
 
 #include "../mathfunctions.h"
+#include "../../structure_templates_lib/rbtree_lib/BRTree.h"
 
 RealRandom<double> GeneticSolver::random = RealRandom(0.0);
+Randomizer GeneticSolver::intRandom = Randomizer();
 
 TSPSolution GeneticSolver::solveFor(const TSPInputMatrix &inputMatrix) {
     this->input = &inputMatrix;
 
     prepareMembers();
 
-    for(int i = 0; i < 100; i++){
+    for(int i = 0; i < parameters.generations; i++){
         assessPopulation();
         createNewBreed();
         applyCrossoverToBreed();
@@ -47,7 +49,7 @@ Individual GeneticSolver::chooseTournamentStyle() {
     long long cost{INT64_MAX};
     long long currentWinnerIndex{};
     Randomizer rand;
-    for(int i = 0; i < 8; i++){
+    for(int i = 0; i < 12; i++){
         auto index = rand.getULong(population.getLength() - 1);
         if(population[index].cost < cost){
             cost = population[index].cost;
@@ -79,8 +81,66 @@ void GeneticSolver::createNewBreed() {
     }
 }
 
-void GeneticSolver::crossover(Individual &, Individual &) {
+void GeneticSolver::crossover(Individual &first, Individual &second) {
+    auto firstIndex = intRandom.getInt(first.permutation.getLength() - 1);
+    auto secondIndex = intRandom.getInt(first.permutation.getLength() - 1);
+    if(firstIndex > secondIndex)
+        std::swap(firstIndex, secondIndex);
+    Individual child1 = produceChild(first, second, firstIndex, secondIndex);
+    Individual child2 = produceChild(second, first, firstIndex, secondIndex);
+    first = child1;
+    second = child2;
+}
 
+Individual GeneticSolver::produceChild(Individual &first, Individual &second, int firstCrossingPoint, int secondCrossingPoint) {
+    if(firstCrossingPoint > secondCrossingPoint)
+        std::swap(firstCrossingPoint, secondCrossingPoint);
+    Individual child;
+    child.permutation = ffarray<int>(first.permutation.getLength());
+    BRTree elementsFromFirst;
+    BRTree indexesUsed;
+    for(auto i = firstCrossingPoint; i <= secondCrossingPoint; i++){
+        child.permutation[i] = first.permutation[i];
+        elementsFromFirst.put(first.permutation[i]);
+        indexesUsed.put(i);
+    }
+    for(auto i = firstCrossingPoint; i <= secondCrossingPoint; i++){
+        if(!elementsFromFirst.contains(second.permutation[i])){
+            auto analogousElementFromFirst = first.permutation[i];
+            do{
+                auto indexInSecondParent = second.permutation.indexOf(analogousElementFromFirst);
+                if(indexInSecondParent < firstCrossingPoint or indexInSecondParent > secondCrossingPoint){
+#if DEBUG
+                    std::cout << "DEBUG(GeneticSolver::crossover): Index: " << std::to_string(indexInSecondParent) << ", value: " << std::to_string(analogousElementFromFirst) << std::endl;
+#endif
+                    indexesUsed.put(indexInSecondParent);
+                    child.permutation[indexInSecondParent] = second.permutation[i];
+                    break;
+                }
+                analogousElementFromFirst = first.permutation[indexInSecondParent];
+            }while(true);
+        }
+    }
+    for(int i = 0; i < firstCrossingPoint; i++){
+        if(elementsFromFirst.contains(second.permutation[i]))
+            continue;
+        auto positionToPutAt = i;
+        while(indexesUsed.contains(positionToPutAt))
+            positionToPutAt++;
+        indexesUsed.put(positionToPutAt);
+        child.permutation[positionToPutAt] = second.permutation[i];
+    }
+
+    for(int i = secondCrossingPoint + 1; i < child.permutation.getLength(); i++){
+        if(elementsFromFirst.contains(second.permutation[i]))
+            continue;
+        auto positionToPutAt = i;
+        while(indexesUsed.contains(positionToPutAt))
+            positionToPutAt++;
+        indexesUsed.put(positionToPutAt);
+        child.permutation[positionToPutAt] = second.permutation[i];
+    }
+    return child;
 }
 
 void GeneticSolver::assessPopulation() {
@@ -97,7 +157,7 @@ void GeneticSolver::setBreedAsParents() {
     population = breed;
 }
 
-TSPSolution GeneticSolver::buildSolutionFromBest() {
+TSPSolution GeneticSolver::buildSolutionFromBest() const {
     TSPSolution solution;
     solution.circuit.pushBack(0);
     for(int i = 0; i < currentlyBest.permutation.getLength(); i++){

@@ -9,7 +9,7 @@ TEST(GeneticSuite, OutputPathLengthTestReverseMutation){
     auto matrix = matrixFrom(values);
     auto output = GeneticSolver::Builder().withMutationMethod(MutationMethod::REVERSE).build().solveFor(matrix);
     ASSERT_EQ(6, output.circuit.getLength());
-    std::cout << std::to_string(output.totalCost) << std::endl;
+    //std::cout << std::to_string(output.totalCost) << std::endl;
 }
 
 TEST(GeneticSuite, OutputPathLengthTestRandomMutation){
@@ -18,7 +18,7 @@ TEST(GeneticSuite, OutputPathLengthTestRandomMutation){
     auto matrix = matrixFrom(values);
     auto output = GeneticSolver::Builder().withMutationMethod(MutationMethod::RANDOM).build().solveFor(matrix);
     ASSERT_EQ(6, output.circuit.getLength());
-    std::cout << std::to_string(output.totalCost) << std::endl;
+    //std::cout << std::to_string(output.totalCost) << std::endl;
 }
 
 TEST(GeneticSuite, BR17TestReverseMutation){
