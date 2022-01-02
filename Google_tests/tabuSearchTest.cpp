@@ -11,7 +11,7 @@ TEST(TSSuite, OutputPathLengthTest){
     //std::cout << std::to_string(matrix.size());
     auto output = solver.solveFor(matrix);
     //ASSERT_EQ(6, output.circuit.getLength());
-    std::cout << std::to_string(output.totalCost) << std::endl;
+    //std::cout << std::to_string(output.totalCost) << std::endl;
     //std::cout << output.circuit.toString() << std::endl;
 }
 

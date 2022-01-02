@@ -8,6 +8,6 @@ add_executable(Google_Tests_run
         InitialTest.cpp
         TSPInputMatrixTest.cpp
         FileReaderTest.cpp
-        BruteForceTest.cpp DynamicProgrammingTest.cpp BnBTest.cpp mathTest.cpp treeTest.cpp listTest.cpp ffarrayTest.cpp AtspCompareTests.cpp SimulatedAnnealingTest.cpp tabuSearchTest.cpp)
+        BruteForceTest.cpp DynamicProgrammingTest.cpp BnBTest.cpp mathTest.cpp treeTest.cpp listTest.cpp ffarrayTest.cpp AtspCompareTests.cpp SimulatedAnnealingTest.cpp tabuSearchTest.cpp GeneticSolverTest.cpp sortTest.cpp)
 
 target_link_libraries(Google_Tests_run gtest gtest_main tspalgorithms program)

@@ -8,7 +8,7 @@ template <typename T>
 class RealRandom {
 public:
     explicit RealRandom(T lowerBound = 0.0,
-               double upperBound = 1.0)
+               T upperBound = 1.0)
                : lowerBound(lowerBound),
                upperBound(upperBound),
                generator(std::random_device(std::random_device())()),

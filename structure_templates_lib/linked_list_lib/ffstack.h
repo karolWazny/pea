@@ -1,6 +1,8 @@
 #ifndef PEA_FFSTACK_H
 #define PEA_FFSTACK_H
 
+#include <iostream>
+
 template <typename T>
 class ffstack{
 public:

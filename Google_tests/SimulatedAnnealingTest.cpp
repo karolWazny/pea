@@ -10,7 +10,7 @@ TEST(SASuite, OutputPathLengthTest){
     auto matrix = matrixFrom(values);
     auto output = TSPSimulatedAnnealingSolver().solveFor(matrix);
     ASSERT_EQ(6, output.circuit.getLength());
-    std::cout << std::to_string(output.totalCost) << std::endl;
+    //std::cout << std::to_string(output.totalCost) << std::endl;
 }
 
 TEST(SASuite, BR17Test){

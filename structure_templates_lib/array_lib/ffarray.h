@@ -1,7 +1,7 @@
 #ifndef PEA_FFARRAY_H
 #define PEA_FFARRAY_H
 
-#include <vector>
+#include <memory>
 #include "../OrderedCollection.h"
 
 template <typename T>
@@ -30,6 +30,13 @@ public:
         }
         return output;
     };
+    int indexOf(T element){
+        for(int i = 0; i < size; i++){
+            if(element == table[i])
+                return i;
+        }
+        return -1;
+    }
 private:
     std::shared_ptr<T[]> elementsShared;
     T* table;
