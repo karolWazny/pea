@@ -39,6 +39,7 @@ private:
     void generateMatrix();
     void solveSA();
     void solveTS();
+    void solveGenetic();
     void saveMatrix();
 
 
@@ -77,7 +78,7 @@ private:
             std::cout << "Utworzono nowy plik z konfiguracja." << std::endl;
         }
         auto solver = T(params);
-        solve("symulowanego wyzarzania",solver);
+        solve(methodName,solver);
         std::cout << "Dla nastepujacych wartosci parametrow:" << std::endl;
         std::cout << params.parse() << std::endl;
     };

@@ -28,6 +28,9 @@ public:
         [[nodiscard]] std::string parse() const;
     };
 
+    explicit GeneticSolver(Parameters);
+    GeneticSolver();
+
     class Builder {
     public:
         Builder& withPopulation(int);

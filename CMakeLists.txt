@@ -3,7 +3,7 @@ project(pea)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(pea main.cpp utils/stringutils.h utils/stringutils.cpp)
+add_executable(pea main.cpp utils/stringutils.h)
 
 add_subdirectory(Google_tests)
 add_subdirectory(tspalgorithms)

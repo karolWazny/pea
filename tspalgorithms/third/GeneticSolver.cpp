@@ -169,6 +169,14 @@ TSPSolution GeneticSolver::buildSolutionFromBest() const {
     return solution;
 }
 
+GeneticSolver::GeneticSolver(GeneticSolver::Parameters params) {
+    *this = Builder().withParameters(params).build();
+}
+
+GeneticSolver::GeneticSolver() {
+    *this = GeneticSolver(Parameters());
+}
+
 GeneticSolver::Builder &GeneticSolver::Builder::withPopulation(int population) {
     parameters.population = population;
     return *this;
