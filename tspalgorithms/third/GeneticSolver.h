@@ -15,6 +15,7 @@ public:
 
     class Parameters {
     public:
+        int tournamentPool{5};
         int population{30};
         int breed{30};
         int generations{200};

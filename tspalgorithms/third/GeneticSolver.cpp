@@ -49,7 +49,7 @@ Individual GeneticSolver::chooseTournamentStyle() {
     long long cost{INT64_MAX};
     long long currentWinnerIndex{};
     Randomizer rand;
-    for(int i = 0; i < 12; i++){
+    for(int i = 0; i < parameters.tournamentPool; i++){
         auto index = rand.getULong(population.getLength() - 1);
         if(population[index].cost < cost){
             cost = population[index].cost;
