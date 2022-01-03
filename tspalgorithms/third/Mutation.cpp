@@ -40,6 +40,12 @@ Mutation MutationFactory::createMutation(MutationMethod method) {
 
 MutationMethod mutationMethodFrom(const std::string& str){
     auto properString = trim_copy(str);
+    toLower(properString);
+    if(properString == "REVERSE")
+        return MutationMethod::REVERSE;
+    else if(properString == "RANDOM")
+        return MutationMethod::RANDOM;
+    return MutationMethod::RANDOM;
 }
 
 MutationMethod mutationMethodFrom(std::istream& stream){
