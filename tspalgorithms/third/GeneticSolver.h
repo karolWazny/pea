@@ -31,6 +31,7 @@ public:
         Builder& withCrossoverRate(double);
         Builder& withMutationRate(double);
         Builder& withMutationMethod(MutationMethod);
+        Builder& withTournamentPool(int);
         GeneticSolver build();
     private:
         Parameters parameters;

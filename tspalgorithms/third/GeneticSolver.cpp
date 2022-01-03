@@ -200,3 +200,8 @@ GeneticSolver GeneticSolver::Builder::build() {
     solver.parameters = parameters;
     return solver;
 }
+
+GeneticSolver::Builder &GeneticSolver::Builder::withTournamentPool(int pool) {
+    this->parameters.tournamentPool = pool;
+    return *this;
+}
