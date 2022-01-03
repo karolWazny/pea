@@ -22,7 +22,14 @@ public:
         double crossoverProbability{0.6};
         double mutationProbability{0.3};
         MutationMethod mutationMethod{MutationMethod::REVERSE};
+
+        static Parameters from(const std::string&);
+        static Parameters from(std::istream&);
+        [[nodiscard]] std::string parse() const;
     };
+
+    explicit GeneticSolver(Parameters);
+    GeneticSolver();
 
     class Builder {
     public:

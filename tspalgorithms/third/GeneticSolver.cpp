@@ -1,3 +1,4 @@
+#include <sstream>
 #include "GeneticSolver.h"
 
 #include "../mathfunctions.h"
@@ -168,6 +169,14 @@ TSPSolution GeneticSolver::buildSolutionFromBest() const {
     return solution;
 }
 
+GeneticSolver::GeneticSolver(GeneticSolver::Parameters params) {
+    *this = Builder().withParameters(params).build();
+}
+
+GeneticSolver::GeneticSolver() {
+    *this = GeneticSolver(Parameters());
+}
+
 GeneticSolver::Builder &GeneticSolver::Builder::withPopulation(int population) {
     parameters.population = population;
     return *this;
@@ -209,4 +218,48 @@ GeneticSolver::Builder &GeneticSolver::Builder::withTournamentPool(int pool) {
 GeneticSolver::Builder &GeneticSolver::Builder::withParameters(const GeneticSolver::Parameters & params) {
     this->parameters = params;
     return *this;
+}
+
+GeneticSolver::Parameters GeneticSolver::Parameters::from(std::istream & stream) {
+    std::string buffer;
+    Parameters output;
+    while(!stream.eof()){
+        stream >> buffer;
+        if(buffer == "TOURNAMENT_POOL")
+            stream >> output.tournamentPool;
+        else if (buffer == "POPULATION")
+            stream >> output.population;
+        else if (buffer == "BREED")
+            stream >> output.breed;
+        else if (buffer == "GENERATIONS")
+            stream >> output.generations;
+        else if (buffer == "CROSSOVER_RATE")
+            stream >> output.crossoverProbability;
+        else if (buffer == "MUTATION_RATE")
+            stream >> output.mutationProbability;
+        else if (buffer == "MUTATION_METHOD")
+            stream >> output.mutationMethod;
+        else
+            std::getline(stream, buffer);
+    }
+    return output;
+}
+
+GeneticSolver::Parameters GeneticSolver::Parameters::from(const std::string & string) {
+    auto stream = std::stringstream(string);
+    return from(stream);
+}
+
+std::string GeneticSolver::Parameters::parse() const {
+    std::stringstream stream;
+
+    stream << "TOURNAMENT_POOL\t" << std::to_string(tournamentPool) << std::endl
+           << "POPULATION\t" << std::to_string(population) << std::endl
+           << "BREED\t" << std::to_string(breed) << std::endl
+           << "GENERATIONS\t" << std::to_string(generations) << std::endl
+           << "CROSSOVER_RATE\t" << std::to_string(crossoverProbability) << std::endl
+           << "MUTATION_RATE\t" << std::to_string(mutationProbability) << std::endl
+           << "MUTATION_METHOD\t" << mutationMethod << std::endl;
+
+    return stream.str();
 }

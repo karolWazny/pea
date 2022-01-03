@@ -1,5 +1,6 @@
 #include "Main.h"
 #include "file/TxtFileHandler.h"
+#include "../tspalgorithms/third/GeneticSolver.h"
 #include <filesystem>
 
 bool hasEnding (std::string const &fullString, std::string const &ending) {
@@ -34,8 +35,9 @@ void Main::displayMenu() {
     menuText += "6. Programowanie dynamiczne.\n"
                 "7. Metoda podzialu i ograniczen\n"
                 "8. Symulowane wyzarzanie\n"
-                "9. Tabu search\n";
-    menuText += "10. Zakoncz program.\n"
+                "9. Tabu search\n"
+                "10. Algorytm ewolucyjny\n";
+    menuText += "11. Zakoncz program.\n"
                 "100. Zapisz graf do pliku\n\n";
     std::cout << menuText;
 }
@@ -73,6 +75,9 @@ void Main::interpretInput() {
                 solveTS();
                 break;
             case 10:
+                solveGenetic();
+                break;
+            case 11:
                 keepGoing = false;
                 break;
             case 100:
@@ -208,3 +213,10 @@ void Main::saveMatrix() {
     std::cout << "Zapisano plik poprawnie pod nazwa " << filename << "." << std::endl << std::endl;
 }
 
+void Main::solveGenetic() {
+    solveStochasticallyWithParameters
+            <GeneticSolver>
+            ("algorytmu ewolucyjnego",
+             "gaparams.txt",
+             GeneticSolver::Parameters());
+}

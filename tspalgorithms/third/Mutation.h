@@ -11,6 +11,13 @@ enum class MutationMethod{
     RANDOM
 };
 
+MutationMethod mutationMethodFrom(const std::string&);
+MutationMethod mutationMethodFrom(std::istream&);
+std::string toString(const MutationMethod& method);
+
+std::istream& operator>>(std::istream&, MutationMethod&);
+std::ostream& operator<<(std::ostream&, const MutationMethod&);
+
 class MutationFactory{
 public:
     Mutation createMutation(MutationMethod method);
