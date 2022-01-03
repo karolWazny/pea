@@ -1,3 +1,4 @@
+#include <sstream>
 #include "GeneticSolver.h"
 
 #include "../mathfunctions.h"
@@ -234,4 +235,23 @@ GeneticSolver::Parameters GeneticSolver::Parameters::from(std::istream & stream)
             std::getline(stream, buffer);
     }
     return output;
+}
+
+GeneticSolver::Parameters GeneticSolver::Parameters::from(const std::string & string) {
+    auto stream = std::stringstream(string);
+    return from(stream);
+}
+
+std::string GeneticSolver::Parameters::parse() const {
+    std::stringstream stream;
+
+    stream << "TOURNAMENT_POOL\t" << std::to_string(tournamentPool) << std::endl
+           << "POPULATION\t" << std::to_string(population) << std::endl
+           << "BREED\t" << std::to_string(breed) << std::endl
+           << "GENERATIONS\t" << std::to_string(generations) << std::endl
+           << "CROSSOVER_RATE\t" << std::to_string(crossoverProbability) << std::endl
+           << "MUTATION_RATE\t" << std::to_string(mutationProbability) << std::endl
+           << "MUTATION_METHOD\t" << mutationMethod << std::endl;
+
+    return stream.str();
 }

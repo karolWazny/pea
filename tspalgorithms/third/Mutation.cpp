@@ -58,3 +58,18 @@ std::istream& operator>>(std::istream& stream, MutationMethod& method){
     method = mutationMethodFrom(stream);
     return stream;
 }
+
+std::string toString(const MutationMethod& method){
+    switch (method) {
+        case MutationMethod::REVERSE:
+            return "REVERSE";
+        case MutationMethod::RANDOM:
+            return "RANDOM";
+        default:
+            return "RANDOM";
+    }
+};
+
+std::ostream& operator<<(std::ostream& stream, const MutationMethod& method){
+    return stream << toString(method);
+}

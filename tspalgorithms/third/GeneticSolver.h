@@ -25,7 +25,7 @@ public:
 
         static Parameters from(const std::string&);
         static Parameters from(std::istream&);
-        std::string parse() const;
+        [[nodiscard]] std::string parse() const;
     };
 
     class Builder {
