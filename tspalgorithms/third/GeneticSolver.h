@@ -22,6 +22,10 @@ public:
         double crossoverProbability{0.6};
         double mutationProbability{0.3};
         MutationMethod mutationMethod{MutationMethod::REVERSE};
+
+        static Parameters from(const std::string&);
+        static Parameters from(std::istream&);
+        std::string parse() const;
     };
 
     class Builder {

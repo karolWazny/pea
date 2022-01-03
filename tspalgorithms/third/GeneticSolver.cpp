@@ -210,3 +210,28 @@ GeneticSolver::Builder &GeneticSolver::Builder::withParameters(const GeneticSolv
     this->parameters = params;
     return *this;
 }
+
+GeneticSolver::Parameters GeneticSolver::Parameters::from(std::istream & stream) {
+    std::string buffer;
+    Parameters output;
+    while(!stream.eof()){
+        stream >> buffer;
+        if(buffer == "TOURNAMENT_POOL")
+            stream >> output.tournamentPool;
+        else if (buffer == "POPULATION")
+            stream >> output.population;
+        else if (buffer == "BREED")
+            stream >> output.breed;
+        else if (buffer == "GENERATIONS")
+            stream >> output.generations;
+        else if (buffer == "CROSSOVER_RATE")
+            stream >> output.crossoverProbability;
+        else if (buffer == "MUTATION_RATE")
+            stream >> output.mutationProbability;
+        else if (buffer == "MUTATION_METHOD")
+            stream >> output.mutationMethod;
+        else
+            std::getline(stream, buffer);
+    }
+    return output;
+}

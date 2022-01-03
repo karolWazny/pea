@@ -5,6 +5,7 @@
 #include "Mutation.h"
 #include "../../program/Randomizer.h"
 #include "../mathfunctions.h"
+#include "../../utils/stringutils.h"
 
 Mutation MutationFactory::createMutation(MutationMethod method) {
     switch(method){
@@ -37,3 +38,17 @@ Mutation MutationFactory::createMutation(MutationMethod method) {
     }
 }
 
+MutationMethod mutationMethodFrom(const std::string& str){
+    auto properString = trim_copy(str);
+}
+
+MutationMethod mutationMethodFrom(std::istream& stream){
+    std::string buffer;
+    stream >> buffer;
+    return mutationMethodFrom(buffer);
+}
+
+std::istream& operator>>(std::istream& stream, MutationMethod& method){
+    method = mutationMethodFrom(stream);
+    return stream;
+}
