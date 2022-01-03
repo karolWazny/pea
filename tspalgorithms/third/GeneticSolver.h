@@ -32,6 +32,7 @@ public:
         Builder& withMutationRate(double);
         Builder& withMutationMethod(MutationMethod);
         Builder& withTournamentPool(int);
+        Builder& withParameters(const Parameters&);
         GeneticSolver build();
     private:
         Parameters parameters;

@@ -46,7 +46,6 @@ void TSPTabuSearchSolver::runAlgorithm() {
                 evaluateSwapping(j, j + k + 1);
             }
         }
-
         updateMembers();
     }
 }

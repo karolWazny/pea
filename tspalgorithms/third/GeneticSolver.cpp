@@ -205,3 +205,8 @@ GeneticSolver::Builder &GeneticSolver::Builder::withTournamentPool(int pool) {
     this->parameters.tournamentPool = pool;
     return *this;
 }
+
+GeneticSolver::Builder &GeneticSolver::Builder::withParameters(const GeneticSolver::Parameters & params) {
+    this->parameters = params;
+    return *this;
+}
