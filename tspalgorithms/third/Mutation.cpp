@@ -3,8 +3,8 @@
 //
 
 #include "Mutation.h"
-#include "../../program/Randomizer.h"
-#include "../mathfunctions.h"
+#include "../../utils/Randomizer.h"
+#include "../../utils/mathfunctions.h"
 #include "../../utils/stringutils.h"
 
 Mutation MutationFactory::createMutation(MutationMethod method) {

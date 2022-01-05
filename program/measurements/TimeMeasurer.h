@@ -5,18 +5,21 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
-#include "../structure_templates_lib/structures.h"
-#include "StopWatch.h"
-#include "Randomizer.h"
-#include "../tspalgorithms/TSPAbstractSolver.h"
+#include "../../structure_templates_lib/structures.h"
+#include "../../utils/StopWatch.h"
+#include "../../utils/Randomizer.h"
+#include "../../tspalgorithms/TSPAbstractSolver.h"
 
 struct SingleMeasurement;
 
 class TimeMeasurer {
 public:
     void runMeasurement();
+    std::string timeString();
+protected:
+    static constexpr int filesAmount = 14;
+    static std::string filenames[filesAmount];
 private:
-
     void writeToFile();
     void someMeasurements(int upperSizeIndexBound, int lowerSolverIndexBound);
 
@@ -34,6 +37,7 @@ private:
     LinkedList<SingleMeasurement> measurements;
     StopWatch stopWatch;
     std::string filename;
+
 };
 
 struct SingleMeasurement {
@@ -41,6 +45,10 @@ public:
     long double time;
     size_t size;
     std::string method;
+};
+
+struct BetterMeasurement{
+
 };
 
 

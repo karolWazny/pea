@@ -2,7 +2,7 @@
 #define PEA_TSPDYNAMICPROGRAMMINGSOLVER_H
 
 #include "../TSPAbstractSolver.h"
-#include "../mathfunctions.h"
+#include "../../utils/mathfunctions.h"
 #include "../../structure_templates_lib/array_lib/ffarray.h"
 #include "../../structure_templates_lib/rbtree_lib/BRTree.h"
 

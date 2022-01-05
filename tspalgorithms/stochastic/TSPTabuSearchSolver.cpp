@@ -1,6 +1,6 @@
 #include <sstream>
 #include "TSPTabuSearchSolver.h"
-#include "../mathfunctions.h"
+#include "../../utils/mathfunctions.h"
 
 TSPSolution TSPTabuSearchSolver::solveFor(const TSPInputMatrix &matrix) {
     prepareMembers(matrix);

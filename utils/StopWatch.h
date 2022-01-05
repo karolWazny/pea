@@ -1,7 +1,7 @@
 #ifndef SDIZO_1_STOPWATCH_H
 #define SDIZO_1_STOPWATCH_H
 
-#include <windows.h>
+#include <Windows.h>
 
 class StopWatch {
 public:

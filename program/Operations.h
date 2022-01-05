@@ -3,7 +3,7 @@
 
 
 #include <string>
-#include "Randomizer.h"
+#include "../utils/Randomizer.h"
 #include "file/AtspFileHandler.h"
 
 class Operations {

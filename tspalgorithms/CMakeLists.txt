@@ -10,8 +10,8 @@ set(HEADER_FILES
         deterministic/TSPBruteForceSolver.h
         deterministic/TSPDynamicProgrammingSolver.h
         deterministic/TSPBranchNBoundSolver.h
-        mathfunctions.h
-        PlanarVector.h
+        ../utils/mathfunctions.h
+        ../utils/PlanarVector.h
         stochastic/TSPTabuSearchSolver.h
         stochastic/TSPSimulatedAnnealingSolver.h
         stochastic/TSPStochasticSolver.h)
@@ -22,8 +22,8 @@ set(SOURCE_FILES
         deterministic/TSPBruteForceSolver.cpp
         deterministic/TSPDynamicProgrammingSolver.cpp
         deterministic/TSPBranchNBoundSolver.cpp
-        mathfunctions.cpp
-        PlanarVector.cpp
+        ../utils/mathfunctions.cpp
+        ../utils/PlanarVector.cpp
         stochastic/TSPTabuSearchSolver.cpp
         stochastic/TSPSimulatedAnnealingSolver.cpp
         stochastic/TSPStochasticSolver.cpp third/GeneticSolver.cpp third/GeneticSolver.h third/Individual.cpp third/Individual.h third/Mutation.h third/Mutation.cpp)

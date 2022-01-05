@@ -1,7 +1,7 @@
 #include <sstream>
 #include "GeneticSolver.h"
 
-#include "../mathfunctions.h"
+#include "../../utils/mathfunctions.h"
 #include "../../structure_templates_lib/rbtree_lib/BRTree.h"
 
 RealRandom<double> GeneticSolver::random = RealRandom(0.0);

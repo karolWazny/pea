@@ -1,13 +1,28 @@
 #include "TimeMeasurer.h"
-#include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
-#include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
-#include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
-#include "../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
-#include "../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
+#include "../../tspalgorithms/deterministic/TSPBruteForceSolver.h"
+#include "../../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
+#include "../../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
+#include "../../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
+#include "../../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
+#include "../../utils/display.h"
 #include <iomanip>
 #include <chrono>
 #include <sstream>
 
+std::string TimeMeasurer::filenames[filesAmount] = {"br17.atsp",
+                                                    "ftv33.atsp",
+                                                    "ftv35.atsp",
+                                                    "ftv38.atsp",
+                                                    "p43.atsp",
+                                                    "ftv44.atsp",
+                                                    "ftv47.atsp",
+                                                    "ry48p.atsp",
+                                                    "ft53.atsp",
+                                                    "ftv55.atsp",
+                                                    "ftv64.atsp",
+                                                    "ftv70.atsp",
+                                                    "ft70.atsp",
+                                                    "kro124.atsp"};
 std::string TimeMeasurer::algorithms[algorithmsAmount] = {"brute_force", "BnB", "Held-Karp", "SA", "TS"};
 std::string TimeMeasurer::columnHeaders = "SIZE\tTIME\tMETHOD";
 std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[algorithmsAmount] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
@@ -16,19 +31,6 @@ std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[algorithmsAmount] = {st
                 std::unique_ptr<TSPAbstractSolver>(new TSPSimulatedAnnealingSolver()),
                 std::unique_ptr<TSPAbstractSolver>(new TSPTabuSearchSolver())};
 
-void gotoxy(short x, short y)
-{
-    COORD coord;
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(handle, coord);
-}
-
-void clear() {
-    system("cls");
-}
-
 std::ostream& operator<<(std::ostream& ostream, const SingleMeasurement meas) {
     ostream << std::to_string(meas.size) << "\t"
             << std::to_string(meas.time) << "\t"
@@ -36,7 +38,7 @@ std::ostream& operator<<(std::ostream& ostream, const SingleMeasurement meas) {
     return ostream;
 }
 
-std::string timeString(){
+std::string TimeMeasurer::timeString(){
     std::stringstream output;
     const auto timePoint = std::chrono::system_clock::now();
     const auto t_c = std::chrono::system_clock::to_time_t(timePoint);

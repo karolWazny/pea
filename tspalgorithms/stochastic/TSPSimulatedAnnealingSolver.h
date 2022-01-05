@@ -1,8 +1,8 @@
 #ifndef PEA_TSPSIMULATEDANNEALINGSOLVER_H
 #define PEA_TSPSIMULATEDANNEALINGSOLVER_H
 
-#include "../../program/RealRandom.h"
-#include "../../program/Randomizer.h"
+#include "../../utils/RealRandom.h"
+#include "../../utils/Randomizer.h"
 #include "TSPStochasticSolver.h"
 
 class TSPSimulatedAnnealingSolver : public TSPStochasticSolver {

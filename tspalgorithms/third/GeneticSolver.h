@@ -7,8 +7,8 @@
 #include "../TSPAbstractSolver.h"
 #include "Individual.h"
 #include "Mutation.h"
-#include "../../program/RealRandom.h"
-#include "../../program/Randomizer.h"
+#include "../../utils/RealRandom.h"
+#include "../../utils/Randomizer.h"
 
 class GeneticSolver : public TSPAbstractSolver {
 public:

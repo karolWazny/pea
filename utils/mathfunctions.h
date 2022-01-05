@@ -1,7 +1,7 @@
 #ifndef PEA_MATHFUNCTIONS_H
 #define PEA_MATHFUNCTIONS_H
 
-#include "../program/Randomizer.h"
+#include "Randomizer.h"
 
 #include "../structure_templates_lib/OrderedCollection.h"
 
