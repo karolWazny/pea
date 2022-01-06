@@ -4,9 +4,7 @@
 
 #include <string>
 
-#include <wincontypes.h>
-#include <consoleapi2.h>
-#include <WinBase.h>
+#include <windows.h>
 
 void gotoxy(short x, short y)
 {

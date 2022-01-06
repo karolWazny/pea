@@ -1,6 +1,7 @@
 #include "Main.h"
 #include "file/TxtFileHandler.h"
 #include "../tspalgorithms/third/GeneticSolver.h"
+#include "measurements/GAMeasurements.h"
 #include <filesystem>
 
 bool hasEnding (std::string const &fullString, std::string const &ending) {
@@ -94,7 +95,9 @@ void Main::interpretInput() {
 
 void Main::measurements() {
     try{
-        timeMeasurer.runMeasurement();
+        //timeMeasurer.runMeasurement();
+        GAMeasurements meas;
+        meas.runParametrizedMeasurement();
     } catch (std::exception& e){
         std::cout << e.what() << std::endl;
     }
