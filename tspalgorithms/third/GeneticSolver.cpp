@@ -177,6 +177,10 @@ GeneticSolver::GeneticSolver() {
     *this = GeneticSolver(Parameters());
 }
 
+void GeneticSolver::setParameters(GeneticSolver::Parameters parameters) {
+    this->parameters = parameters;
+}
+
 GeneticSolver::Builder &GeneticSolver::Builder::withPopulation(int population) {
     parameters.population = population;
     return *this;

@@ -47,6 +47,8 @@ public:
 
     TSPSolution solveFor(const TSPInputMatrix& input) override;
 
+    void setParameters(Parameters);
+
 private:
     explicit GeneticSolver(Mutation mutation) : mutate(std::move(mutation)){};
     void prepareMembers();
@@ -68,7 +70,6 @@ private:
     Parameters parameters;
     ffarray<Individual> population;
     ffarray<Individual> breed;
-    LinkedList<Individual> crossoverBreed;
     const TSPInputMatrix* input{};
     Individual currentlyBest;
 
