@@ -8,7 +8,7 @@
 #include "../../utils/display.h"
 #include "../file/AtspFileHandler.h"
 
-const std::string GAMeasurements::headers[8] = {"TIME",
+const std::string GAMeasurements::headers[] = {"TIME",
                                           "INSTANCE",
                                           "POPULATION",
                                           "CROSSOVER_RATE",
@@ -176,4 +176,4 @@ std::ostream& operator<<(std::ostream& stream, GASingleMeasurement& measurement)
             << std::to_string(measurement.averageCost) << '\t'
             << std::to_string(measurement.instanceSize) << '\t';
     return stream;
-};
+}
