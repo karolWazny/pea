@@ -27,7 +27,7 @@ public:
         return measurements;
     }
 
-    static const std::string headers[6];
+    static const std::string headers[7];
 private:
     std::string outputFileName;
     std::string currentFileName;

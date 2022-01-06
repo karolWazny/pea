@@ -8,12 +8,13 @@
 #include "../../utils/display.h"
 #include "../file/AtspFileHandler.h"
 
-const std::string GAMeasurements::headers[6] = {"TIME",
+const std::string GAMeasurements::headers[7] = {"TIME",
                                           "INSTANCE",
                                           "POPULATION",
                                           "CROSSOVER_RATE",
                                           "MUTATION_RATE",
-                                          "MUTATION_METHOD"};
+                                          "MUTATION_METHOD",
+                                          "AVER_COST"};
 
 void GAMeasurements::runParametrizedMeasurement() {
     outputFileName = std::string("ga_run-") + timeString() + ".txt";
@@ -168,6 +169,7 @@ std::ostream& operator<<(std::ostream& stream, GASingleMeasurement& measurement)
             << std::to_string(params.population) << '\t'
             << std::to_string(params.crossoverProbability) << '\t'
             << std::to_string(params.mutationProbability) << '\t'
-            << params.mutationMethod;
+            << params.mutationMethod << '\t'
+            << std::to_string(measurement.averageCost);
     return stream;
 };
