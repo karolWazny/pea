@@ -21,6 +21,7 @@ public:
 
 class SAMeasurements : public TimeMeasurer{
 public:
+    SAMeasurements() : displayedStuff(ffstack<std::string>(10)){};
     void runParametrizedMeasurement();
 
     static const std::string headers[];
