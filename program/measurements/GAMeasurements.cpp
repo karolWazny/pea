@@ -149,10 +149,9 @@ void GAMeasurements::readInputMatrices() {
 }
 
 std::ostream& operator<<(std::ostream& stream, GAMeasurements& measurements){
-    for(int i = 0; i < 5; i++){
-        stream << GAMeasurements::headers[i] << '\t';
+    for(const auto & header : GAMeasurements::headers){
+        stream << header << '\t';
     }
-    stream << GAMeasurements::headers[5] << std::endl;
 
     auto iterator = measurements.getMeasuredValues().iterator();
     while(iterator.hasNext()){
@@ -170,6 +169,6 @@ std::ostream& operator<<(std::ostream& stream, GASingleMeasurement& measurement)
             << std::to_string(params.crossoverProbability) << '\t'
             << std::to_string(params.mutationProbability) << '\t'
             << params.mutationMethod << '\t'
-            << std::to_string(measurement.averageCost);
+            << std::to_string(measurement.averageCost) << '\t';
     return stream;
 };
