@@ -18,7 +18,7 @@ public:
         int tournamentPool{5};
         int population{30};
         int breed{30};
-        int generations{200};
+        int generations{400};
         double crossoverProbability{0.6};
         double mutationProbability{0.3};
         MutationMethod mutationMethod{MutationMethod::REVERSE};
