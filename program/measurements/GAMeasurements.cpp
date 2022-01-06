@@ -43,6 +43,7 @@ void GAMeasurements::measurementsDifferentMutationMethods() {
 
         displayedStuff.pop();
     }
+    clear();
 }
 
 void GAMeasurements::measurementsDifferentPopulations() {
