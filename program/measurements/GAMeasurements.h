@@ -12,7 +12,7 @@
 
 struct GASingleMeasurement{
 public:
-    unsigned long long averageCost{};
+    long double averageCost{};
     long double time{};
     long instanceSize{};
     std::string instanceFilename;
@@ -27,7 +27,7 @@ public:
         return measurements;
     }
 
-    static const std::string headers[7];
+    static const std::string headers[8];
 private:
     std::string outputFileName;
     std::string currentFileName;

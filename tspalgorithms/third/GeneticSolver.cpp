@@ -23,6 +23,7 @@ TSPSolution GeneticSolver::solveFor(const TSPInputMatrix &inputMatrix) {
 }
 
 void GeneticSolver::prepareMembers() {
+    currentlyBest = Individual();
     population = ffarray<Individual>(parameters.population);
     for(int i = 0; i < population.getLength(); i++){
         Individual& ind = population[i];

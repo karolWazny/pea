@@ -8,13 +8,14 @@
 #include "../../utils/display.h"
 #include "../file/AtspFileHandler.h"
 
-const std::string GAMeasurements::headers[7] = {"TIME",
+const std::string GAMeasurements::headers[8] = {"TIME",
                                           "INSTANCE",
                                           "POPULATION",
                                           "CROSSOVER_RATE",
                                           "MUTATION_RATE",
                                           "MUTATION_METHOD",
-                                          "AVER_COST"};
+                                          "AVER_COST",
+                                          "SIZE"};
 
 void GAMeasurements::runParametrizedMeasurement() {
     outputFileName = std::string("ga_run-") + timeString() + ".txt";
@@ -110,7 +111,7 @@ GASingleMeasurement GAMeasurements::measurementForCurrentParameters() {
 
     for(int i = 0; i < 10; i++){
         stopWatch.start();
-        auto result = solver.solveFor(currentInputMatrix);
+        auto result = solver.solveFor(inputMatrices[currentFileName]);
         stopWatch.stop();
         output.time += stopWatch.getLastMeasurementsFloat();
         output.averageCost += result.totalCost;
@@ -153,7 +154,7 @@ std::ostream& operator<<(std::ostream& stream, GAMeasurements& measurements){
         stream << header << '\t';
     }
 
-    stream << std::endl;
+    stream << std::endl << std::endl;
 
     auto iterator = measurements.getMeasuredValues().iterator();
     while(iterator.hasNext()){
@@ -171,6 +172,7 @@ std::ostream& operator<<(std::ostream& stream, GASingleMeasurement& measurement)
             << std::to_string(params.crossoverProbability) << '\t'
             << std::to_string(params.mutationProbability) << '\t'
             << params.mutationMethod << '\t'
-            << std::to_string(measurement.averageCost) << '\t';
+            << std::to_string(measurement.averageCost) << '\t'
+            << std::to_string(measurement.instanceSize) << '\t';
     return stream;
 };
