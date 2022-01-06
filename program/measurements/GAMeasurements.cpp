@@ -25,6 +25,7 @@ void GAMeasurements::runParametrizedMeasurement() {
 }
 
 void GAMeasurements::measurementsDifferentMutationMethods() {
+    clear();
     for(MutationMethod method : mutationMethods){
         currentParameters.mutationMethod = method;
 
@@ -84,7 +85,6 @@ void GAMeasurements::measurementsDifferentMutationRates() {
 void GAMeasurements::measurementsDifferentInstances() {
     for(auto & filename : filenames){
         currentFileName = filename;
-        clear();
         displayedStuff.push(std::string("Current file: ") + currentFileName);
         gotoxy(0, displayedStuff.numberOfElements() - 1);
         std::cout << std::left << std::setw(50) << displayedStuff.getCurrent() << std::endl;
@@ -122,7 +122,7 @@ GASingleMeasurement GAMeasurements::measurementForCurrentParameters() {
 }
 
 void GAMeasurements::save() {
-    std::fstream stream(outputFileName);
+    std::ofstream stream(outputFileName);
     stream << *this;
 }
 

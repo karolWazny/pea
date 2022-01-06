@@ -22,7 +22,7 @@ std::string TimeMeasurer::filenames[filesAmount] = {"br17.atsp",
                                                     "ftv64.atsp",
                                                     "ftv70.atsp",
                                                     "ft70.atsp",
-                                                    "kro124.atsp"};
+                                                    "kro124p.atsp"};
 std::string TimeMeasurer::algorithms[algorithmsAmount] = {"brute_force", "BnB", "Held-Karp", "SA", "TS"};
 std::string TimeMeasurer::columnHeaders = "SIZE\tTIME\tMETHOD";
 std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[algorithmsAmount] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
