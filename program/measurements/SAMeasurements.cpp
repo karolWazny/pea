@@ -23,8 +23,89 @@ void SAMeasurements::runParametrizedMeasurement() {
     measurements = LinkedList<SASingleMeasurement>();
     readInputMatrices();
 
-    measurementForCurrentParameters();
+    measurementsDifferentIterations();
+}
 
+void SAMeasurements::measurementsDifferentIterations() {
+    clear();
+    for(auto numberOfIterations : iterations){
+        currentParameters.setIterations(numberOfIterations);
+        displayedStuff.push(std::string("Current number of iterations: ") + std::to_string(currentParameters.getIterations()));
+        gotoxy(0, displayedStuff.numberOfElements() - 1);
+        std::cout << std::left << std::setw(50) << displayedStuff.getCurrent() << std::endl;
+
+        measurementsDifferentTries();
+
+        displayedStuff.pop();
+    }
+    clear();
+}
+
+void SAMeasurements::measurementsDifferentTries() {
+    for(auto numberOfTries : tries){
+        currentParameters.setTries(numberOfTries);
+        displayedStuff.push(std::string("Current number of tries: ") + std::to_string(currentParameters.getTries()));
+        gotoxy(0, displayedStuff.numberOfElements() - 1);
+        std::cout << std::left << std::setw(50) << displayedStuff.getCurrent() << std::endl;
+
+        measurementsDifferentMinTemps();
+
+        displayedStuff.pop();
+    }
+}
+
+void SAMeasurements::measurementsDifferentMinTemps() {
+    for(double minTemp : minimalTemps){
+        currentParameters.setMinimalTemp(minTemp);
+        displayedStuff.push(std::string("Current minimal temperature: ") + std::to_string(currentParameters.getMinimalTemp()));
+        gotoxy(0, displayedStuff.numberOfElements() - 1);
+        std::cout << std::left << std::setw(50) << displayedStuff.getCurrent() << std::endl;
+
+        measurementsDifferentStartingTemps();
+
+        displayedStuff.pop();
+    }
+}
+
+void SAMeasurements::measurementsDifferentStartingTemps() {
+    for(double startingTemp : startingTemps){
+        currentParameters.setStartTemp(startingTemp);
+        displayedStuff.push(std::string("Current starting temperature: ") + std::to_string(currentParameters.getStartTemp()));
+        gotoxy(0, displayedStuff.numberOfElements() - 1);
+        std::cout << std::left << std::setw(50) << displayedStuff.getCurrent() << std::endl;
+
+        measurementsDifferentCoolingFactors();
+
+        displayedStuff.pop();
+    }
+}
+
+void SAMeasurements::measurementsDifferentCoolingFactors() {
+    for(double coolingFactor : coolingFactors){
+        currentParameters.setCoolingConstant(coolingFactor);
+        displayedStuff.push(std::string("Current cooling factor: ") + std::to_string(currentParameters.getCoolingConstant()));
+        gotoxy(0, displayedStuff.numberOfElements() - 1);
+        std::cout << std::left << std::setw(50) << displayedStuff.getCurrent() << std::endl;
+
+        measurementsDifferentInstances();
+
+        displayedStuff.pop();
+    }
+}
+
+void SAMeasurements::measurementsDifferentInstances() {
+    for(auto & filename : filenames){
+        currentFileName = filename;
+        displayedStuff.push(std::string("Current file: ") + currentFileName);
+        gotoxy(0, displayedStuff.numberOfElements() - 1);
+        std::cout << std::left << std::setw(50) << displayedStuff.getCurrent() << std::endl;
+
+        currentInputMatrix = inputMatrices[currentFileName];
+
+        measurements.pushBack(measurementForCurrentParameters());
+
+        displayedStuff.pop();
+    }
     save();
 }
 
