@@ -153,6 +153,8 @@ std::ostream& operator<<(std::ostream& stream, GAMeasurements& measurements){
         stream << header << '\t';
     }
 
+    stream << std::endl;
+
     auto iterator = measurements.getMeasuredValues().iterator();
     while(iterator.hasNext()){
         stream << iterator.next() << std::endl;
