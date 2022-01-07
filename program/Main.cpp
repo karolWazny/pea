@@ -43,6 +43,9 @@ void Main::displayMenu() {
                 "10. Algorytm ewolucyjny\n";
     menuText += "11. Zakoncz program.\n"
                 "100. Zapisz graf do pliku\n\n";
+#ifdef DEBUG
+    std::cout << "[DEBUG BUILD]" << std::endl;
+#endif
     std::cout << menuText;
 }
 
