@@ -15,7 +15,7 @@ const std::string TSMeasurements::headers[] = {"TIME",
                                                "TABU_LENGTH",
                                                "ITERATIONS"};
 
-void TSMeasurements::runParametrizedMeasurements() {
+void TSMeasurements::runParametrizedMeasurement() {
     outputFileName = std::string("ts_run-") + timeString() + ".txt";
 
     measurements = LinkedList<TSSingleMeasurement>();

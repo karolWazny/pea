@@ -25,7 +25,7 @@ public:
     LinkedList<TSSingleMeasurement>& getMeasuredValues(){
         return measurements;
     }
-    void runParametrizedMeasurements();
+    void runParametrizedMeasurement();
 
     static const std::string headers[];
 private:
@@ -54,7 +54,7 @@ private:
 
     static constexpr int tabuLengths[] = {30, 70, 150, 300};
     static constexpr int tries[] = {1, 2, 4, 8};
-    static constexpr int iterations[] = {2000, 3000, 6000};
+    static constexpr int iterations[] = {500, 800, 1500};
 };
 
 std::ostream& operator<<(std::ostream&, TSSingleMeasurement&);

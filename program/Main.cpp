@@ -3,6 +3,7 @@
 #include "../tspalgorithms/third/GeneticSolver.h"
 #include "measurements/GAMeasurements.h"
 #include "measurements/SAMeasurements.h"
+#include "measurements/TSMeasurements.h"
 #include <filesystem>
 
 bool hasEnding (std::string const &fullString, std::string const &ending) {
@@ -98,7 +99,8 @@ void Main::measurements() {
     try{
         //timeMeasurer.runMeasurement();
         //GAMeasurements meas;
-        SAMeasurements meas;
+        //SAMeasurements meas;
+        TSMeasurements meas;
         meas.runParametrizedMeasurement();
     } catch (std::exception& e){
         std::cout << e.what() << std::endl;

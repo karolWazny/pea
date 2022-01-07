@@ -110,7 +110,7 @@ GASingleMeasurement GAMeasurements::measurementForCurrentParameters() {
     output.parameters = currentParameters;
     output.instanceSize = currentInputMatrix.size();
 
-    for(int i = 0; i < 100; i++){
+    for(int i = 0; i < 20; i++){
         stopWatch.start();
         auto result = solver.solveFor(inputMatrices[currentFileName]);
         stopWatch.stop();
@@ -118,8 +118,8 @@ GASingleMeasurement GAMeasurements::measurementForCurrentParameters() {
         output.averageCost += result.totalCost;
     }
 
-    output.time /= 100;
-    output.averageCost /= 100;
+    output.time /= 20;
+    output.averageCost /= 20;
 
     return output;
 }
