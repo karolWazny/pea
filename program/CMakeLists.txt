@@ -6,18 +6,18 @@ set(CMAKE_CXX_STANDARD 20)
 set(HEADER_FILES
         Main.h
         Operations.h
-        Randomizer.h
+        ../utils/Randomizer.h
         file/AtspFileHandler.h
-        StopWatch.h
-        TimeMeasurer.h)
+        ../utils/StopWatch.h
+        measurements/TimeMeasurer.h)
 
 set(SOURCE_FILES
         Main.cpp
         Operations.cpp
-        Randomizer.cpp
+        ../utils/Randomizer.cpp
         file/AtspFileHandler.cpp
-        StopWatch.cpp
-        TimeMeasurer.cpp ProgramSetup.cpp ProgramSetup.h Program.cpp Program.h PeaSetup.cpp PeaSetup.h RealRandom.cpp RealRandom.h file/TxtFileHandler.cpp file/TxtFileHandler.h file/FileHandler.cpp file/FileHandler.h)
+        ../utils/StopWatch.cpp
+        measurements/TimeMeasurer.cpp ProgramSetup.cpp ProgramSetup.h Program.cpp Program.h PeaSetup.cpp PeaSetup.h ../utils/RealRandom.cpp ../utils/RealRandom.h file/TxtFileHandler.cpp file/TxtFileHandler.h file/FileHandler.cpp file/FileHandler.h measurements/GAMeasurements.cpp measurements/GAMeasurements.h ../utils/display.h ../utils/display.cpp measurements/DeterministicMeasurements.cpp measurements/DeterministicMeasurements.h measurements/TSMeasurements.cpp measurements/TSMeasurements.h measurements/SAMeasurements.cpp measurements/SAMeasurements.h ../utils/timestring.h ../utils/timestring.cpp ../utils/stringutils.cpp)
 
 link_libraries(tspalgorithms)
 

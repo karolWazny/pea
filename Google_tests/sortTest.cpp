@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../structure_templates_lib/array_lib/ffarray.h"
-#include "../tspalgorithms/mathfunctions.h"
+#include "../utils/mathfunctions.h"
 
 TEST(SortingSuite, InitialTest){
     ffarray<int> array = ffarray<int>(1);

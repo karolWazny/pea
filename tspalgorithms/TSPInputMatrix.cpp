@@ -4,8 +4,8 @@
 #include <memory>
 #include <sstream>
 #include <iomanip>
-#include "../program/Randomizer.h"
-#include "PlanarVector.h"
+#include "../utils/Randomizer.h"
+#include "../utils/PlanarVector.h"
 
 TSPInputMatrix matrixFrom(std::shared_ptr<int32_t[]> valuesFromFile){
     return TSPInputMatrix::from(valuesFromFile);

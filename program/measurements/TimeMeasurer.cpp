@@ -1,33 +1,25 @@
 #include "TimeMeasurer.h"
-#include "../tspalgorithms/deterministic/TSPBruteForceSolver.h"
-#include "../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
-#include "../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
-#include "../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
-#include "../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
+#include "../../tspalgorithms/deterministic/TSPBruteForceSolver.h"
+#include "../../tspalgorithms/deterministic/TSPDynamicProgrammingSolver.h"
+#include "../../tspalgorithms/deterministic/TSPBranchNBoundSolver.h"
+#include "../../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
+#include "../../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
+#include "../../utils/display.h"
+#include "../file/AtspFileHandler.h"
+#include "../../utils/stringutils.h"
 #include <iomanip>
 #include <chrono>
 #include <sstream>
 
-std::string TimeMeasurer::algorithms[algorithmsAmount] = {"brute_force", "BnB", "Held-Karp", "SA", "TS"};
+#include <filesystem>
+
+std::vector<std::string> TimeMeasurer::filenames = TimeMeasurer::loadFilenamesFromWorkingDirectory();
+
+const std::string TimeMeasurer::algorithms[] = {"brute_force", "BnB", "Held-Karp"};
 std::string TimeMeasurer::columnHeaders = "SIZE\tTIME\tMETHOD";
-std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[algorithmsAmount] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
+std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
                 std::unique_ptr<TSPAbstractSolver>(new TSPBranchNBoundSolver()),
-                std::unique_ptr<TSPAbstractSolver>(new TSPDynamicProgrammingSolver()),
-                std::unique_ptr<TSPAbstractSolver>(new TSPSimulatedAnnealingSolver()),
-                std::unique_ptr<TSPAbstractSolver>(new TSPTabuSearchSolver())};
-
-void gotoxy(short x, short y)
-{
-    COORD coord;
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(handle, coord);
-}
-
-void clear() {
-    system("cls");
-}
+                std::unique_ptr<TSPAbstractSolver>(new TSPDynamicProgrammingSolver())};
 
 std::ostream& operator<<(std::ostream& ostream, const SingleMeasurement meas) {
     ostream << std::to_string(meas.size) << "\t"
@@ -36,7 +28,7 @@ std::ostream& operator<<(std::ostream& ostream, const SingleMeasurement meas) {
     return ostream;
 }
 
-std::string timeString(){
+std::string TimeMeasurer::timeString(){
     std::stringstream output;
     const auto timePoint = std::chrono::system_clock::now();
     const auto t_c = std::chrono::system_clock::to_time_t(timePoint);
@@ -65,8 +57,6 @@ void TimeMeasurer::runMeasurement() {
     someMeasurements(5, 0);
 
     someMeasurements(7, 1);
-
-    someMeasurements(10, 3);
 
     std::cout << "\n";
     writeToFile();
@@ -118,4 +108,47 @@ void TimeMeasurer::prepareDisplay() {
     gotoxy(0,0);
     std::cout << "PERFORMING MEASUREMENTS\n";
     std::cout << "Size:\nInstance:\nAlgorithm:";
+}
+
+void TimeMeasurer::runMeasurement(const std::string & instanceFilename) {
+    auto outputFile = timeString() + "-dp_bnb-" + instanceFilename + ".txt";
+    std::ofstream stream(outputFile);
+    stream << columnHeaders << std::endl;
+    stream.close();
+    AtspFileHandler fileHandler;
+    TSPInputMatrix instance = TSPInputMatrix::from(fileHandler.fromFile(instanceFilename));
+    LinkedList<SingleMeasurement> singleMeasurements;
+    for(int i = 1; i < 3; i++){
+        SingleMeasurement measurement;
+        measurement.method = algorithms[i];
+        measurement.size = instance.size();
+        for(int j = 0; j < 10; j++){
+            stopWatch.start();
+            auto result = solvers[i]->solveFor(instance);
+            stopWatch.stop();
+            result.totalCost++;
+            measurement.time += stopWatch.getLastMeasurementsFloat();
+        }
+        measurement.time /= 10;
+        singleMeasurements.pushBack(measurement);
+    }
+    stream.open(outputFile);
+    stream << columnHeaders << std::endl;
+    auto iterator = singleMeasurements.iterator();
+    while(iterator.hasNext()){
+        stream << iterator.next() << std::endl;
+    }
+}
+
+std::vector<std::string> TimeMeasurer::loadFilenamesFromWorkingDirectory() {
+    std::vector<std::string> output;
+
+    std::filesystem::path cwd = std::filesystem::current_path();
+    std::string path = cwd.string();
+    for (const auto & entry : std::filesystem::directory_iterator(path)){
+        if(hasEnding(entry.path().filename().string(), ".atsp"))
+            output.push_back(entry.path().filename().string());
+    }
+
+    return output;
 }

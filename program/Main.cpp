@@ -1,15 +1,12 @@
 #include "Main.h"
 #include "file/TxtFileHandler.h"
 #include "../tspalgorithms/third/GeneticSolver.h"
+#include "measurements/GAMeasurements.h"
+#include "measurements/SAMeasurements.h"
+#include "measurements/TSMeasurements.h"
+#include "../utils/timestring.h"
+#include "../utils/stringutils.h"
 #include <filesystem>
-
-bool hasEnding (std::string const &fullString, std::string const &ending) {
-    if (fullString.length() >= ending.length()) {
-        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
-    } else {
-        return false;
-    }
-}
 
 int Main::run() {
     displayGreeting();
@@ -39,6 +36,9 @@ void Main::displayMenu() {
                 "10. Algorytm ewolucyjny\n";
     menuText += "11. Zakoncz program.\n"
                 "100. Zapisz graf do pliku\n\n";
+#ifdef DEBUG
+    std::cout << "[DEBUG BUILD]" << std::endl;
+#endif
     std::cout << menuText;
 }
 
@@ -93,10 +93,46 @@ void Main::interpretInput() {
 }
 
 void Main::measurements() {
-    try{
-        timeMeasurer.runMeasurement();
-    } catch (std::exception& e){
-        std::cout << e.what() << std::endl;
+    std::cout << "1. Pelny pomiar\n"
+                 "2. Tylko algorytmy dokladne\n"
+                 "3. Tylko algorytmy niedokladne\n"
+                 "4. Tylko TS\n"
+                 "5. Tylko SA\n"
+                 "6. Tylko GA\n";
+
+    int option = readInt();
+
+    GAMeasurements gaMeasurements;
+    SAMeasurements saMeasurements;
+    TSMeasurements tsMeasurements;
+    TimeMeasurer timeMeasurer;
+
+    switch(option){
+        case 1:
+            gaMeasurements.runParametrizedMeasurement();
+            saMeasurements.runParametrizedMeasurement();
+            tsMeasurements.runParametrizedMeasurement();
+            timeMeasurer.runMeasurement();
+            break;
+        case 2:
+            timeMeasurer.runMeasurement("br17.atsp");
+            timeMeasurer.runMeasurement();
+            break;
+        case 3:
+            gaMeasurements.runParametrizedMeasurement();
+            saMeasurements.runParametrizedMeasurement();
+            tsMeasurements.runParametrizedMeasurement();
+        case 4:
+            tsMeasurements.runParametrizedMeasurement();
+            break;
+        case 5:
+            saMeasurements.runParametrizedMeasurement();
+            break;
+        case 6:
+            gaMeasurements.runParametrizedMeasurement();
+            break;
+        default:
+            throw 4;
     }
 }
 
@@ -153,13 +189,13 @@ void Main::dynamicProgramming() {
 }
 
 void Main::solve(const std::string& methodName, TSPAbstractSolver &solver) {
-    std::cout << "Znajdowanie minimalnego cyklu Hamiltona metoda\n" << methodName
+    std::cout << "[" << timeString() << "] Znajdowanie minimalnego cyklu Hamiltona metoda\n" << methodName
                         << ". Prosze czekac...\n";
     auto stopWatch = StopWatch();
     stopWatch.start();
     auto result = solver.solveFor(adjacencyMatrix);
     stopWatch.stop();
-    std::cout << "Uzyskany wynik:\n\tKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
+    std::cout << "[" << timeString() << "] Uzyskany wynik:\n\tKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
     std::cout << "\tMinimalny cykl: " << result.circuit.toString() << std::endl
                     << "\tRozmiar instancji (N): " << std::to_string(adjacencyMatrix.size()) << std::endl
                     << "\tCzas: " << std::to_string(stopWatch.getLastMeasurementsFloat() / 100000) << " s" << std::endl

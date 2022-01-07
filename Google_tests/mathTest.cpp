@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "../tspalgorithms/mathfunctions.h"
+#include "../utils/mathfunctions.h"
 
 
 TEST(MathSuite, nBelowK){

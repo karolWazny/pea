@@ -1,7 +1,7 @@
 #include <sstream>
 #include "GeneticSolver.h"
 
-#include "../mathfunctions.h"
+#include "../../utils/mathfunctions.h"
 #include "../../structure_templates_lib/rbtree_lib/BRTree.h"
 
 RealRandom<double> GeneticSolver::random = RealRandom(0.0);
@@ -23,6 +23,7 @@ TSPSolution GeneticSolver::solveFor(const TSPInputMatrix &inputMatrix) {
 }
 
 void GeneticSolver::prepareMembers() {
+    currentlyBest = Individual();
     population = ffarray<Individual>(parameters.population);
     for(int i = 0; i < population.getLength(); i++){
         Individual& ind = population[i];
@@ -175,6 +176,10 @@ GeneticSolver::GeneticSolver(GeneticSolver::Parameters params) {
 
 GeneticSolver::GeneticSolver() {
     *this = GeneticSolver(Parameters());
+}
+
+void GeneticSolver::setParameters(GeneticSolver::Parameters parameters) {
+    this->parameters = parameters;
 }
 
 GeneticSolver::Builder &GeneticSolver::Builder::withPopulation(int population) {

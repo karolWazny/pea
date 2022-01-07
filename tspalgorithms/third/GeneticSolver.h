@@ -7,8 +7,8 @@
 #include "../TSPAbstractSolver.h"
 #include "Individual.h"
 #include "Mutation.h"
-#include "../../program/RealRandom.h"
-#include "../../program/Randomizer.h"
+#include "../../utils/RealRandom.h"
+#include "../../utils/Randomizer.h"
 
 class GeneticSolver : public TSPAbstractSolver {
 public:
@@ -18,7 +18,7 @@ public:
         int tournamentPool{5};
         int population{30};
         int breed{30};
-        int generations{200};
+        int generations{400};
         double crossoverProbability{0.6};
         double mutationProbability{0.3};
         MutationMethod mutationMethod{MutationMethod::REVERSE};
@@ -47,6 +47,8 @@ public:
 
     TSPSolution solveFor(const TSPInputMatrix& input) override;
 
+    void setParameters(Parameters);
+
 private:
     explicit GeneticSolver(Mutation mutation) : mutate(std::move(mutation)){};
     void prepareMembers();
@@ -68,7 +70,6 @@ private:
     Parameters parameters;
     ffarray<Individual> population;
     ffarray<Individual> breed;
-    LinkedList<Individual> crossoverBreed;
     const TSPInputMatrix* input{};
     Individual currentlyBest;
 
