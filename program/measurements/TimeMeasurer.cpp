@@ -6,24 +6,15 @@
 #include "../../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
 #include "../../utils/display.h"
 #include "../file/AtspFileHandler.h"
+#include "../../utils/stringutils.h"
 #include <iomanip>
 #include <chrono>
 #include <sstream>
 
-std::string TimeMeasurer::filenames[filesAmount] = {"br17.atsp",
-                                                    "ftv33.atsp",
-                                                    "ftv35.atsp",
-                                                    "ftv38.atsp",
-                                                    "p43.atsp",
-                                                    "ftv44.atsp",
-                                                    "ftv47.atsp",
-                                                    "ry48p.atsp",
-                                                    "ft53.atsp",
-                                                    "ftv55.atsp",
-                                                    "ftv64.atsp",
-                                                    "ftv70.atsp",
-                                                    "ft70.atsp",
-                                                    "kro124p.atsp"};
+#include <filesystem>
+
+std::vector<std::string> TimeMeasurer::filenames = TimeMeasurer::loadFilenamesFromWorkingDirectory();
+
 const std::string TimeMeasurer::algorithms[] = {"brute_force", "BnB", "Held-Karp"};
 std::string TimeMeasurer::columnHeaders = "SIZE\tTIME\tMETHOD";
 std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
@@ -147,4 +138,17 @@ void TimeMeasurer::runMeasurement(const std::string & instanceFilename) {
     while(iterator.hasNext()){
         stream << iterator.next() << std::endl;
     }
+}
+
+std::vector<std::string> TimeMeasurer::loadFilenamesFromWorkingDirectory() {
+    std::vector<std::string> output;
+
+    std::filesystem::path cwd = std::filesystem::current_path();
+    std::string path = cwd.string();
+    for (const auto & entry : std::filesystem::directory_iterator(path)){
+        if(hasEnding(entry.path().filename().string(), ".atsp"))
+            output.push_back(entry.path().filename().string());
+    }
+
+    return output;
 }

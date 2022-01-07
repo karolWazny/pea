@@ -5,15 +5,8 @@
 #include "measurements/SAMeasurements.h"
 #include "measurements/TSMeasurements.h"
 #include "../utils/timestring.h"
+#include "../utils/stringutils.h"
 #include <filesystem>
-
-bool hasEnding (std::string const &fullString, std::string const &ending) {
-    if (fullString.length() >= ending.length()) {
-        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
-    } else {
-        return false;
-    }
-}
 
 int Main::run() {
     displayGreeting();

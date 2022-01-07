@@ -17,9 +17,12 @@ public:
     void runMeasurement();
     void runMeasurement(const std::string& instanceFilename);
     std::string timeString();
+
+    static std::vector<std::string> loadFilenamesFromWorkingDirectory();
+
 protected:
     static constexpr int filesAmount = 14;
-    static std::string filenames[filesAmount];
+    static std::vector<std::string> filenames;
 private:
     void writeToFile();
     void someMeasurements(int upperSizeIndexBound, int lowerSolverIndexBound);
