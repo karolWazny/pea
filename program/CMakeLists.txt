@@ -17,7 +17,7 @@ set(SOURCE_FILES
         ../utils/Randomizer.cpp
         file/AtspFileHandler.cpp
         ../utils/StopWatch.cpp
-        measurements/TimeMeasurer.cpp ProgramSetup.cpp ProgramSetup.h Program.cpp Program.h PeaSetup.cpp PeaSetup.h ../utils/RealRandom.cpp ../utils/RealRandom.h file/TxtFileHandler.cpp file/TxtFileHandler.h file/FileHandler.cpp file/FileHandler.h measurements/GAMeasurements.cpp measurements/GAMeasurements.h ../utils/display.h ../utils/display.cpp measurements/DeterministicMeasurements.cpp measurements/DeterministicMeasurements.h measurements/TSMeasurements.cpp measurements/TSMeasurements.h measurements/SAMeasurements.cpp measurements/SAMeasurements.h)
+        measurements/TimeMeasurer.cpp ProgramSetup.cpp ProgramSetup.h Program.cpp Program.h PeaSetup.cpp PeaSetup.h ../utils/RealRandom.cpp ../utils/RealRandom.h file/TxtFileHandler.cpp file/TxtFileHandler.h file/FileHandler.cpp file/FileHandler.h measurements/GAMeasurements.cpp measurements/GAMeasurements.h ../utils/display.h ../utils/display.cpp measurements/DeterministicMeasurements.cpp measurements/DeterministicMeasurements.h measurements/TSMeasurements.cpp measurements/TSMeasurements.h measurements/SAMeasurements.cpp measurements/SAMeasurements.h ../utils/timestring.h ../utils/timestring.cpp)
 
 link_libraries(tspalgorithms)
 

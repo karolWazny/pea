@@ -4,6 +4,7 @@
 #include "measurements/GAMeasurements.h"
 #include "measurements/SAMeasurements.h"
 #include "measurements/TSMeasurements.h"
+#include "../utils/timestring.h"
 #include <filesystem>
 
 bool hasEnding (std::string const &fullString, std::string const &ending) {
@@ -160,13 +161,13 @@ void Main::dynamicProgramming() {
 }
 
 void Main::solve(const std::string& methodName, TSPAbstractSolver &solver) {
-    std::cout << "Znajdowanie minimalnego cyklu Hamiltona metoda\n" << methodName
+    std::cout << "[" << timeString() << "] Znajdowanie minimalnego cyklu Hamiltona metoda\n" << methodName
                         << ". Prosze czekac...\n";
     auto stopWatch = StopWatch();
     stopWatch.start();
     auto result = solver.solveFor(adjacencyMatrix);
     stopWatch.stop();
-    std::cout << "Uzyskany wynik:\n\tKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
+    std::cout << "[" << timeString() << "] Uzyskany wynik:\n\tKoszt minimalnego cyklu: " << std::to_string(result.totalCost) << std::endl;
     std::cout << "\tMinimalny cykl: " << result.circuit.toString() << std::endl
                     << "\tRozmiar instancji (N): " << std::to_string(adjacencyMatrix.size()) << std::endl
                     << "\tCzas: " << std::to_string(stopWatch.getLastMeasurementsFloat() / 100000) << " s" << std::endl

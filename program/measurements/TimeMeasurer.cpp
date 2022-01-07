@@ -23,13 +23,11 @@ std::string TimeMeasurer::filenames[filesAmount] = {"br17.atsp",
                                                     "ftv70.atsp",
                                                     "ft70.atsp",
                                                     "kro124p.atsp"};
-std::string TimeMeasurer::algorithms[algorithmsAmount] = {"brute_force", "BnB", "Held-Karp", "SA", "TS"};
+const std::string TimeMeasurer::algorithms[] = {"brute_force", "BnB", "Held-Karp"};
 std::string TimeMeasurer::columnHeaders = "SIZE\tTIME\tMETHOD";
-std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[algorithmsAmount] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
+std::unique_ptr<TSPAbstractSolver> TimeMeasurer::solvers[] = {std::unique_ptr<TSPAbstractSolver>(new TSPBruteForceSolver()),
                 std::unique_ptr<TSPAbstractSolver>(new TSPBranchNBoundSolver()),
-                std::unique_ptr<TSPAbstractSolver>(new TSPDynamicProgrammingSolver()),
-                std::unique_ptr<TSPAbstractSolver>(new TSPSimulatedAnnealingSolver()),
-                std::unique_ptr<TSPAbstractSolver>(new TSPTabuSearchSolver())};
+                std::unique_ptr<TSPAbstractSolver>(new TSPDynamicProgrammingSolver())};
 
 std::ostream& operator<<(std::ostream& ostream, const SingleMeasurement meas) {
     ostream << std::to_string(meas.size) << "\t"
@@ -67,8 +65,6 @@ void TimeMeasurer::runMeasurement() {
     someMeasurements(5, 0);
 
     someMeasurements(7, 1);
-
-    someMeasurements(10, 3);
 
     std::cout << "\n";
     writeToFile();

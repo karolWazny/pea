@@ -28,10 +28,10 @@ private:
     static constexpr int sizesAmount = 10;
     static constexpr int algorithmsAmount = 5;
 
-    static constexpr size_t sizes[sizesAmount] = {4, 6, 8, 10, 12, 15, 20, 30, 50, 100};
-    static std::string algorithms[algorithmsAmount];
+    static constexpr size_t sizes[sizesAmount] = {4, 6, 8, 10, 12, 15, 20};
+    static const std::string algorithms[];
     static std::string columnHeaders;
-    static std::unique_ptr<TSPAbstractSolver> solvers[algorithmsAmount];
+    static std::unique_ptr<TSPAbstractSolver> solvers[];
     int sizeIndex{};
 
     LinkedList<SingleMeasurement> measurements;
