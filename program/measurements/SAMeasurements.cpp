@@ -118,7 +118,7 @@ SASingleMeasurement SAMeasurements::measurementForCurrentParameters() {
     output.parameters = currentParameters;
     output.instanceSize = currentInputMatrix.size();
 
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 100; i++){
         stopWatch.start();
         auto result = solver.solveFor(inputMatrices[currentFileName]);
         stopWatch.stop();
@@ -126,8 +126,8 @@ SASingleMeasurement SAMeasurements::measurementForCurrentParameters() {
         output.averageCost += result.totalCost;
     }
 
-    output.time /= 10;
-    output.averageCost /= 10;
+    output.time /= 100;
+    output.averageCost /= 100;
 
     return output;
 }
