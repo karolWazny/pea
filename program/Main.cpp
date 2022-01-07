@@ -100,14 +100,45 @@ void Main::interpretInput() {
 }
 
 void Main::measurements() {
-    try{
-        //timeMeasurer.runMeasurement();
-        //GAMeasurements meas;
-        //SAMeasurements meas;
-        TSMeasurements meas;
-        meas.runParametrizedMeasurement();
-    } catch (std::exception& e){
-        std::cout << e.what() << std::endl;
+    std::cout << "1. Pelny pomiar\n"
+                 "2. Tylko algorytmy dokladne\n"
+                 "3. Tylko algorytmy niedokladne\n"
+                 "4. Tylko TS\n"
+                 "5. Tylko SA\n"
+                 "6. Tylko GA\n";
+
+    int option = readInt();
+
+    GAMeasurements gaMeasurements;
+    SAMeasurements saMeasurements;
+    TSMeasurements tsMeasurements;
+    TimeMeasurer timeMeasurer;
+
+    switch(option){
+        case 1:
+            gaMeasurements.runParametrizedMeasurement();
+            saMeasurements.runParametrizedMeasurement();
+            tsMeasurements.runParametrizedMeasurement();
+            timeMeasurer.runMeasurement();
+            break;
+        case 2:
+            timeMeasurer.runMeasurement();
+            break;
+        case 3:
+            gaMeasurements.runParametrizedMeasurement();
+            saMeasurements.runParametrizedMeasurement();
+            tsMeasurements.runParametrizedMeasurement();
+        case 4:
+            tsMeasurements.runParametrizedMeasurement();
+            break;
+        case 5:
+            saMeasurements.runParametrizedMeasurement();
+            break;
+        case 6:
+            gaMeasurements.runParametrizedMeasurement();
+            break;
+        default:
+            throw 4;
     }
 }
 
