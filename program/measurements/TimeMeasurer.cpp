@@ -73,7 +73,7 @@ void TimeMeasurer::someMeasurements(int upperSizeIndexBound, int lowerSolverInde
 
         writeToFile();
 
-        long double times[5] = {0, 0, 0, 0, 0};
+        long double times[3] = {0, 0, 0};
         for(int i = 0; i < 100; i++){
             gotoxy(10, 2);
             std::cout << std::right << std::setw(3) << std::to_string(i + 1)
@@ -93,11 +93,11 @@ void TimeMeasurer::someMeasurements(int upperSizeIndexBound, int lowerSolverInde
                 times[solverIndex] += stopWatch.getLastMeasurementsFloat();
             }
         }
-        for(int solverIndex = lowerSolverIndexBound; solverIndex < 5; solverIndex++){
+        for(int solverIndex = lowerSolverIndexBound; solverIndex < 3; solverIndex++){
             SingleMeasurement measurement;
             measurement.method = algorithms[solverIndex];
             measurement.size = sizes[sizeIndex];
-            measurement.time = times[solverIndex];
+            measurement.time = times[solverIndex] / 100;
             measurements.pushBack(measurement);
         }
     }
