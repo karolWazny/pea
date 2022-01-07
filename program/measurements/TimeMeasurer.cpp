@@ -121,6 +121,9 @@ void TimeMeasurer::prepareDisplay() {
 
 void TimeMeasurer::runMeasurement(const std::string & instanceFilename) {
     auto outputFile = timeString() + "-dp_bnb-" + instanceFilename + ".txt";
+    std::ofstream stream(outputFile);
+    stream << columnHeaders << std::endl;
+    stream.close();
     AtspFileHandler fileHandler;
     TSPInputMatrix instance = TSPInputMatrix::from(fileHandler.fromFile(instanceFilename));
     LinkedList<SingleMeasurement> singleMeasurements;
@@ -138,7 +141,7 @@ void TimeMeasurer::runMeasurement(const std::string & instanceFilename) {
         measurement.time /= 10;
         singleMeasurements.pushBack(measurement);
     }
-    std::ofstream stream(outputFile);
+    stream.open(outputFile);
     stream << columnHeaders << std::endl;
     auto iterator = singleMeasurements.iterator();
     while(iterator.hasNext()){
