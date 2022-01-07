@@ -5,6 +5,7 @@
 #include "../../tspalgorithms/stochastic/TSPSimulatedAnnealingSolver.h"
 #include "../../tspalgorithms/stochastic/TSPTabuSearchSolver.h"
 #include "../../utils/display.h"
+#include "../file/AtspFileHandler.h"
 #include <iomanip>
 #include <chrono>
 #include <sstream>
@@ -116,4 +117,31 @@ void TimeMeasurer::prepareDisplay() {
     gotoxy(0,0);
     std::cout << "PERFORMING MEASUREMENTS\n";
     std::cout << "Size:\nInstance:\nAlgorithm:";
+}
+
+void TimeMeasurer::runMeasurement(const std::string & instanceFilename) {
+    auto outputFile = timeString() + "-dp_bnb-" + instanceFilename + ".txt";
+    AtspFileHandler fileHandler;
+    TSPInputMatrix instance = TSPInputMatrix::from(fileHandler.fromFile(instanceFilename));
+    LinkedList<SingleMeasurement> singleMeasurements;
+    for(int i = 1; i < 3; i++){
+        SingleMeasurement measurement;
+        measurement.method = algorithms[i];
+        measurement.size = instance.size();
+        for(int j = 0; j < 10; j++){
+            stopWatch.start();
+            auto result = solvers[i]->solveFor(instance);
+            stopWatch.stop();
+            result.totalCost++;
+            measurement.time += stopWatch.getLastMeasurementsFloat();
+        }
+        measurement.time /= 10;
+        singleMeasurements.pushBack(measurement);
+    }
+    std::ofstream stream(outputFile);
+    stream << columnHeaders << std::endl;
+    auto iterator = singleMeasurements.iterator();
+    while(iterator.hasNext()){
+        stream << iterator.next() << std::endl;
+    }
 }

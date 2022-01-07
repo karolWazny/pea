@@ -15,6 +15,7 @@ struct SingleMeasurement;
 class TimeMeasurer {
 public:
     void runMeasurement();
+    void runMeasurement(const std::string& instanceFilename);
     std::string timeString();
 protected:
     static constexpr int filesAmount = 14;
@@ -46,10 +47,5 @@ public:
     size_t size;
     std::string method;
 };
-
-struct BetterMeasurement{
-
-};
-
 
 #endif //SDIZO2_TIMEMEASURER_H

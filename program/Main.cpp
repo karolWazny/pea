@@ -122,6 +122,7 @@ void Main::measurements() {
             timeMeasurer.runMeasurement();
             break;
         case 2:
+            timeMeasurer.runMeasurement("br17.atsp");
             timeMeasurer.runMeasurement();
             break;
         case 3:
