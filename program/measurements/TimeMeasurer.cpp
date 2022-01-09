@@ -79,7 +79,7 @@ void TimeMeasurer::someMeasurements(int upperSizeIndexBound, int lowerSolverInde
             std::cout << std::right << std::setw(3) << std::to_string(i + 1)
                       << " out of 100";
             auto problemInstance = randomMatrix(sizes[sizeIndex]);
-            for(int solverIndex = lowerSolverIndexBound; solverIndex < 5; solverIndex ++) {
+            for(int solverIndex = lowerSolverIndexBound; solverIndex < 3; solverIndex ++) {
                 gotoxy(11, 3);
                 std::cout << std::setw(20) << algorithms[solverIndex]
                           << " (" << std::to_string(solverIndex + 1) << " out of "

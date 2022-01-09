@@ -115,8 +115,8 @@ void Main::measurements() {
             timeMeasurer.runMeasurement();
             break;
         case 2:
-            timeMeasurer.runMeasurement("br17.atsp");
             timeMeasurer.runMeasurement();
+            timeMeasurer.runMeasurement("br17.atsp");
             break;
         case 3:
             gaMeasurements.runParametrizedMeasurement();
