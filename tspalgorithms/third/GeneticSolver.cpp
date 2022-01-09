@@ -69,7 +69,6 @@ void GeneticSolver::applyMutationToBreed() {
 }
 
 void GeneticSolver::applyCrossoverToBreed() {
-    math::fisherYatesShuffle(breed);
     for(int i = 1; i < breed.getLength(); i += 2){
         if(random() < parameters.crossoverProbability)
             crossover(breed[i], breed[i - 1]);
