@@ -19,6 +19,7 @@ TSPSolution GeneticSolver::solveFor(const TSPInputMatrix &inputMatrix) {
         applyMutationToBreed();
         setBreedAsParents();
     }
+    assessPopulation();
     return buildSolutionFromBest();
 }
 
