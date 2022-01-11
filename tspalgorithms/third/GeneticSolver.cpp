@@ -79,7 +79,7 @@ void GeneticSolver::applyCrossoverToBreed() {
 void GeneticSolver::createNewBreed() {
     breed = ffarray<Individual>(parameters.population);
     for(int i = 0; i < breed.getLength(); i++){
-        breed[i] = chooseTournamentStyle();
+        chooseTournamentStyle().copyTo(breed[i]);
     }
 }
 
